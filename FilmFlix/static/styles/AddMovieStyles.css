@@ -1,0 +1,111 @@
+
+/* ------------------------------------------------------------------------------------- MAIN */
+
+.add-movie-section {
+    width: 100%;
+    padding: 30px 5% 0;
+}
+
+/* ------------------------------------------------------------------------------ FORM */
+
+.subtitle {
+    width: fit-content;
+    font-size: var(--fs-240);
+    font-weight: var(--fw-bold);
+    margin: 0 auto;
+
+}
+
+form {
+    margin: 50px auto;
+    max-width: 700px;
+    flex-direction: column;
+    gap: 20px;
+}
+
+form * {
+    display: block;
+}
+
+label {
+    font-size: var(--fs-0);
+    font-weight: var(--fw-bold);
+    margin-bottom: 8px;
+}
+
+input, .input {
+    height: 30px;
+    width: 100%;
+    border: 1px solid var(--clr-rule);
+    border-radius: 4px;
+    padding: 0 10px;
+    letter-spacing: 0.5px;
+    color: var(--clr-table-text);
+    font-family: var(--ff-main);
+    font-weight: var(--fw-bold);
+}
+
+.input {
+    font-size: var(--fs-140);
+}
+
+input:focus, .input:focus {
+    outline-offset: 1px;
+    outline-color: #33CA70;
+    outline-style: double;
+}
+
+.input-container {
+    flex-direction: row;
+    gap: 0;
+}
+
+#duration-input {
+    max-width: 200px;
+    border-radius: 4px 0 0 4px;
+    position: relative;
+    z-index: 100;
+}
+
+.input-container input[type='text'] {
+    width: 10%;
+    min-width: 55px;
+    text-align: center;
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    position: relative;
+    z-index: 50;
+}
+
+.input-container input[type='text']:hover {
+    cursor: default;
+}
+
+.input-container input[type='text']:focus {
+    outline: none;
+}
+
+#duration-input:focus {
+    .input-container input[type='text'] {
+        outline: revert;
+    }
+}
+
+input[type='submit'] {
+    width: max(80%, 250px);
+    height: 40px;
+    margin: 30px auto 0;
+    background-color: var(--clr-accent);
+    border: 1px solid var(--clr-rule);
+    color: var(--clr-main);
+    transition: ease-in-out 50ms;
+}
+
+input[type='submit']:focus {
+    outline: none;
+}
+
+input[type='submit']:active {
+    transform: scale(0.98);
+}
+

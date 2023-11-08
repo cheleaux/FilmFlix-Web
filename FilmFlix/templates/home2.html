@@ -1,0 +1,59 @@
+{% extends 'Base.html'%}
+
+{% block title %}FilmFlix{% endblock %}
+
+{% block header %}
+<Section class="hero">
+    <div class="hero-bg-shadow"></div>
+    <div class="nav-container flex">
+        <nav class="flex">
+            <a href="/"><h1 class="logo">FilmFlix</h1></a>
+            <div class="search flex">
+                <input type="text" name="nameQuery" id="search-bar" placeholder="Search...">
+                <i class="bi bi-search"></i>
+            </div>
+        </nav>
+    </div>
+    <div class="hero-taglines flex">
+        <div class="tag-group">
+            <h2 class="tag-1">Put All Your<br>Favourite movies</h2>
+            <h2 class="tag-2">...All In One Place</h2>
+        </div>
+        <h2 class="tag-3">Store up to 2000+ <span class="green-highlight">Movies Records</span> for free</h2>
+    </div>
+</Section>
+{% endblock %}
+
+{% block main %}
+<main class="home-menu">
+    <ul class="main-menu flex">
+        <li class="menu-opt-box" id="see-collection-opt">
+            <a href="./movie-list">
+                <div class="bg-img-container">
+                    <img src="{{ url_for('static', filename='assets/img/myke-simon-atsUqIm3wxo-unsplash.jpg') }}" alt="engimatic entrance to a neo-retro movie theatre with neon pink lights">
+                    <div class="img-dimmer-screen"></div>
+                </div>
+                <h3 class="opt-text">See Your Collection</h3>
+            </a>
+        </li>
+        <li class="menu-opt-box" id="make-list-opt">
+            <a href="./movie-list">
+                <div class="bg-img-container">
+                    <img src="{{ url_for('static', filename='assets/img/samuel-regan-asante-wMkaMXTJjlQ-unsplash.jpg') }}" alt="Pile of blockbuster movies vynyl casing">
+                    <div class="img-dimmer-screen"></div>
+                </div>
+                <h3 class="opt-text">Make A List</h3>
+            </a>
+        </li>
+        <li class="menu-opt-box" id="add-movie-opt">
+            <a href="/add-movie">
+                <div class="bg-img-container">
+                    <img src="{{ url_for('static', filename='assets/img/tech-daily-PGuCnUzsRSM-unsplash.jpg') }}" alt="someone typing on a laptop on a filmFlix.com">
+                    <div class="img-dimmer-screen"></div>
+                </div>
+                <h3 class="opt-text">Add New Movie</h3>
+            </a>
+        </li>
+    </ul>
+</main>
+{% endblock %}

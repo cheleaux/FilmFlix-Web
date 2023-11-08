@@ -1,0 +1,106 @@
+/* ------------------------------------------------------------------------------------- FONTS */
+
+@font-face {
+    font-family: "Broadway";
+    src:
+        url('../assets/fonts/Broadway/BROADW.eot') format('embedded-opentype'),
+        url('../assets/fonts/Broadway/BROADW.woff2') format('woff2'),
+        url('../assets/fonts/Broadway/BROADW.woff') format('woff'),
+        url('../assets/fonts/Broadway/BROADW.TTF') format('truetype');
+    font-weight: 400;
+}
+
+/* ------------------------------------------------------------------------------------- ROOT */
+
+:root {
+
+    /*  COLOURS  */
+    --clr-accent: #33CA70;
+    --clr-main: #ffffff;
+    --clr-icon: #757D8A;
+    --clr-main-text: #000000;
+    --clr-table-text: #6D6D6D;
+    --clr-main-bg: #ececec;
+    --clr-rule: #BDBDBD;
+
+    /*  FONT-FAMILY  */
+    --ff-main: 'Satoshi', Sans-serif;
+    --ff-title: 'Broadway';
+
+    /*  FONTS SIZE  */
+    --fs-120: 0.75rem;
+    --fs-140: 0.875rem;
+    --fs-160: 1rem;
+    --fs-200: 1.25rem;
+    --fs-240: 1.5rem;
+    --fs-480: 3rem;
+
+    /*  FONTS SIZE  */
+    --fw-reg: 400;
+    --fw-med: 500;
+    --fw-bold: 700;
+
+    /* ELEMENT SIZES */
+    --es-web-search-width: 200px;
+
+}
+
+/* ------------------------------------ RESET */
+html {
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+    margin: 0;
+    padding: 0;
+    font-family: var(--ff-main);
+    font-weight: normal;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    color: rgb(27, 27, 27);
+}
+
+/* --------------------------------------------------------------------------- MAIN STYLES */
+
+body {
+    background-color: var(--clr-main-bg);
+}
+
+.flex {
+    display: flex;
+}
+
+.green-highlight {
+    color: var(--clr-accent);
+}
+
+a:has(.logo) {
+    text-decoration: none;
+}

@@ -1,0 +1,32 @@
+
+/*  ------------------------------------------------------------------ FOOTER*/
+
+footer {
+    width: 100%;
+    height: fit-content;
+    margin: 150px 0 70px;
+    padding: 0 10%;
+}
+
+.ftr-content {
+    margin: 0 auto;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 1000px;
+    font-size: var(--fs-120);
+}
+
+.small-print {
+    max-width: 700px;
+    flex-grow: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20%;
+}
+
+.ftr-content-col {
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px
+}
