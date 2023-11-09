@@ -21,15 +21,7 @@
         {% block header %}
         <Section class="header">
             <div class="header-bg-shadow"></div>
-            <div class="nav-container flex">
-                <nav class="flex">
-                    <a href="/"><h1 class="logo">FilmFlix</h1></a>
-                    <div class="search flex">
-                        <input type="text" name="nameQuery" id="search-bar" placeholder="Search...">
-                        <i class="bi bi-search"></i>
-                    </div>
-                </nav>
-            </div>
+            {% include 'nav.html' %}
         </Section>
         {% endblock %}
 
@@ -58,5 +50,6 @@
                 </div>
             </section>
         </footer>
+        <script type="module" src="{{ url_for('static', filename='js/index.js') }}"></script>
     </body>
 </html>

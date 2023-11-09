@@ -1,4 +1,8 @@
 
+#movie-list-package {
+    display: none;
+}
+
 /* --------------------------------------------------------------------- OPTION TABS */
 
 .opt-tabs {
@@ -38,6 +42,7 @@
     margin: 0 auto;
     width: fit-content;
     margin-top: 80px;
+    transform: translateX(5%);
 }
 
 .movie-table {
@@ -80,30 +85,14 @@ tbody :last-child td {
 }
 
 tbody::-webkit-scrollbar {
-    width: 10px;
+    width: 7px;
 }
 
 tbody::-webkit-scrollbar-thumb {
-    background-color: var(--clr-);
+    background-color: var(--clr-rule);
     border-radius: 5px;
-    display: block;
 }
 
-tbody::-webkit-scrollbar-thumb:active {
-    background-color: var(--clr-icon)
-}
-
-tbody::-webkit-scrollbar-track {
-    background-color: var(--clr-translucent-hover);
-    border-radius: 5px;
-    overflow: hidden;
-
-}
-
-
-tbody::-webkit-scrollbar:hover {
-    scrollbar-track-color: var(--clr-translucent-hover);
-}
 
 tr {
     display: table;
@@ -111,7 +100,6 @@ tr {
 
 .movie-table tr {
     width: 100%;
-    padding: 0 0 0 20px;
     table-layout: fixed;
 }
 
@@ -126,7 +114,7 @@ tr {
 }
 
 .movie-table tr > :first-child {
-    padding-left: 5%;
+    padding-left: 3%;
 }
 
 .movie-table .tbl-row-opt {

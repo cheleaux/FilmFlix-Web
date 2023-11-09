@@ -62,6 +62,13 @@ nav {
     outline: none;
 }
 
+#search-bar::-webkit-search-decoration,
+#search-bar::-webkit-search-cancel-button,
+#search-bar::-webkit-search-results-button,
+#search-bar::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
 .search i {
     background-color: var(--clr-main);
     position: relative;

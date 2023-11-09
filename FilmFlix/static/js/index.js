@@ -1,7 +1,5 @@
+import search from './searchBar.js'
+import './movieList.js'
 
+search.icon.addEventListener( 'click', search.initialiseSearch )
 
-
-const submitBtn = document.querySelector("input[type='submit']")
-
-submitBtn.addEventListener('click', ( e ) => { 
-    e.preventDefault() })

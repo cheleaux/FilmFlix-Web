@@ -1,4 +1,3 @@
-from Connect import *
 from Checks import *
 
 def inputFromAvailible( column ):
@@ -23,12 +22,6 @@ def inputFromAvailible( column ):
     value = checkList[int(selector)-1]
     return value
 
-def formatByType( value, expressiontype = 'primative' ):
-    if str(value).isdigit():
-        return value
-    elif expressiontype == 'regex':
-        return f'"%{value.strip()}%"'
-    else:
-        return f'"{value.strip()}"'
+
     
     
