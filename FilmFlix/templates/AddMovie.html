@@ -5,7 +5,7 @@
 {% block main %}
 <main class="add-movie-section">
     <h3 class="subtitle">Enter the movie details</h3>
-    <form action="" class="insertForm flex">
+    <form id="insertForm" method="post" class="flex">
         <div class="title">
             <label for="title-input">Title:</label>
             <input type="text" name="movieTitle" id="title-input">
@@ -102,7 +102,7 @@
         </div>
         <div class="duration">
             <label for="duration-input">Duration:</label>
-            <div class="input-container flex">
+            <div id="input-container" class="flex">
                 <input type="number" min="20" name="duration" id="duration-input">
                 <input type="text" placeholder="mins" readonly>
             </div>
@@ -136,7 +136,8 @@
                 <option value="Western">Western</option>
             </select>
         </div>
-        <input type="submit" value="Add Movie">
+        <button type="button" class="submitBtn">Add Movie</button>
     </form>
+    <a href="api/movies" id="success-redirect">See updated collection</a>
 </main>
 {% endblock %}

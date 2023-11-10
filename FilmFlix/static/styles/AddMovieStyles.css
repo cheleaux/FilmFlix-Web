@@ -16,14 +16,15 @@
 
 }
 
-form.insertForm {
+#insertForm {
     margin: 50px auto;
     max-width: 700px;
     flex-direction: column;
     gap: 20px;
+    transition: ease-in-out 0.2s;
 }
 
-form.insertForm * {
+#insertForm * {
     display: block;
 }
 
@@ -55,7 +56,8 @@ input:focus, .input:focus {
     outline-style: double;
 }
 
-.input-container {
+#input-container {
+    display: flex;
     flex-direction: row;
     gap: 0;
 }
@@ -67,8 +69,10 @@ input:focus, .input:focus {
     z-index: 100;
 }
 
-.input-container input[type='text'] {
+#input-container input[type='text'] {
+    display: inline-block;
     width: 10%;
+    max-width: 100px;
     min-width: 55px;
     text-align: center;
     border-left: none;
@@ -77,11 +81,11 @@ input:focus, .input:focus {
     z-index: 50;
 }
 
-.input-container input[type='text']:hover {
+#input-container input[type='text']:hover {
     cursor: default;
 }
 
-.input-container input[type='text']:focus {
+#input-container input[type='text']:focus {
     outline: none;
 }
 
@@ -91,7 +95,7 @@ input:focus, .input:focus {
     }
 }
 
-input[type='submit'] {
+.submitBtn {
     width: max(80%, 250px);
     height: 40px;
     margin: 30px auto 0;
@@ -99,13 +103,46 @@ input[type='submit'] {
     border: 1px solid var(--clr-rule);
     color: var(--clr-main);
     transition: ease-in-out 50ms;
+    font-size: var(--fs-160);
+    font-weight: var(--fw-bold);
 }
 
-input[type='submit']:focus {
+.submitBtn:focus {
     outline: none;
 }
 
-input[type='submit']:active {
+.submitBtn:active {
     transform: scale(0.98);
 }
 
+#success-redirect {
+    display: none;
+}
+
+/* ------------------------------------------------------------------------------ FORM ( after-submit ) */
+
+#insertForm.after-add input:not(input[type=submit], input:read-only), #insertForm.after-add .input{
+    background-color: var(--clr-form-noselect);
+    pointer-events: none;
+}
+
+#insertForm.after-add label {
+    pointer-events: none;
+}
+
+#insertForm.after-add select {
+    appearance: none;
+}
+
+#insertForm.after-add .submitBtn {
+    background-color: var(--clr-icon);
+    height: 60px;
+}
+
+#insertForm.after-add + #success-redirect {
+    display: block;
+    text-align: center;
+    color: var(--clr-accent);
+    margin: 0 auto;
+    font-size: var(--fs-160);
+}

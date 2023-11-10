@@ -3,6 +3,17 @@
     display: none;
 }
 
+.err-not-found {
+    font-size: var(--fs-480);
+    font-weight: var(--fw-bold);
+    position: absolute;
+    right: 50%;
+    bottom: 50%;
+    transform: translate( 50%, 50% );
+    color: var(--clr-rule);
+    display: none;
+}
+
 /* --------------------------------------------------------------------- OPTION TABS */
 
 .opt-tabs {
@@ -12,6 +23,10 @@
     gap: 20px;
     justify-content: space-between;
     align-items: center;
+}
+
+.opt-tabs a {
+    text-decoration: none;
 }
 
 .opt-tabs h3 {
