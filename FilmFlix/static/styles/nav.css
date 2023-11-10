@@ -35,7 +35,6 @@ nav {
     min-width: 240px;
     justify-content: space-between;
     align-items: center;
-    margin-top: 2px;
     position: relative;
     overflow: hidden;
 }

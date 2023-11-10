@@ -16,14 +16,14 @@
 
 }
 
-form {
+form.insertForm {
     margin: 50px auto;
     max-width: 700px;
     flex-direction: column;
     gap: 20px;
 }
 
-form * {
+form.insertForm * {
     display: block;
 }
 
