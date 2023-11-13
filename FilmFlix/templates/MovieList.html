@@ -6,7 +6,7 @@
 <main>
     <div class="opt-tabs flex">
         <div class="divider">|</div>
-        <a href="/add-movie"><h3 class="opt-add-new">Add New Movie</h3></a>
+        <a href="/api/add-movie"><h3 class="opt-add-new">Add New Movie</h3></a>
         <div class="divider">|</div>
         <h3 class="opt-report">Make Report</h3>
         <div class="divider">|</div>
@@ -46,4 +46,12 @@
         </table>
     </section>
 </main>
+<div id="confirm-del-container" class="flex">
+    <h2>The following movie will be deleted:</h2>
+    <span class="movie-title-del"></span>
+    <div class="confirm-del-btns flex">
+        <button id="confirm-del">Confirm</button>
+        <button id="cancel-del">Cancel</button>
+    </div>
+</div>
 {% endblock %}

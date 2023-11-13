@@ -2,10 +2,7 @@ from .Movie import Movie
 import sqlite3 as sql
 
 
-def getMovies( allMovies ):
-    return fetchMovieJSON( allMovies )
-
-def fetchMovieJSON( movies ):
+def makeMoviesFromList( movies ):
     movieList = []
     for item in movies:
         (id, title, release, rating, duration, genre) = item
@@ -15,4 +12,4 @@ def fetchMovieJSON( movies ):
 
 
 if __name__ == '__main__':
-    getMovies()
+    makeMoviesFromList()

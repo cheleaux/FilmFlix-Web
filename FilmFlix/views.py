@@ -1,8 +1,5 @@
 from flask import Blueprint, render_template, request
-from .MovieList import getMovies
-import sqlite3 as sql
-import json
-
+from .Routes import *
 
 
 views = Blueprint('views', __name__)
@@ -13,35 +10,21 @@ def home():
 
 @views.route( '/api/movies' )
 def movieList():
+    query = request.args.get('query') if request.args else None
+    return render_template( 'movieList.html', movies=fetchMovieList( query ) )
 
-    dbCon = sql.connect( r'filmflix.db' )
-    dbCursor = dbCon.cursor()
-
-    dbQuery = 'SELECT * FROM tblFilms '  ## intentional string whitespace for valid query
-    
-    if request.args.get( 'query' ):
-        reqQuery = request.args.get( 'query' )
-        condition = formatByType( reqQuery, 'regex' )
-        dbQuery += f'WHERE like( {condition}, yearReleased )' if reqQuery.isdigit() else f'WHERE like( {condition}, title )'
-        dbCursor.execute( dbQuery ) 
-    else:
-        dbCursor.execute( dbQuery.strip() )
-    
-    payload = json.dumps( getMovies( dbCursor.fetchall() ))
-
-    return render_template( 'movieList.html', movies = payload )
-
-@views.route( '/add-movie', methods=['GET', 'POST'] )
+@views.route( '/api/add-movie', methods=['GET', 'POST'] )
 def AddMovie():
-    return render_template('addMovie.html')
-
-
-
-
-def formatByType( value, expressiontype = 'primative' ):
-    if str( value ).isdigit():
-        return value
-    elif expressiontype == 'regex':
-        return f'"%{ value.strip() }%"'
-    else:
-        return f'"{ value.strip() }"'
+    if request.method == 'GET':
+        return render_template( 'addMovie.html' )
+    elif request.method == 'POST':
+        return respondToPOST( request.json )
+    
+@views.route( '/api/movies/<movieId>' )
+def selectMovie( movieId ):
+    if request.method == 'GET':
+        return render_template( 'addMovie.html', details=fetchMovieDetails( movieId ) )
+    # elif request.method == 'UPDATE':
+    #     changeMovieDetails( movieId )
+    # elif request.method == 'DELETE':
+    #     removeMovie( movieId )

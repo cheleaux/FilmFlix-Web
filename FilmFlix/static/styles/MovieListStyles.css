@@ -132,6 +132,8 @@ tr {
     padding-left: 3%;
 }
 
+/* --------------------------------------------------------------------- OPTION MENU */
+
 .movie-table .tbl-row-opt {
     width: 5%;
     padding: none;
@@ -151,6 +153,7 @@ tr {
     position: absolute;
     transition: ease-in-out 0.2s;
     user-select: none;
+    z-index: 300;
 }
 
 .row-opt-menu a {
@@ -208,4 +211,65 @@ tr {
     right: 50%;
     bottom: 50%;
     transform: translate(50%, 50%)
+}
+
+/* ------------------------------- CONFIRM DELETE */
+
+body:has(#confirm-del-container){
+    position: relative;
+}
+
+#confirm-del-container {
+    width: 350px;
+    min-height: 150px;
+    border-radius: 4%;
+    padding: 30px 0;
+    background-color: var(--clr-main);
+    color: var(--clr-main-text);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    flex-direction: column;
+    align-items: center;
+    position: sticky;
+    left: 50%;
+    bottom: 50%;
+    transform: translate( -50%, 50% );
+    justify-content: space-around;
+    display:none;
+}
+
+#confirm-del-container h2 {
+   font-size: var(--fs-180);
+    font-weight: var(--fw-bold);
+    width: 80%;
+    height: fit-content;
+}
+
+.confirm-del-btns {
+    width: 150px;
+    flex-direction: row;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: var(--fs-160);
+    justify-content: space-between;
+}
+
+#confirm-del, #cancel-del{
+    padding: 10px;
+    border-radius: 3px;
+    transition: ease-in-out 0.1s;
+}
+
+#confirm-del:active, #cancel-del:active {
+    transform: scale(0.95);
+}
+
+#confirm-del {
+    background-color: var(--clr-main);
+    border: none;
+}
+
+#cancel-del {
+    background-color: var(--clr-accent);
+    color: var(--clr-main);
+    border: none;
 }

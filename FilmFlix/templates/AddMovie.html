@@ -5,7 +5,7 @@
 {% block main %}
 <main class="add-movie-section">
     <h3 class="subtitle">Enter the movie details</h3>
-    <form id="insertForm" method="post" class="flex">
+    <form id="insertForm" data-movie="{{ details }}" class="flex">
         <div class="title">
             <label for="title-input">Title:</label>
             <input type="text" name="movieTitle" id="title-input">
@@ -103,7 +103,7 @@
         <div class="duration">
             <label for="duration-input">Duration:</label>
             <div id="input-container" class="flex">
-                <input type="number" min="20" name="duration" id="duration-input">
+                <input type="number" min="20" max="240" name="duration" id="duration-input">
                 <input type="text" placeholder="mins" readonly>
             </div>
         </div>
@@ -111,14 +111,14 @@
             <label for="rating-input">Rating:</label>
             <select id="rating-input" class="input" name="rating">
                 <option value=""></option>
-                <option value="G - General Audiences">G - General Audiences</option>
-                <option value="PG - Parental Guidance Advised">PG - Parental Guidance Advised</option>
-                <option value="R - Restricted">R - Restricted</option>
+                <option value="G">G - General Audiences</option>
+                <option value="PG">PG - Parental Guidance Advised</option>
+                <option value="R">R - Restricted</option>
             </select>
         </div>
         <div class="genre">
             <label for="genre-input">Genre:</label>
-            <select id="rating-input" class="input" name="rating">
+            <select id="genre-input" class="input" name="rating">
                 <option value=""></option>
                 <option value="Action">Action</option>
                 <option value="Animation">Animation</option>
