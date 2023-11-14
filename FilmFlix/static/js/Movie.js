@@ -14,7 +14,7 @@ export default class Movie {
         row.classList.add('mv-row')
         row.id = String(this.id)
         row.innerHTML = `
-                <td class="mv-title">${ this.title }</td>
+                <td class="mv-title"><span>${ this.title }</span></td>
                 <td class="mv-release">${ this.yearReleased }</td>
                 <td class="mv-rating">${ this.rating }</td>
                 <td class="mv-duration" class="tbl-key">${ this.duration }</td>

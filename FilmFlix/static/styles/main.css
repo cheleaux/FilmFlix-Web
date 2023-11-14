@@ -43,6 +43,7 @@
 
     /* ELEMENT SIZES */
     --es-web-search-width: 200px;
+    --es-mobile-search-width: 90%;
 
 }
 
@@ -50,6 +51,7 @@
 html {
     box-sizing: border-box;
     font-size: 16px;
+    width: 100vw;
 }
 
 *,
@@ -92,6 +94,8 @@ a {
 
 body {
     background-color: var(--clr-main-bg);
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .flex {

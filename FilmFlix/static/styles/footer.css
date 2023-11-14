@@ -14,6 +14,7 @@ footer {
     justify-content: space-between;
     max-width: 1000px;
     font-size: var(--fs-120);
+    gap: 40px;
 }
 
 .small-print {
@@ -22,7 +23,7 @@ footer {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 20%;
+    gap: 15%;
 }
 
 .ftr-content-col {
