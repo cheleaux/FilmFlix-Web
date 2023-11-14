@@ -5,21 +5,15 @@ const submitBtn = document.querySelector('.submitBtn')
 
 function lockAndSubmitForm( e ) {
     if (e.target != submitBtn) return;
+    const newMovie = makeMovie()
     form.classList.add('after-add')
     submitBtn.innerHTML = 'Added Successfully <span><i class="bi bi-check"></i></span>'
-    const newMovie = JSON.stringify( makeMovie() )
-    submitForm( newMovie ) 
-}
-
-function submitForm( movie ){
-    const xhttp = new XMLHttpRequest()
-    xhttp.open( 'POST', '/api/add-movie', true )
-    xhttp.setRequestHeader( 'Content-type', 'application/json; charset=UTF-8' )
-    xhttp.send( movie )
+    newMovie._addNew()
 }
 
 function makeMovie(){
-    const newMovie = new Movie( 
+    const newMovie = new Movie(
+        undefined,
         document.querySelector('#title-input').value,
         document.querySelector('#release-input').value,
         document.querySelector('#rating-input').value,

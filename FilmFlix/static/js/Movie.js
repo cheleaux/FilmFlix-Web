@@ -32,9 +32,22 @@ export default class Movie {
     }
 
     _deleteMovie(){
-        console.log( this.id )
-        // const xhttp = new XMLHttpRequest()
-        // xhttp.open( 'DELETE', `/api/movies/${ movie.id }`, true )
-        // xhttp.send()
+        const xhttp = new XMLHttpRequest()
+        xhttp.open( 'DELETE', `/api/movies/${ String( this.id ) }`, true )
+        xhttp.send()
+    }
+
+    _addNew(){
+        const xhttp = new XMLHttpRequest()
+        xhttp.open( 'POST', '/api/add-movie', true )
+        xhttp.setRequestHeader( 'Content-type', 'application/json; charset=UTF-8' )
+        xhttp.send( JSON.stringify(this) )
+    }
+
+    _updateMovieDetails(){
+        const xhttp = new XMLHttpRequest()
+        xhttp.open( 'PUT', `/api/movies/${ String( this.id ) }`, true )
+        xhttp.setRequestHeader( 'Content-type', 'application/json; charset=UTF-8' )
+        xhttp.send( JSON.stringify(this) )
     }
 }

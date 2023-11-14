@@ -10,20 +10,29 @@ def queryDb( dbQuery, params = None ):
     else: dbCursor.execute( dbQuery )
     return dbCursor.fetchall()
 
-def effecDB( dbQuery, params = None ):
-    dbCon = sql.connect( r'filmflix.db' )
+def effectDB( dbQuery, params = None ):
+    dbCon = sql.connect( r'filmflix.db', isolation_level=None )
     dbCursor = dbCon.cursor()
     if params:
         dbCursor.execute( dbQuery, params )
     else:
         dbCursor.execute( dbQuery )
-    dbCon.commit()
 
-def insertMovie( Details ):
-    title, year, rating, duration, genre = Details.values()
+def insertMovie( details ):
+    title, year, rating, duration, genre = details.values()
     insert = Movie( None, title, year, rating, duration, genre )
-    effecDB( 'INSERT INTO tblFilms VALUES ( NULL, ?, ?, ?, ?, ? )', ( insert.title, insert.yearReleased, insert.rating, insert.duration, insert.genre ) )
+    effectDB( 'INSERT INTO tblFilms VALUES ( NULL, ?, ?, ?, ?, ? )', ( insert.title, insert.yearReleased, insert.rating, insert.duration, insert.genre ) )
 
+def updateMovieDetails( details ):
+    ID, title, year, rating, duration, genre = details.values()
+    updated = Movie( ID, title, year, rating, duration, genre )
+    dbQuery = f'UPDATE tblFilms SET title = "{ updated.title }", yearReleased = { updated.yearReleased }, rating = "{ updated.rating }", duration = { updated.duration }, genre = "{ updated.genre }" WHERE filmID = { updated.id }'
+    effectDB( dbQuery )
+
+def removeMovie( ID ):
+    dbQuery = f'DELETE FROM tblFilms WHERE filmID = { ID }'
+    effectDB( dbQuery )
+ 
 def fetchMoviesFromSearch( query ):
     if query:
         dbQuery = constructDBQuery( 'yearReleased', query ) if query.isdigit() else constructDBQuery( 'title', query )

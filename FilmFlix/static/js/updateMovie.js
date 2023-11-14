@@ -1,3 +1,6 @@
+import Movie from './Movie.js'
+
+
 const titleInp = document.querySelector('#title-input')
 const releaseInp = document.querySelector('#release-input')
 const ratingInp = document.querySelector('#rating-input')
@@ -18,17 +21,11 @@ function displayMovieDetails(){
 
 function lockAndSubmitForm( e ) {
     if (e.target != submitBtn) return;
+    const ID = JSON.parse( form.dataset.movie ).id
+    const updatedMovie = new Movie( ID, titleInp.value, releaseInp.value, ratingInp.value, durationInp.value, genreInp.value )
     form.classList.add('after-add')
     submitBtn.innerHTML = 'Added Successfully <span><i class="bi bi-check"></i></span>'
-    const newMovie = JSON.stringify( makeMovie() )
-    submitForm( newMovie )
-}
-
-function submitForm( movie ){
-    const xhttp = new XMLHttpRequest()
-    xhttp.open( 'UPDATE', `/api/movies/edit/${ movie.id }`, true )
-    xhttp.setRequestHeader( 'Content-type', 'application/json; charset=UTF-8' )
-    xhttp.send( movie )
+    updatedMovie._updateMovieDetails()
 }
 
 const exports = { form, submitBtn, displayMovieDetails, lockAndSubmitForm }

@@ -20,11 +20,11 @@ def AddMovie():
     elif request.method == 'POST':
         return respondToPOST( request.json )
     
-@views.route( '/api/movies/<movieId>' )
+@views.route( '/api/movies/<movieId>', methods=['GET', 'DELETE', 'PUT'] )
 def selectMovie( movieId ):
     if request.method == 'GET':
         return render_template( 'addMovie.html', details=fetchMovieDetails( movieId ) )
-    # elif request.method == 'UPDATE':
-    #     changeMovieDetails( movieId )
-    # elif request.method == 'DELETE':
-    #     removeMovie( movieId )
+    elif request.method == 'PUT':
+        return respondToPUT( request.json )
+    elif request.method == 'DELETE':
+        return respondToDELETE( movieId )
