@@ -2,3 +2,4 @@ virtenv/
 __pycache__/
 config.json
 baseFunc/
+instance/
