@@ -12,7 +12,7 @@ let confirmation;
 
 function populateTable(){
     const movieData = JSON.parse(tblBody.dataset.movies)
-    if(movieData.length == 0 || movieData == undefined) errMsg.style.display = 'block'
+    if( movieData.length == 0 || movieData == undefined ) errMsg.style.display = 'block';
     for (const item of movieData){
         const newMovie = new Movie( item.id, item.title, item.yearReleased, item.rating, item.duration, item.genre )
         tblBody.insertAdjacentElement( 'afterbegin', newMovie._constructListItemHTML() )
@@ -38,7 +38,6 @@ function toggleOptionsMenu( optBtn = undefined ){
 }
 
 function getComfirmation( Btn ){
-    console.log('in getComfirmation')
     const movieRow = Btn.closest('.mv-row')
     const movie = movieList.find( (movie) => movieRow.id == movie.id )
     toggleConfirmWindow( movie.title )
@@ -48,8 +47,6 @@ function getComfirmation( Btn ){
 }
 
 function toggleConfirmWindow( title = undefined ){
-    console.log('in toggleConfirmWindow')
-    console.log( confirmDelMenu.style.display )
     if ( confirmDelMenu.style.display != 'flex'){
         confirmDelMenu.style.display = 'flex'
         confirmDelMenu.querySelector('span').innerHTML = title
@@ -60,7 +57,6 @@ function toggleConfirmWindow( title = undefined ){
 }
 
 function ConfirmAndRemove( e, movie, HTMLRow ){
-    console.log('in ConfirmAndRemove')
     if (e.target.closest('button').id == 'confirm-del'){
         toggleConfirmWindow()
         HTMLRow.style.display = 'none'

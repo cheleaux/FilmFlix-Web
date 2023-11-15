@@ -2,15 +2,13 @@ from .Movie import Movie
 import sqlite3 as sql
 
 
-def makeMoviesFromList( data ):
+def makeMovieDict( data ):
     movieList = []
-    for item in data:
-        movie = dict(item.__dict__)
-        del movie['_sa_instance_state']
-        print( movie )
-        movieList.append(movie)
-    return movieList
-
-
-if __name__ == '__main__':
-    makeMoviesFromList()
+    if isinstance(data, list):
+        for item in data:
+            movie = Movie.initFromObj(item)
+            movieList.append( movie.__dict__ )
+        return movieList
+    else:
+        movie = Movie.initFromObj(data)
+        return movie.__dict__

@@ -1,5 +1,4 @@
 from flask import Response
-from datetime import date
 from .TouchDB import *
 from .MovieList import *
 from .Movie import Movie
@@ -8,7 +7,7 @@ import json
 
 def respondToPOST( movie ):
     insertMovie( movie )
-    movieID = queryDb( constructDBQuery( 'title', movie.get("title"), 'filmID' ) )[0][0]
+    movieID = getMovieIdByTitle( movie.get('title') )
     res = Response( f'Deleted record { movieID }', 201, mimetype='text/plain' )
     return res
 
@@ -23,13 +22,13 @@ def respondToPUT( movie ):
     return res
         
 def fetchMovieDetails( ID ):
-    details = fetchMoviesFromID( ID )
-    movieID, title, release, rating, duration, genre = details
+    details = fetchMovieByID( ID )
+    movieID, title, release, rating, duration, genre = makeMovieDict( details ).values()
     movie = Movie( movieID, title, release, rating, duration, genre )
     movieJson = json.dumps( movie.__dict__ )
     return movieJson
 
 def fetchMovieList( query ):
     movieList = fetchMoviesFromSearch( query )
-    movieJson = json.dumps( makeMoviesFromList( movieList ))
+    movieJson = json.dumps( makeMovieDict( movieList ))
     return movieJson
