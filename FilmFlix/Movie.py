@@ -8,11 +8,3 @@ class Movie:
         self.rating = str(rating)
         self.duration = int(duration)
         self.genre = str(genre)
-
-def devDeleteDB():
-    dbCon = sql.connect( r'filmflix.db' )
-    dbCursor = dbCon.cursor()
-    dbCursor.execute('DELETE FROM tblFilms WHERE filmID = 37')
-    dbCon.commit()
-
-devDeleteDB()

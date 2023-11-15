@@ -2,12 +2,13 @@ from .Movie import Movie
 import sqlite3 as sql
 
 
-def makeMoviesFromList( movies ):
+def makeMoviesFromList( data ):
     movieList = []
-    for item in movies:
-        (id, title, release, rating, duration, genre) = item
-        newMovie = Movie(id, title, release, rating, duration, genre)
-        movieList.append(newMovie.__dict__)
+    for item in data:
+        movie = dict(item.__dict__)
+        del movie['_sa_instance_state']
+        print( movie )
+        movieList.append(movie)
     return movieList
 
 
