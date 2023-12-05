@@ -28,7 +28,7 @@ def fetchMovieDetails( ID ):
     movieJson = json.dumps( movie.__dict__ )
     return movieJson
 
-def fetchMovieList( query ):
-    movieList = fetchMoviesFromSearch( query )
+def fetchMovieList( listName, query ):
+    movieList = fetchMoviesFromSearch( query ) # use listName to create the list | custom list grabbing and search query dont run concurrently
     movieJson = json.dumps( makeMovieDict( movieList ))
     return movieJson

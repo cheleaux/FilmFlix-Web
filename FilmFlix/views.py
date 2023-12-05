@@ -11,17 +11,10 @@ def home():
 
 
 @views.route("/api/movies")
-def movieList():
-    query = request.args.get("query") if request.args else None
-    return render_template("movieList.html", movies=fetchMovieList(query))
-
-
-@views.route("/api/add-movie", methods=["GET", "POST"])
-def AddMovie():
-    if request.method == "GET":
-        return render_template("addMovie.html")
-    elif request.method == "POST":
-        return respondToPOST(request.json)
+def allMovies():
+    query = request.args.get("query") if request.args.get("query") else None
+    listName = request.args.get("list") if request.args.get("list") else 'all'
+    return render_template("movieList.html", movies=fetchMovieList( listName, query ))
 
 
 @views.route("/api/movies/<movieId>", methods=["GET", "DELETE", "PUT"])
@@ -32,3 +25,11 @@ def selectMovie(movieId):
         return respondToPUT(request.json)
     elif request.method == "DELETE":
         return respondToDELETE(movieId)
+
+
+@views.route("/api/add-movie", methods=["GET", "POST"])
+def AddMovie():
+    if request.method == "GET":
+        return render_template("addMovie.html")
+    elif request.method == "POST":
+        return respondToPOST(request.json)
