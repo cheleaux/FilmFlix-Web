@@ -28,7 +28,9 @@ nav {
 .logo {
     font-family: var(--ff-title);
     font-size: var(--fs-240);
-    color: var(--clr-accent)
+    color: var(--clr-accent);
+    position: relative;
+    z-index: 120;
 }
 
 #search-bar {

@@ -17,10 +17,10 @@
 /* --------------------------------------------------------------------- OPTION TABS */
 
 .opt-tabs {
-    width: 400px;
+    width: min(400px, 80%);
     margin: 20px auto 0;
-    flex-direction: row;
-    gap: 20px;
+    padding: 0 10px;
+    flex-direction: row;    
     justify-content: space-between;
     align-items: center;
 }
