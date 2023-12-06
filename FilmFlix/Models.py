@@ -22,6 +22,5 @@ class Movie(db.Model):
 
 class MovieList(db.Model):
     __tablename__ = "lists"
-    listID = db.Column(db.integer, primary_key=True)
+    listID = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(150), nullable=False)
-

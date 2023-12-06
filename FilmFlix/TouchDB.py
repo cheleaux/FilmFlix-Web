@@ -23,19 +23,22 @@ def removeMovie(ID):
     Movie.query.filter_by(filmID=ID).delete()
     db.session.commit()
 
-
+def fetchMoviesFromList( listName ):
+    mvList = Movie.query.all()
+    if listName != 'all':
+        mvList = [ movie for movie in mvList if listName in movie.__dict__['lists'] ]
+    return mvList
+        
 def fetchMoviesFromSearch(query):
-    if query:
-        list = (
-            Movie.query.filter_by(yearReleased=query).all()
-            if query.isdigit()
-            else Movie.query.filter(
-                Movie.title.like(f"%{query.title().strip()}%")
-            ).all()
-        )
-    else:
-        list = Movie.query.all()
-    return list
+    mvList = (
+        Movie.query.filter_by(yearReleased=query).all()
+        if query.isdigit()
+        else Movie.query.filter(
+            Movie.title.like(f"%{query.title().strip()}%")
+        ).all()
+    )
+    print(mvList[1].__dict__)
+    return mvList
 
 
 def fetchMovieByID(movieID):
