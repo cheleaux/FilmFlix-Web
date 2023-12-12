@@ -2,8 +2,8 @@ from .Models import Movie, db
 
 
 def insertMovie(details):
-    title, year, rating, duration, genre = details.values()
-    movie = Movie(title, year, rating, duration, genre)
+    title, year, rating, duration, genre, lists = details.values()
+    movie = Movie(title, year, rating, duration, genre, lists)
     db.session.add(movie)
     db.session.commit()
 
@@ -49,3 +49,6 @@ def fetchMovieByID(movieID):
 def getMovieIdByTitle(title):
     ID = Movie.query.filter_by(title=title).first().filmID
     return ID
+
+def devTestPrint():
+    print(Movie.lists)
