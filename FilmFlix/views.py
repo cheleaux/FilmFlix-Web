@@ -13,8 +13,8 @@ def home():
 @views.route("/api/movies")
 def allMovies():
     query = request.args.get("query") if request.args.get("query") else None
-    listName = request.args.get("list") if request.args.get("list") else 'all'
-    return render_template("movieList.html", movies=fetchMovieList( listName, query ))
+    listID = request.args.get("list") if request.args.get("list") else None
+    return render_template("movieList.html", movies=fetchMovies( listID, query ))
 
 
 @views.route("/api/movies/<movieId>", methods=["GET", "DELETE", "PUT"])
@@ -22,14 +22,22 @@ def selectMovie(movieId):
     if request.method == "GET":
         return render_template("addMovie.html", details=fetchMovieDetails(movieId))
     elif request.method == "PUT":
-        return respondToPUT(request.json)
+        return respondToMovieUpdate(request.json)
     elif request.method == "DELETE":
-        return respondToDELETE(movieId)
+        return respondToMovieDelete(movieId)
 
+
+@views.route("/api/custom-list", methods=["GET", "POST"])
+def addCustomList():
+    if request.method == "GET":
+        return render_template("addList.html", movies=fetchMovies())
+    elif request.method == "POST":
+        listDetails = request.json
+        return createCustomList( listDetails )
 
 @views.route("/api/add-movie", methods=["GET", "POST"])
 def AddMovie():
     if request.method == "GET":
         return render_template("addMovie.html")
     elif request.method == "POST":
-        return respondToPOST(request.json)
+        return respondToMovieInsert(request.json)

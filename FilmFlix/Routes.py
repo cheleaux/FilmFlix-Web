@@ -5,18 +5,18 @@ from .Movie import Movie
 import json
 
 
-def respondToPOST( movie ):
+def respondToMovieInsert( movie ):
     insertMovie( movie )
-    movieID = getMovieIdByTitle( movie.get('title') )
+    movieID = getID( { 'title': movie.get('title') } )
     res = Response( f'Deleted record { movieID }', 201, mimetype='text/plain' )
     return res
 
-def respondToDELETE( movieID ):
+def respondToMovieDelete( movieID ):
     res = Response( f'Deleted record { movieID }', 204, mimetype='text/plain' )
     removeMovie( movieID )
     return res
 
-def respondToPUT( movie ):
+def respondToMovieUpdate( movie ):
     res = Response( f'Updated record { movie["id"] }', 201, mimetype='text/plain' )
     updateMovieDetails( movie )
     return res
@@ -28,11 +28,17 @@ def fetchMovieDetails( ID ):
     movieJson = json.dumps( movie.__dict__ )
     return movieJson
 
-def fetchMovieList( listName, query ):
+def fetchMovies( listID, query = None ):
     if query:
-        movieList = fetchMoviesFromSearch( query ) # use listName to create the list | custom list grabbing and search query dont run concurrently
+        movieList = fetchMoviesFromSearch( query )
     else:
-        movieList = fetchMoviesFromList( listName )
+        movieList = fetchMoviesFromList( listID )
     movieJson = json.dumps( makeMovieDict( movieList ))
     return movieJson
 
+def createCustomList( listDetails ):
+    InsertList( listDetails )
+    listID = getID( { 'name': listDetails.get('name') } )
+    appendIDToItems( listID, listDetails.get( 'movieIDs' ) )
+    res = Response( f'New cutsom list { listID }', 201, mimetype='text/plain')
+    return res

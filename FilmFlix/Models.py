@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import ARRAY, Integer
 
 db = SQLAlchemy()
 
@@ -11,7 +12,8 @@ class Movie(db.Model):
     rating = db.Column(db.String(3), nullable=False)
     duration = db.Column(db.Integer, nullable=False)
     genre = db.Column(db.String(50), nullable=False)
-    lists = db.Column(db.String(250), nullable=True)
+    lists = db.Column(ARRAY(Integer), nullable=True)
+
 
     def __init__(self, title, yearReleased, rating, duration, genre):
         self.title = str(title.title())
