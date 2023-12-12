@@ -28,7 +28,7 @@ def fetchMovieDetails( ID ):
     movieJson = json.dumps( movie.__dict__ )
     return movieJson
 
-def fetchMovies( listID, query = None ):
+def fetchMovies( listID, query ):
     if query:
         movieList = fetchMoviesFromSearch( query )
     else:
