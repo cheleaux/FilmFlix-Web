@@ -24,11 +24,11 @@ def removeMovie(ID):
     db.session.commit()
 
 
-def InsertList( listDetails ):
+def insertList( listDetails ):
     name = listDetails['name']
-    IDs = listDetails['movieIDs']
-    newList = CustomList( name, len( IDs ) )
-    db.sesson.add(newList)
+    itemCount = len( listDetails['movieIDs'] )
+    newList = CustomList( name, itemCount )
+    db.session.add(newList)
     db.session.commit()
 
 
@@ -52,21 +52,26 @@ def fetchMovieByID(movieID):
     return mvDetails
 
 
-def appendIDToItems( CustomListID, itemIDs ):
+def addMoviesToList( CustomListID, itemIDs ):
     for movieID in itemIDs:
         movie = Movie.query.filter_by(filmID=movieID).first()
         if movie.lists and movieID not in movie.list:
             movie.lists.append( CustomListID )
         elif not movie.lists:
-            movie.lists = [].append( CustomListID )
+            movie.lists = []
+            movie.lists.append( CustomListID )
     db.session.commit()
 
 def getID( ref ):
-    if ref['title']:
+    if ref.__contains__('title'):
         ID = Movie.query.filter_by(title=ref['title']).first().filmID
-    elif ref['name']:
-        ID = CustomList.query.filter_by(title=ref['name']).first().filmID
+    elif ref.__contains__('name'):
+        ID = CustomList.query.filter_by(name=ref['name']).first().list_id
     return ID
 
 def devTestPrint():
-    print(Movie.lists)
+    movie = Movie.query.filter_by(filmID=20).first()
+    print(movie.lists)
+    movie.lists = None
+    db.session.commit()
+    print(movie.lists)

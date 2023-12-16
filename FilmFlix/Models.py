@@ -24,11 +24,11 @@ class Movie(db.Model):
 
 class CustomList(db.Model):
     __tablename__ = "lists"
-    listid = db.Column(db.Integer, primary_key=True)
+    list_id = db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True)
     name = db.Column(db.String(250), nullable=False)
-    movieCount = db.Column(db.Integer, nullable=False)
+    movie_count = db.Column(db.Integer, nullable=False)
 
     def __init__(self, name, count=0):
         self.name = name
-        self.count = count
+        self.movie_count = int(count)
 

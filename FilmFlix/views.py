@@ -29,11 +29,15 @@ def selectMovie(movieId):
 
 @views.route("/api/custom-list", methods=["GET", "POST"])
 def addCustomList():
-    if request.method == "GET":
-        return render_template("addList.html", movies=fetchMovies())
-    elif request.method == "POST":
-        listDetails = request.json
-        return createCustomList( listDetails )
+    # if request.method == "GET":
+    #     return render_template("addList.html", movies=fetchMovies())
+    # if request.method == "POST":
+        # listDetails = request.json
+    listDetails = {
+        'name': 'Tom Cruise',
+        'movieIDs': [2, 12, 19, 25]
+    }
+    return createCustomList( listDetails )
 
 @views.route("/api/add-movie", methods=["GET", "POST"])
 def AddMovie():

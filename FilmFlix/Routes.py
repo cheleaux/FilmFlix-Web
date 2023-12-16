@@ -37,8 +37,9 @@ def fetchMovies( listID, query ):
     return movieJson
 
 def createCustomList( listDetails ):
-    InsertList( listDetails )
-    listID = getID( { 'name': listDetails.get('name') } )
-    appendIDToItems( listID, listDetails.get( 'movieIDs' ) )
+    devTestPrint()
+    # insertList( listDetails )
+    # listID = getID( { 'name': listDetails.get('name') } )
+    # addMoviesToList( listID, listDetails.get( 'movieIDs' ) )
     res = Response( f'New cutsom list { listID }', 201, mimetype='text/plain')
     return res
