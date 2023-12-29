@@ -3,44 +3,59 @@
 {% block title %}FilmFlix - Full movie list{% endblock %}
 
 {% block main %}
-<main>
-    <div class="opt-tabs flex">
-        <div class="divider">|</div>
-        <a href="/api/add-movie"><h3 class="opt-add-new">Add New Movie</h3></a>
-        <div class="divider">|</div>
-    </div>
+<main id="movie-list-main" class="flex">
+    <aside class="page-menu flex">
+        <div class="custom-list-menu">
+            <h3 class="custom-list-subhead">Collections</h3>
+
+            <ul class="list-menu flex">
+                <li class="list-menu-opt flex" data-list-id="">
+                    <h4 class="list-name">All</h4>
+                    <span class="quantity"><h4></h4></span>
+                </li>
+                <li class="list-menu-opt flex" data-list-id="">
+                    <h4 class="list-name">Childhood Favourites</h4>
+                    <span class="quantity"><h4>27</h4></span>
+                </li>
+                <li class="list-menu-opt flex" data-list-id="">
+                    <h4 class="list-name">Vampire movies</h4>
+                    <span class="quantity"><h4>27</h4></span>
+                </li>
+                <li class="list-menu-opt flex" data-list-id="">
+                    <h4 class="list-name">Trippy</h4>
+                    <span class="quantity"><h4>27</h4></span>
+                </li>
+            </ul>
+        </div>
+        
+        <a href="/api/add-movie">
+            <button class="opt-add-new flex">
+                <h4>Add New Movie</h4><i class="bi bi-plus-square"></i>
+            </button>
+        </a>
+    </aside>
 
     <section class="movie-table-container">
         <table class="movie-table">
-            <thead>
-                <tr class="tbl-keys">
-                    <th class="tbl-key">Title</th>
-                    <th class="tbl-key">Release</th>
-                    <th class="tbl-key">Rating</th>
-                    <th class="tbl-key">Duration</th>
-                    <th class="tbl-key">Genre</th>
-                    <th></th>
-                </tr>
-            </thead>
-                <tbody data-movies="{{ movies }}">
-                    <h1 class="err-not-found">No Results found</h1>
+            <tbody data-movies="{{ movies }}">
+                <h1 class="err-not-found">No Results found</h1>
 
-                    <!-- <tr class="mv-row">
-                        <td class="mv-title">The Grinch</td>
-                        <td class="mv-release">2017</td>
-                        <td class="mv-duration">120</td>
-                        <td class="mv-rating">G</td>
-                        <td class="mv-genre">Fantasy</td>
-                        <td class="tbl-row-opt">
-                            <i class="bi bi-three-dots"></i>
-                            <ul class="row-opt-menu">
-                                <a href="#"><li class="row-option flex"><span>Update</span></li></a>
-                                <a href="#"><li class="row-option flex"><span>Delete</span></li></a>
-                            </ul>
-                        </td>
-                    </tr> -->
-                    
-                </tbody>
+                <!-- <tr class="mv-row">
+                    <td class="mv-title">The Grinch</td>
+                    <td class="mv-release">2017</td>
+                    <td class="mv-duration">120</td>
+                    <td class="mv-rating">G</td>
+                    <td class="mv-genre">Fantasy</td>
+                    <td class="tbl-row-opt">
+                        <i class="bi bi-three-dots"></i>
+                        <ul class="row-opt-menu">
+                            <a href="#"><li class="row-option flex"><span>Update</span></li></a>
+                            <a href="#"><li class="row-option flex"><span>Delete</span></li></a>
+                        </ul>
+                    </td>
+                </tr> -->
+                
+            </tbody>
         </table>
     </section>
 </main>
@@ -52,4 +67,7 @@
         <button id="cancel-del">Cancel</button>
     </div>
 </div>
+{% endblock %}
+
+{% block footer %}
 {% endblock %}

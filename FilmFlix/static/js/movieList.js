@@ -20,6 +20,8 @@ function populateTable(){
     }
 }
 
+// ADD BLURRED EVENT TO HIDE OPTIONS MENU
+
 function handleMenuSelection( e ){
     if( e.target.classList.contains('bi-three-dots') ) toggleOptionsMenu( e.target );
     else if ( e.target.closest('.delete-btn') ){

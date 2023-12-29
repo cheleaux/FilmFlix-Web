@@ -20,9 +20,10 @@
     --clr-icon: #757D8A;
     --clr-main-text: #000000;
     --clr-table-text: #6D6D6D;
-    --clr-main-bg: #ececec;
+    --clr-main-bg: #fafafa;
     --clr-rule: #BDBDBD;
-    --clr-form-noselect: #d7e0da;
+    --clr-form-noselect: #f2fcf4;
+    --clr-aside-rule: #E7E7E7;
 
     /*  FONT-FAMILY  */
     --ff-main: 'Satoshi', Sans-serif;
@@ -32,6 +33,7 @@
     --fs-120: 0.75rem;
     --fs-140: 0.875rem;
     --fs-160: 1rem;
+    --fs-180: 1.125rem;
     --fs-200: 1.25rem;
     --fs-240: 1.5rem;
     --fs-480: 3rem;
@@ -53,6 +55,7 @@ html {
     font-size: 16px;
     width: 100%;
     min-width: 100vw;
+    overflow: hidden;
 }
 
 *,

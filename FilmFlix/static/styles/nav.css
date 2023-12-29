@@ -2,7 +2,7 @@
 
 .nav-container {
     height: 90px;
-    width: 100vw;
+    width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;

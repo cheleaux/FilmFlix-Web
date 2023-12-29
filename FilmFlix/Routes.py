@@ -1,6 +1,6 @@
 from flask import Response
 from .TouchDB import *
-from .MovieList import *
+from .Packager import *
 from .Movie import Movie
 import json
 
@@ -36,10 +36,16 @@ def fetchMovies( listID, query ):
     movieJson = json.dumps( makeMovieDict( movieList ))
     return movieJson
 
+def fetchAllCustomListDetails():
+    allLists = fetchListMeta()
+    listJson = json.dumps( makeListDict( allLists ) )
+    res = Response( listJson, 200, mimetype='application/json' )
+    return res
+
 def createCustomList( listDetails ):
-    devTestPrint()
-    # insertList( listDetails )
-    # listID = getID( { 'name': listDetails.get('name') } )
-    # addMoviesToList( listID, listDetails.get( 'movieIDs' ) )
+    insertList( listDetails )
+    listID = getID( { 'name': listDetails.get('name') } )
+    print(f'Custom List ID is { listID }')
+    addMoviesToList( listID, listDetails.get( 'movieIDs' ) )
     res = Response( f'New cutsom list { listID }', 201, mimetype='text/plain')
     return res

@@ -1,6 +1,5 @@
-import json
-import sqlite3 as sql
-class Movie:
+
+class Movie:    
     def __init__(self, mvId, mvTitle, yearReleased, rating, duration, genre):
         self.id = mvId
         self.title = mvTitle.title()

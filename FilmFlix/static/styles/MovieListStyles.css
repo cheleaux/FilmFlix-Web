@@ -14,69 +14,99 @@
     display: none;
 }
 
-/* --------------------------------------------------------------------- OPTION TABS */
+#movie-list-main {
+    height: 43rem;
+    width: 100%;
+    padding: 0 2%;
+}
 
-.opt-tabs {
-    width: 400px;
-    margin: 20px auto 0;
-    flex-direction: row;
-    gap: 20px;
+/* --------------------------------------------------------------------- OPTION MENU */
+
+aside {
+    width: 24rem;
+    border-right: 1px solid var(--clr-aside-rule);
+    padding: 3.3rem 1.8rem 0 3.7em;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
 }
 
-.opt-tabs a {
-    text-decoration: none;
-}
-
-.opt-tabs h3 {
-    font-size: var(--fs-160);
+.custom-list-subhead {
+    font-size: var(--fs-180);
     font-weight: var(--fw-bold);
-    height: fit-content;
-    transition: ease-in-out 0.1s;
-    user-select: none;
+    margin-bottom: 2.5rem;
 }
 
-.opt-add-new:hover,
-.opt-report:hover {
-    transform: scale(1.05);
+.list-menu {
+    flex-direction: column;
+    gap: 0.9rem;
+    width: 100%;
 }
 
-.opt-add-new:active,
-.opt-report:active {
-    color: var(--clr-accent);
+.list-menu-opt, .opt-add-new {
+    font-size: var(--fs-140);
+    width: 100%;
+    padding: 0.18rem 0.7rem;
+    border-radius: 0.2rem
 }
 
-.divider {
-    font-size: var(--fs-240);
+.list-menu-opt:hover, .opt-add-new:hover {
+    background-color: var(--clr-aside-rule);
+}
+
+.list-menu-opt:active, .list-menu-opt.active {
+    background-color: var(--clr-accent);
+    color: var(--clr-main);
+}
+
+.list-menu-opt {
+    flex-direction: row;
+    gap: 3rem;
+    justify-content: space-between;
+}
+
+.opt-add-new {
+    background-color: var(--clr-main-bg);
+    border: none;
+}
+
+/* .list-menu-opt:first-of-type {
+    background-color: var(--clr-accent);
+    color: var(--clr-main);
+} */
+
+.list-menu-opt .quantity {
+    align-self: center;
+    height: min-content;
+}
+
+.list-menu-opt .quantity h4 {
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-120);
 }
 
 /* --------------------------------------------------------------------- MOVIE TABLE */
 
 .movie-table-container {
-    margin: 80px auto;
+    margin: 0 auto;
+    padding-top: 3.3rem;
+    padding-right: 3%;
     width: fit-content;
     transform: translateX(5%);
+    height: 100%;
 }
 
 .movie-table {
     width: 95%;
+    height: 100%;
     max-width: 1150px;
     row-gap: 20px;
     border-spacing: 0;
     font-size: var(--fs-140);
 }
 
-thead {
-    text-align: left;
-    height: 50px;
-    font-size: var(--fs-160)
-
-}
-
 tbody {
     display: block;
-    height: 450px;
+    height: 39.8rem;
     overflow: scroll;
     overflow-x: hidden;
     scroll-behavior: smooth;

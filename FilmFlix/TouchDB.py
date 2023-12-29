@@ -1,4 +1,4 @@
-from .Models import Movie, CustomList, db
+from .Models import Movie, CustomList, db, CustomList
 
 
 def insertMovie( details ):
@@ -28,18 +28,25 @@ def insertList( listDetails ):
     name = listDetails['name']
     itemCount = len( listDetails['movieIDs'] )
     newList = CustomList( name, itemCount )
+    print(f'Custom list { listDetails["name"] } has been added')
     db.session.add(newList)
     db.session.commit()
+
+
+def removeList( listID ):
+    CustomList.query.filter_by(list_id= int(listID)).delete()
+    db.session.commit()
+    print('list has been deleted')
 
 
 def fetchMoviesFromList( listID ):
     mvList = Movie.query.all()
     if listID:
-        mvList = [ movie for movie in mvList if listID in movie.__dict__['lists'] ]
+        mvList = [ movie for movie in mvList if movie.lists and listID in movie.lists  ]
     return mvList
 
     
-def fetchMoviesFromSearch(query):
+def fetchMoviesFromSearch( query ):
     if query.isdigit():
         mvList = Movie.query.filter_by(yearReleased=query).all()
     else:
@@ -47,15 +54,18 @@ def fetchMoviesFromSearch(query):
     return mvList
 
 
-def fetchMovieByID(movieID):
+def fetchMovieByID( movieID ):
     mvDetails = Movie.query.filter_by(filmID=movieID).first()
     return mvDetails
 
+def fetchListMeta():
+    CustomLists = CustomList.query.all()
+    return CustomLists
 
 def addMoviesToList( CustomListID, itemIDs ):
     for movieID in itemIDs:
         movie = Movie.query.filter_by(filmID=movieID).first()
-        if movie.lists and movieID not in movie.list:
+        if movie.lists and movieID not in movie.lists:
             movie.lists.append( CustomListID )
         elif not movie.lists:
             movie.lists = []
@@ -69,9 +79,9 @@ def getID( ref ):
         ID = CustomList.query.filter_by(name=ref['name']).first().list_id
     return ID
 
-def devTestPrint():
-    movie = Movie.query.filter_by(filmID=20).first()
-    print(movie.lists)
-    movie.lists = None
-    db.session.commit()
-    print(movie.lists)
+# def DevRemoveFromMovies( listID ):
+#     movies = fetchMoviesFromList( listID )
+#     for movie in movies:
+#         movie.lists = None
+#     db.session.commit()
+#     print('delete complete')   

@@ -11,7 +11,7 @@ def home():
 
 
 @views.route("/api/movies")
-def allMovies():
+def ListMovies():
     query = request.args.get("query") if request.args.get("query") else None
     listID = request.args.get("list") if request.args.get("list") else None
     return render_template("movieList.html", movies=fetchMovies( listID, query ))
@@ -25,19 +25,21 @@ def selectMovie(movieId):
         return respondToMovieUpdate(request.json)
     elif request.method == "DELETE":
         return respondToMovieDelete(movieId)
-
+    
 
 @views.route("/api/custom-list", methods=["GET", "POST"])
 def addCustomList():
-    # if request.method == "GET":
-    #     return render_template("addList.html", movies=fetchMovies())
-    # if request.method == "POST":
-        # listDetails = request.json
-    listDetails = {
-        'name': 'Tom Cruise',
-        'movieIDs': [2, 12, 19, 25]
-    }
+    if request.method == "GET":
+        return render_template("addList.html", movies=fetchMovies())
+    if request.method == "POST":
+        listDetails = request.json
     return createCustomList( listDetails )
+
+
+@views.route("/api/custom-list/all", methods=["GET", "POST"])
+def fetchListData():
+    customListDataRes = fetchAllCustomListDetails()
+    return customListDataRes
 
 @views.route("/api/add-movie", methods=["GET", "POST"])
 def AddMovie():
