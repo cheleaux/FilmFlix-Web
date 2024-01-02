@@ -1,8 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import ARRAY, Integer
+from sqlalchemy.dialects.postgresql import JSONB
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
-
+migrate = Migrate()
 
 class Movie(db.Model):
     __tablename__ = "movies"
@@ -12,7 +13,7 @@ class Movie(db.Model):
     rating = db.Column(db.String(3), nullable=False)
     duration = db.Column(db.Integer, nullable=False)
     genre = db.Column(db.String(50), nullable=False)
-    lists = db.Column(ARRAY(Integer), nullable=True)
+    lists = db.Column(JSONB, nullable=True)
 
 
     def __init__(self, title, yearReleased, rating, duration, genre):

@@ -28,11 +28,11 @@ def fetchMovieDetails( ID ):
     movieJson = json.dumps( movie.__dict__ )
     return movieJson
 
-def fetchMovies( listID, query ):
-    if query:
-        movieList = fetchMoviesFromSearch( query )
-    else:
-        movieList = fetchMoviesFromList( listID )
+def fetchMovies( param ):
+    if 'listID' in param.keys():
+        movieList = fetchMoviesFromList( param['listID'] )
+    elif 'query' in param.keys():
+        movieList = fetchMoviesFromSearch( param['query'] )
     movieJson = json.dumps( makeMovieDict( movieList ))
     return movieJson
 
@@ -46,6 +46,7 @@ def createCustomList( listDetails ):
     insertList( listDetails )
     listID = getID( { 'name': listDetails.get('name') } )
     print(f'Custom List ID is { listID }')
-    addMoviesToList( listID, listDetails.get( 'movieIDs' ) )
+    createMovietoListRelation( listID, listDetails.get( 'movieIDs' ) )
     res = Response( f'New cutsom list { listID }', 201, mimetype='text/plain')
     return res
+

@@ -47,6 +47,8 @@
     --es-web-search-width: 200px;
     --es-mobile-search-width: 90%;
 
+    /* TRANSITION ANIMATION DURATIONS */
+    --td-btn-scale-up: 0.05s;
 }
 
 /* ------------------------------------ RESET */

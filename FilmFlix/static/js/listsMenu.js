@@ -1,12 +1,27 @@
 import CustomList from './CustomList.js'
+import MovieList from './movieList.js'
 
+const CustomListMenuEl = document.querySelector('.list-menu')
 
-function displayListMenu() {
+function displayListResults( e ){
+    if( !e.target ) return;
+        const listOpt = e.target.closest('.list-menu-opt')
+    if( listOpt ){
+        switchActiveStatus( listOpt )
+        console.log(listOpt.dataset.list)
+        const customMovies = CustomList._fetchCustomListMovies( listOpt.dataset.list )
+        customMovies.then( movies => console.log(movies))
+
+        // DISPLAY THE MOVIES ONCE THE DATA IS RECIEVED
+        // MovieList.populateTable( customMovies )
+    };
+}
+
+function renderListMenu() {
     const listData = fetchListData()
-    const menu = document.querySelector('.list-menu')
     listData.then( data => data.forEach( item => {
-        const customList = new CustomList( item.id, item.name, item.quantity )
-        menu.insertAdjacentElement( 'beforeend', customList.constructListOptionHTML() )
+        const customList = new CustomList( item.Id, item.name, item.quantity )
+        CustomListMenuEl.insertAdjacentElement( 'beforeend', customList.constructListOptionHTML() )
     }))
     .catch( err => console.log(err) )
 }
@@ -21,5 +36,13 @@ async function fetchListData() {
     }
 }
 
-const exports = { displayListMenu }
+function switchActiveStatus( listOpt ){
+    const menuOptions = Array.from( CustomListMenuEl.children )
+    menuOptions.forEach( ( element ) => {
+        if( element.classList.contains('tab-focus') ) CustomList._toggleActiveStatus( element );
+    })
+    CustomList._toggleActiveStatus( listOpt )
+}
+
+const exports = { renderListMenu, displayListResults, CustomListMenuEl }
 export default exports;

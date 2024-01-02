@@ -10,8 +10,8 @@ const confirmDelMenu = document.querySelector('#confirm-del-container')
 let movieList = []
 let confirmation;
 
-function populateTable(){
-    const movieData = JSON.parse(tblBody.dataset.movies)
+function populateTable( customListMovies = null ){
+    const movieData = customListMovies || JSON.parse(tblBody.dataset.movies);
     if( movieData.length == 0 || movieData == undefined ) errMsg.style.display = 'block';
     for (const item of movieData){
         const newMovie = new Movie( item.id, item.title, item.yearReleased, item.rating, item.duration, item.genre )

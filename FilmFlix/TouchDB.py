@@ -1,4 +1,5 @@
 from .Models import Movie, CustomList, db, CustomList
+import json
 
 
 def insertMovie( details ):
@@ -62,15 +63,26 @@ def fetchListMeta():
     CustomLists = CustomList.query.all()
     return CustomLists
 
-def addMoviesToList( CustomListID, itemIDs ):
+# FIND A WAY TO STORE ARRAYS IN POSTGRES WITH MUTABILITY
+def createMovietoListRelation( CustomListID, itemIDs ):
     for movieID in itemIDs:
-        movie = Movie.query.filter_by(filmID=movieID).first()
-        if movie.lists and movieID not in movie.lists:
-            movie.lists.append( CustomListID )
+        movie = Movie.query.filter_by(filmID=int(movieID)).first()
+        listsColumnAsArr = json.loads(movie.lists) if movie.lists else None
+
+        if not movie:
+            print(f'movie "{movieID}" not found 404')
+            continue
+        
+        if movie.lists and movieID not in listsColumnAsArr:
+           listsColumnAsArr.append( CustomListID )
+           movie.lists = json.dumps(listsColumnAsArr)
+           print(movie.lists)
         elif not movie.lists:
-            movie.lists = []
-            movie.lists.append( CustomListID )
-    db.session.commit()
+            listsArr = []
+            listsArr.append( CustomListID )
+            movie.lists = json.dumps(listsArr)
+        db.session.commit()
+        print(movie.lists, f' this is the final log ')
 
 def getID( ref ):
     if ref.__contains__('title'):
@@ -79,9 +91,8 @@ def getID( ref ):
         ID = CustomList.query.filter_by(name=ref['name']).first().list_id
     return ID
 
-# def DevRemoveFromMovies( listID ):
-#     movies = fetchMoviesFromList( listID )
-#     for movie in movies:
-#         movie.lists = None
-#     db.session.commit()
-#     print('delete complete')   
+# def DEVFetchMovieLists( movieID ):
+#     movie = Movie.query.filter_by(filmID=movieID).first()
+#     # movie.lists = 
+#     # db.session.commit()
+#     print(movie.lists)

@@ -53,9 +53,18 @@ aside {
     background-color: var(--clr-aside-rule);
 }
 
-.list-menu-opt:active, .list-menu-opt.active {
+.list-menu-opt:active {
+    background-color: var(--clr-translucent-hover);
+    transform: scale(1.005);
+    transition: ease-in-out var(--td-btn-scale-up);
+}
+
+.list-menu-opt.tab-focus {
     background-color: var(--clr-accent);
     color: var(--clr-main);
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.25),
+    0px 2px 8px 0px rgba(0,0,0,0.25),
+    0px 0px 0px 1px rgba(255,255,255,0.1) inset;
 }
 
 .list-menu-opt {

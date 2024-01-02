@@ -13,8 +13,7 @@ def home():
 @views.route("/api/movies")
 def ListMovies():
     query = request.args.get("query") if request.args.get("query") else None
-    listID = request.args.get("list") if request.args.get("list") else None
-    return render_template("movieList.html", movies=fetchMovies( listID, query ))
+    return render_template("movieList.html", movies=fetchMovies( { 'query': query } ))   
 
 
 @views.route("/api/movies/<movieId>", methods=["GET", "DELETE", "PUT"])
@@ -30,10 +29,19 @@ def selectMovie(movieId):
 @views.route("/api/custom-list", methods=["GET", "POST"])
 def addCustomList():
     if request.method == "GET":
-        return render_template("addList.html", movies=fetchMovies())
+        if request.args.get("list"):
+            # listID = request.args.get("list") if request.args.get("list") else None
+            # customListMovies = fetchMovies( { 'listID': listID } )
+            # print(customListMovies)
+
+            # I WAS ADDING LIST IDS TO SOME MOVIE TO A VALID MOVIE LIST RETURNED
+            # TEMP FUNCTION TO MANIPULATE THE lists ARRAY FOR SPECIFIC MOVIES 
+            DevAddMovieToList()
+        else:
+            return render_template( 'customLists.html', lists=fetchAllCustomListDetails )
     if request.method == "POST":
         listDetails = request.json
-    return createCustomList( listDetails )
+        return createCustomList( listDetails )
 
 
 @views.route("/api/custom-list/all", methods=["GET", "POST"])
