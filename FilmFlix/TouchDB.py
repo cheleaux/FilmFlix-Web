@@ -84,6 +84,9 @@ def createMovietoListRelation( CustomListID, itemIDs ):
         db.session.commit()
         print(movie.lists, f' this is the final log ')
 
+def updateListQuantity( list_id ):
+    Movie.query(Movie.lists).count(  )
+
 def getID( ref ):
     if ref.__contains__('title'):
         ID = Movie.query.filter_by(title=ref['title']).first().filmID
