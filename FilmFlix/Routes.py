@@ -50,3 +50,6 @@ def createCustomList( listDetails ):
     res = Response( f'New cutsom list { listID }', 201, mimetype='text/plain')
     return res
 
+def DEVaddDummyData():
+    movieIDs = [17, 36, 21, 29, 15, 7, 20]
+    instateListMembership( 10, movieIDs )

@@ -30,13 +30,15 @@ def selectMovie(movieId):
 def addCustomList():
     if request.method == "GET":
         if request.args.get("list"):
+
             # listID = request.args.get("list") if request.args.get("list") else None
             # customListMovies = fetchMovies( { 'listID': listID } )
             # print(customListMovies)
 
             # I WAS ADDING LIST IDS TO SOME MOVIE TO A VALID MOVIE LIST RETURNED
             # TEMP FUNCTION TO MANIPULATE THE lists ARRAY FOR SPECIFIC MOVIES 
-            DevAddMovieToList()
+            DEVaddDummyData()
+            # return fetchMovies( { 'listID': request.args.get("list") } )
         else:
             return render_template( 'customLists.html', lists=fetchAllCustomListDetails )
     if request.method == "POST":

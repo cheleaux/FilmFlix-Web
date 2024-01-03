@@ -13,7 +13,7 @@ class Movie(db.Model):
     rating = db.Column(db.String(3), nullable=False)
     duration = db.Column(db.Integer, nullable=False)
     genre = db.Column(db.String(50), nullable=False)
-    lists = db.Column(JSONB, nullable=True)
+    lists = db.Column(JSONB, nullable=False)
 
 
     def __init__(self, title, yearReleased, rating, duration, genre):
@@ -32,4 +32,3 @@ class CustomList(db.Model):
     def __init__(self, name, count=0):
         self.name = name
         self.movie_count = int(count)
-
