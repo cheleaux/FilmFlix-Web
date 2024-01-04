@@ -45,7 +45,7 @@ def removeList( listID ):
 def fetchMoviesFromList( listID ):
     mvList = Movie.query.all()
     if listID:
-        mvList = [ movie for movie in mvList if movie.lists and listID in movie.lists  ]
+        mvList = [ movie for movie in mvList if movie.lists and int(listID) in movie.lists['list_ids']  ]
     return mvList
 
     
@@ -61,9 +61,11 @@ def fetchMovieByID( movieID ):
     mvDetails = Movie.query.filter_by(filmID=movieID).first()
     return mvDetails
 
+
 def fetchListMeta():
     CustomLists = CustomList.query.all()
     return CustomLists
+
 
 def instateListMembership( CustomListID, itemIDs ):
     for movieID in itemIDs:
@@ -81,6 +83,7 @@ def instateListMembership( CustomListID, itemIDs ):
         db.session.commit()
         # print(movie.lists, f' this is the final log ')
 
+
 def updateListQuantity( listId ):
     query = f'''
                 WITH vmt AS (
@@ -94,6 +97,7 @@ def updateListQuantity( listId ):
     flag_modified(listToUpdate, 'movie_count')
     db.session.add(listToUpdate)
     db.session.commit()
+
 
 def getID( ref ):
     if ref.__contains__('title'):
