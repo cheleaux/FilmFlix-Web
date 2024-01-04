@@ -1,5 +1,6 @@
 from .Models import Movie, CustomList, db, CustomList
 from sqlalchemy.orm.attributes import flag_modified
+from sqlalchemy.sql import text
 import json
 
 
@@ -64,7 +65,6 @@ def fetchListMeta():
     CustomLists = CustomList.query.all()
     return CustomLists
 
-# FIND A WAY TO STORE ARRAYS IN POSTGRES WITH MUTABILITY
 def instateListMembership( CustomListID, itemIDs ):
     for movieID in itemIDs:
         movie = Movie.query.filter_by(filmID=int(movieID)).first()
@@ -81,8 +81,19 @@ def instateListMembership( CustomListID, itemIDs ):
         db.session.commit()
         # print(movie.lists, f' this is the final log ')
 
-def updateListQuantity( list_id ):
-    Movie.query(Movie.lists).count(  )
+def updateListQuantity( listId ):
+    query = f'''
+                WITH vmt AS (
+                    SELECT x ->> 0 AS l_ids
+                    FROM movies, jsonb_array_elements(lists->'list_ids') x)
+                SELECT COUNT(l_ids) FROM vmt
+                WHERE l_ids = '{str(listId)}' '''
+    quantity = db.session.execute(text(query)).first()[0]
+    listToUpdate = CustomList.query.filter_by(list_id=listId).first()
+    listToUpdate.movie_count = quantity
+    flag_modified(listToUpdate, 'movie_count')
+    db.session.add(listToUpdate)
+    db.session.commit()
 
 def getID( ref ):
     if ref.__contains__('title'):

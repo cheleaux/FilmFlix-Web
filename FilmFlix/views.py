@@ -37,7 +37,7 @@ def addCustomList():
 
             # I WAS ADDING LIST IDS TO SOME MOVIE TO A VALID MOVIE LIST RETURNED
             # TEMP FUNCTION TO MANIPULATE THE lists ARRAY FOR SPECIFIC MOVIES 
-            DEVaddDummyData()
+            DEVops()
             # return fetchMovies( { 'listID': request.args.get("list") } )
         else:
             return render_template( 'customLists.html', lists=fetchAllCustomListDetails )

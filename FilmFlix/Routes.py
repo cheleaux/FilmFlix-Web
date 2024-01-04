@@ -46,10 +46,11 @@ def createCustomList( listDetails ):
     insertList( listDetails )
     listID = getID( { 'name': listDetails.get('name') } )
     print(f'Custom List ID is { listID }')
-    createMovietoListRelation( listID, listDetails.get( 'movieIDs' ) )
+    instateListMembership( listID, listDetails.get( 'movieIDs' ) )
     res = Response( f'New cutsom list { listID }', 201, mimetype='text/plain')
     return res
 
-def DEVaddDummyData():
-    movieIDs = [17, 36, 21, 29, 15, 7, 20]
-    instateListMembership( 10, movieIDs )
+def DEVops():
+    updateListQuantity( 13 )
+    # movieIDs = [ 15 ]
+    # instateListMembership( 13, movieIDs )
