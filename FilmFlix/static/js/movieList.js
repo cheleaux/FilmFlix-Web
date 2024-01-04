@@ -2,7 +2,6 @@ import Movie from './Movie.js'
 
 
 const movieTbl = document.querySelector('.movie-table')
-const tblHead = document.querySelector('thead')
 const tblBody = document.querySelector('tbody')
 const errMsg = document.querySelector('.err-not-found')
 const confirmDelMenu = document.querySelector('#confirm-del-container')
@@ -13,11 +12,13 @@ let confirmation;
 function populateTable( customListMovies = null ){
     const movieData = customListMovies || JSON.parse(tblBody.dataset.movies);
     if( movieData.length == 0 || movieData == undefined ) errMsg.style.display = 'block';
+    clearTable()
     for (const item of movieData){
         const newMovie = new Movie( item.id, item.title, item.yearReleased, item.rating, item.duration, item.genre )
         tblBody.insertAdjacentElement( 'afterbegin', newMovie._constructListItemHTML() )
         movieList.push( newMovie )
     }
+    
 }
 
 // ADD BLURRED EVENT TO HIDE OPTIONS MENU
@@ -28,6 +29,10 @@ function handleMenuSelection( e ){
         movieTbl.querySelectorAll('.row-opt-menu').forEach( menu => menu.style.display = 'none')
         getComfirmation( e.target )
     };
+}
+
+function clearTable(){
+    Array.from(tblBody.children).forEach( elem => elem.remove())
 }
 
 function toggleOptionsMenu( optBtn = undefined ){
@@ -69,6 +74,8 @@ function ConfirmAndRemove( e, movie, HTMLRow ){
     }
     
 }
+
+
 
 const exports = { movieTbl, populateTable, handleMenuSelection }
 export default exports;

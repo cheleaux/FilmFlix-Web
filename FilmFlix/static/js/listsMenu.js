@@ -7,10 +7,14 @@ function displayListResults( e ){
     if( !e.target ) return;
         const listOpt = e.target.closest('.list-menu-opt')
     if( listOpt ){
+        const listId = listOpt.dataset.list
         switchActiveStatus( listOpt )
-        console.log(listOpt.dataset.list)
-        const customMovies = CustomList._fetchCustomListMovies( listOpt.dataset.list )
-        customMovies.then( movies => console.log(movies))
+        if(listId == 0){ MovieList.populateTable() }
+        else {
+            const customMovies = CustomList._fetchCustomListMovies( listId )
+            customMovies.then( movies => MovieList.populateTable(movies))
+        }
+        
 
         // DISPLAY THE MOVIES ONCE THE DATA IS RECIEVED
         // MovieList.populateTable( customMovies )

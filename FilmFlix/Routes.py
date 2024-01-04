@@ -29,13 +29,14 @@ def fetchMovieDetails( ID ):
     return movieJson
 
 def fetchMoviesJSON( param ):
-    if 'listID' in param.keys():
+    if param[list(param)[0]] == None or param[list(param)[0]] == 'undefined':
+        movieList = fetchMoviesFromList( None )
+    elif 'listID' in param.keys():
         movieList = fetchMoviesFromList( param['listID'] )
-    elif 'query' in param.keys():
+    elif 'query' in param.keys() and param['query'] != None:
         movieList = fetchMoviesFromSearch( param['query'] )
     movieJson = json.dumps( makeMovieDict( movieList ))
-    res = Response( movieJson, 200, mimetype='application/json' )
-    return res
+    return movieJson
 
 def fetchAllCustomListDetails():
     allLists = fetchListMeta()

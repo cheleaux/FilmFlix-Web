@@ -13,7 +13,7 @@ def home():
 @views.route("/api/movies")
 def ListMovies():
     query = request.args.get("query") if request.args.get("query") else None
-    return render_template("movieList.html", movies=fetchMovies( { 'query': query } ))   
+    return render_template("movieList.html", movies=fetchMoviesJSON( { 'query': query } ))   
 
 
 @views.route("/api/movies/<movieId>", methods=["GET", "DELETE", "PUT"])
