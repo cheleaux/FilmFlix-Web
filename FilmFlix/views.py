@@ -13,7 +13,7 @@ def home():
 @views.route("/api/movies")
 def ListMovies():
     query = request.args.get("query") if request.args.get("query") else None
-    return render_template("movieList.html", movies=fetchMoviesJSON( { 'query': query } ))   
+    return render_template("movieList.html", movies=fetchMovies( { 'query': query } ))   
 
 
 @views.route("/api/movies/<movieId>", methods=["GET", "DELETE", "PUT"])
@@ -31,9 +31,9 @@ def addCustomList():
     if request.method == "GET":
         if request.args.get("list"):
             listId = request.args.get('list')
-            return fetchMoviesJSON( { 'listID': listId } )
+            return fetchMovies( { 'listID': listId } )
         else:
-            return render_template( 'customLists.html', lists=fetchAllCustomListDetails )
+            return render_template( 'customLists.html', lists=fetchCustomListMemuDetails )
     if request.method == "POST":
         listDetails = request.json
         return createCustomList( listDetails )
@@ -41,7 +41,7 @@ def addCustomList():
 
 @views.route("/api/custom-list/all", methods=["GET", "POST"])
 def fetchListData():
-    customListDataRes = fetchAllCustomListDetails()
+    customListDataRes = fetchCustomListMemuDetails()
     return customListDataRes
 
 @views.route("/api/add-movie", methods=["GET", "POST"])

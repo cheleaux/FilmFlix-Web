@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import JSONB
 from flask_migrate import Migrate
+import json
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -23,6 +24,10 @@ class Movie(db.Model):
         self.duration = int(duration)
         self.genre = str(genre)
 
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__)
+
+    
 class CustomList(db.Model):
     __tablename__ = "lists"
     list_id = db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True)
@@ -32,3 +37,6 @@ class CustomList(db.Model):
     def __init__(self, name, count=0):
         self.name = name
         self.movie_count = int(count)
+
+    def toJSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__)

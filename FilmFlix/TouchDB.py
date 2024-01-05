@@ -39,7 +39,6 @@ def insertList( listDetails ):
 def removeList( listID ):
     CustomList.query.filter_by(list_id= int(listID)).delete()
     db.session.commit()
-    print('list has been deleted')
 
 
 def fetchMoviesFromList( listID ):
@@ -67,36 +66,41 @@ def fetchListMeta():
     return CustomLists
 
 
-def instateListMembership( CustomListID, itemIDs ):
+def instateListMembership( listID, itemIDs ):
     for movieID in itemIDs:
-        movie = Movie.query.filter_by(filmID=int(movieID)).first()
-
-        if not movie:
+        newListMember = Movie.query.filter_by(filmID=int(movieID)).first()
+        if not newListMember:
             print(f'movie "{movieID}" not found 404')
             continue
-
-        if CustomListID not in movie.lists['list_ids']:
-            movie.lists['list_ids'].append( CustomListID )
-            flag_modified(movie, 'lists')
-            db.session.add(movie)
-            # print(movie.lists)
-        db.session.commit()
-        # print(movie.lists, f' this is the final log ')
+        if listID not in newListMember.lists['list_ids']: 
+            appendListIDToMemebershipRecord( newListMember, listID )
 
 
-def updateListQuantity( listId ):
+def appendListIDToMemebershipRecord( movie, listID ):
+    movie.lists['list_ids'].append( listID )
+    flag_modified(movie, 'lists')
+    db.session.add(movie)
+    db.session.commit()
+
+
+def updateListMemberCount( listID ):
+    count = getListMemberCount( listID )
+    listToUpdate = CustomList.query.filter_by(list_id=listID).first()
+    listToUpdate.movie_count = count
+    flag_modified(listToUpdate, 'movie_count')
+    db.session.add(listToUpdate)
+    db.session.commit()
+
+
+def getListMemberCount( listID ):
     query = f'''
                 WITH vmt AS (
                     SELECT x ->> 0 AS l_ids
                     FROM movies, jsonb_array_elements(lists->'list_ids') x)
                 SELECT COUNT(l_ids) FROM vmt
-                WHERE l_ids = '{str(listId)}' '''
-    quantity = db.session.execute(text(query)).first()[0]
-    listToUpdate = CustomList.query.filter_by(list_id=listId).first()
-    listToUpdate.movie_count = quantity
-    flag_modified(listToUpdate, 'movie_count')
-    db.session.add(listToUpdate)
-    db.session.commit()
+                WHERE l_ids = '{str(listID)}' '''
+    count = db.session.execute(text(query)).first()[0]
+    return count
 
 
 def getID( ref ):
