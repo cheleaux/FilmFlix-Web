@@ -20,7 +20,7 @@
     --clr-icon: #757D8A;
     --clr-main-text: #000000;
     --clr-table-text: #6D6D6D;
-    --clr-main-bg: #fafafa;
+    --clr-main-bg: #f7f7fa;
     --clr-rule: #BDBDBD;
     --clr-form-noselect: #f2fcf4;
     --clr-aside-rule: #E7E7E7;
@@ -55,8 +55,8 @@
 html {
     box-sizing: border-box;
     font-size: 16px;
-    width: 100%;
-    min-width: 100vw;
+    width: 100vw;
+    height: 100%;
     overflow: hidden;
 }
 
@@ -100,9 +100,11 @@ a {
 
 body {
     background-color: var(--clr-main-bg);
-    width: 100%;
-    min-width: 100vw;
-    overflow-x: hidden;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .flex {
@@ -115,4 +117,8 @@ body {
 
 a:has(.logo) {
     text-decoration: none;
+}
+
+main {
+    flex: 1 1 auto;
 }

@@ -14,7 +14,7 @@ function populateTable( customListMovies = null ){
     if( movieData.length == 0 || movieData == undefined ) errMsg.style.display = 'block';
     clearTable()
     for (const item of movieData){
-        const newMovie = new Movie( item.id, item.title, item.yearReleased, item.rating, item.duration, item.genre )
+        const newMovie = new Movie( item.filmID, item.title, item.yearReleased, item.rating, item.duration, item.genre )
         tblBody.insertAdjacentElement( 'afterbegin', newMovie._constructListItemHTML() )
         movieList.push( newMovie )
     }
@@ -40,6 +40,8 @@ function toggleOptionsMenu( optBtn = undefined ){
     if ( optMenu.style.display != 'revert' ) {
         movieTbl.querySelectorAll('.row-opt-menu').forEach( menu => menu.style.display = 'none')
         optMenu.style.display = 'revert';
+        optMenu.focus()
+        optMenu.addEventListener('blur', swatAwayMenu )
     }
     else optMenu.style.display = 'none'
 }
@@ -51,6 +53,12 @@ function getComfirmation( Btn ){
     confirmDelMenu.querySelector('.confirm-del-btns').addEventListener( 'click', ( e ) => {
         ConfirmAndRemove( e, movie, movieRow )
     }, { once: true })
+}
+
+function swatAwayMenu( e ){
+    if( this.style.display != 'revert' ) return;
+    toggleOptionsMenu( this )
+    this.removeEventListener( 'blur', swatAwayMenu )
 }
 
 function toggleConfirmWindow( title = undefined ){

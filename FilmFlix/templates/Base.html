@@ -29,11 +29,6 @@
         {% block main %}
             <main></main>
         {% endblock %}
-
-        {% block footer %}
-            {% include 'footer.html' %}
-        {% endblock %}
-        
         <script type="module" src="{{ url_for('static', filename='js/index.js') }}"></script>
     </body>
 </html>

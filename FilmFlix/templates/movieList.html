@@ -9,7 +9,7 @@
             <h3 class="custom-list-subhead">Collections</h3>
 
             <ul class="list-menu flex">
-                <li class="list-menu-opt flex" data-list-id="0">
+                <li class="list-menu-opt flex tab-focus" data-list-id="0">
                     <h4 class="list-name">All</h4>
                     <span class="quantity"><h4></h4></span>
                 </li>
@@ -23,15 +23,21 @@
 
             </ul>
         </div>
-        
-        <a href="/api/add-movie">
-            <button class="opt-add-new flex">
-                <h4>Add New Movie</h4><i class="bi bi-plus-square"></i>
-            </button>
-        </a>
+        <div class="add-new-section flex">
+            <a href="/api/add-movie">
+                <button class="opt-add-new flex">
+                    <h4>Add New Movie</h4><i class="bi bi-camera-reels-fill"></i>
+                </button>
+            </a>
+            <a href="/api/custom-list">
+                <button class="opt-add-new flex">
+                    <h4>Make New Custom List</h4><i class="bi bi-collection-play-fill"></i>
+                </button>
+            </a>
+        </div>
     </aside>
 
-    <section class="movie-table-container">
+    <section class="movie-table-container flex">
         <table class="movie-table">
             <tbody data-movies="{{ movies }}">
                 <h1 class="err-not-found">No Results found</h1>
@@ -63,7 +69,4 @@
         <button id="cancel-del">Cancel</button>
     </div>
 </div>
-{% endblock %}
-
-{% block footer %}
 {% endblock %}

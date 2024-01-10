@@ -24,7 +24,7 @@ function displayListResults( e ){
 function renderListMenu() {
     const listData = fetchListData()
     listData.then( data => data.forEach( item => {
-        const customList = new CustomList( item.Id, item.name, item.quantity )
+        const customList = new CustomList( item.list_id, item.name, item.movie_count )
         CustomListMenuEl.insertAdjacentElement( 'beforeend', customList.constructListOptionHTML() )
     }))
     .catch( err => console.log(err) )

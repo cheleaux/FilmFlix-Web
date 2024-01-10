@@ -24,19 +24,14 @@ class Movie(db.Model):
         self.duration = int(duration)
         self.genre = str(genre)
 
-    def toJSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__)
-
+    
     
 class CustomList(db.Model):
     __tablename__ = "lists"
     list_id = db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True)
-    name = db.Column(db.String(250), nullable=False)
+    name = db.Column(db.String(250), nullable=False) 
     movie_count = db.Column(db.Integer, nullable=False)
 
     def __init__(self, name, count=0):
         self.name = name
         self.movie_count = int(count)
-
-    def toJSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__)
