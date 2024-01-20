@@ -58,6 +58,7 @@ function getComfirmation( Btn ){
 function swatAwayMenu( e ){
     if( this.style.display != 'revert' ) return;
     toggleOptionsMenu( this )
+    console.log( this.querySelector('a') )
     this.removeEventListener( 'blur', swatAwayMenu )
 }
 
