@@ -35,6 +35,7 @@ function clearTable(){
     Array.from(tblBody.children).forEach( elem => elem.remove())
 }
 
+// TODO: STOP OPTMENU BLUR FIRING BEFORE THE LINK TO MOVIE DETAILS IN CLICKED!!
 function toggleOptionsMenu( optBtn = undefined ){
     const optMenu = optBtn.closest('.tbl-row-opt').querySelector('.row-opt-menu')
     if ( optMenu.style.display != 'revert' ) {
