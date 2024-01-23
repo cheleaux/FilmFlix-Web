@@ -1,13 +1,8 @@
 import json
 
-#     else:
-#         customList = CustomList.initFromObj( item )
-#         return customList
-
 def serializeObjects( Objs ):
     if isinstance( Objs, list ):
         statelessMoviesList = makeStatelessAndSerializable( Objs )
-        print(statelessMoviesList)
         return json.dumps( statelessMoviesList )
     elif isinstance( Objs, object ):
         Objs.__dict__.pop('_sa_instance_state')

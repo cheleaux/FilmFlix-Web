@@ -9,7 +9,7 @@ search.icon.addEventListener( 'click', search.initialiseSearch )
 
 if ( window.location.href.includes('movies') && !window.location.href.includes('movies/') ){
     MovieList.populateTable()
-    MovieList.movieTbl.addEventListener( 'click', MovieList.handleMenuSelection )
+    MovieList.movieTbl.addEventListener( 'click', MovieList.enableMovieActionsMenu )
     CustomListMenu.renderListMenu()
     CustomListMenu.CustomListMenuEl.addEventListener( 'click', CustomListMenu.displayListResults )
 }

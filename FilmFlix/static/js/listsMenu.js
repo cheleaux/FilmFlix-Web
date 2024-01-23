@@ -14,10 +14,6 @@ function displayListResults( e ){
             const customMovies = CustomList._fetchCustomListMovies( listId )
             customMovies.then( movies => MovieList.populateTable(movies))
         }
-        
-
-        // DISPLAY THE MOVIES ONCE THE DATA IS RECIEVED
-        // MovieList.populateTable( customMovies )
     };
 }
 

@@ -21,46 +21,46 @@ function populateTable( customListMovies = null ){
     
 }
 
-// ADD BLURRED EVENT TO HIDE OPTIONS MENU
-
-function handleMenuSelection( e ){
-    if( e.target.classList.contains('bi-three-dots') ) toggleOptionsMenu( e.target );
-    else if ( e.target.closest('.delete-btn') ){
-        movieTbl.querySelectorAll('.row-opt-menu').forEach( menu => menu.style.display = 'none')
-        getComfirmation( e.target )
-    };
-}
-
 function clearTable(){
     Array.from(tblBody.children).forEach( elem => elem.remove())
 }
 
-// TODO: STOP OPTMENU BLUR FIRING BEFORE THE LINK TO MOVIE DETAILS IN CLICKED!!
-function toggleOptionsMenu( optBtn = undefined ){
-    const optMenu = optBtn.closest('.tbl-row-opt').querySelector('.row-opt-menu')
-    if ( optMenu.style.display != 'revert' ) {
+function enableMovieActionsMenu( e ){
+    e.stopPropagation()
+    if( e.target.classList.contains('bi-three-dots') ) toggleMenuVisibility( e.target );
+    else if ( e.target.closest('.delete-btn') ){
         movieTbl.querySelectorAll('.row-opt-menu').forEach( menu => menu.style.display = 'none')
-        optMenu.style.display = 'revert';
-        optMenu.focus()
-        optMenu.addEventListener('blur', swatAwayMenu )
+        getDeleteComfirmation( e.target )
+    };
+}
+
+function toggleMenuVisibility( optBtn = undefined ){
+    const optMenu = optBtn.closest('.tbl-row-opt').querySelector('.row-opt-menu')
+
+    const disableMovieActionsMenu = ( e ) => {
+        if( !(e.target in optMenu.children) ){
+            toggleMenuVisibility( optMenu )
+            document.querySelector('body').removeEventListener( 'click', disableMovieActionsMenu )
+        }
     }
+
+    if ( optMenu.style.display != 'revert' ) openMenuAndManualFocus( optMenu, disableMovieActionsMenu );
     else optMenu.style.display = 'none'
 }
 
-function getComfirmation( Btn ){
+function openMenuAndManualFocus( optMenu, disableMovieActionsMenu ){
+    movieTbl.querySelectorAll('.row-opt-menu').forEach( menu => menu.style.display = 'none')
+    optMenu.style.display = 'revert';
+    document.querySelector('body').addEventListener( 'click', disableMovieActionsMenu )
+}
+
+function getDeleteComfirmation( Btn ){
     const movieRow = Btn.closest('.mv-row')
     const movie = movieList.find( (movie) => movieRow.id == movie.id )
     toggleConfirmWindow( movie.title )
     confirmDelMenu.querySelector('.confirm-del-btns').addEventListener( 'click', ( e ) => {
         ConfirmAndRemove( e, movie, movieRow )
     }, { once: true })
-}
-
-function swatAwayMenu( e ){
-    if( this.style.display != 'revert' ) return;
-    toggleOptionsMenu( this )
-    console.log( this.querySelector('a') )
-    this.removeEventListener( 'blur', swatAwayMenu )
 }
 
 function toggleConfirmWindow( title = undefined ){
@@ -87,5 +87,5 @@ function ConfirmAndRemove( e, movie, HTMLRow ){
 
 
 
-const exports = { movieTbl, populateTable, handleMenuSelection }
+const exports = { movieTbl, populateTable, enableMovieActionsMenu }
 export default exports;
