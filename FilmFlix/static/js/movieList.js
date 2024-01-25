@@ -10,9 +10,9 @@ const errMsg = movieListContainer.querySelector('.err-not-found')
 
 let movieList = []
 
-// MESSY 'populateTable' FUNCTION NEEDS TO BE REFACTORED
+// MESSY 'populateRegister' FUNCTION NEEDS TO BE REFACTORED
 // DEFINE MOVIE HTML TEMPLATE FOR CARD REGISTER FORMAT
-function populateTable( definedMovieList = null ){
+function populateRegister( definedMovieList = null ){
     const movieData = definedMovieList || JSON.parse(movieListContainer.dataset.movies);
     const isTabularList = movieListContainer.classList.contains('tabular-register')
     movieList = movieData
@@ -30,7 +30,7 @@ function setMovieListFormat( format ){
         case 'tabular': setRegisterFormatToTabular();
         case 'block': setRegisterFormatToBlock();
     }
-    populateTable( movieList )
+    populateRegister( movieList )
 }
 
 function enableMovieActionsMenu( e ){
@@ -110,5 +110,5 @@ function clearRegister(){
     Array.from(activeRegisterChildren).forEach( elem => elem.remove() )
 }
 
-const exports = { movieTbl, populateTable, enableMovieActionsMenu, setMovieListFormat }
+const exports = { movieTbl, populateRegister, enableMovieActionsMenu, setMovieListFormat }
 export default exports;
