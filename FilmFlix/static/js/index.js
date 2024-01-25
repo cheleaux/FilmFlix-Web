@@ -4,19 +4,24 @@ import updateMovie from './updateMovie.js'
 import MovieList from './movieList.js'
 import CustomListMenu from './listsMenu.js '
 
+const isOnMovieListPage = (window.location.href.includes('movies') && !window.location.href.includes('movies/'))
+const isOnMovieDetailsPage = ( window.location.href.includes('movies/'))
+const isOnAddMoviePage = (window.location.href.includes('add-movie'))
+const screenWidth1180 = window.matchMedia('(max-width: 1180px)')
 
 search.icon.addEventListener( 'click', search.initialiseSearch )
 
-if ( window.location.href.includes('movies') && !window.location.href.includes('movies/') ){
+if ( isOnMovieListPage ){
     MovieList.populateTable()
     MovieList.movieTbl.addEventListener( 'click', MovieList.enableMovieActionsMenu )
     CustomListMenu.renderListMenu()
     CustomListMenu.CustomListMenuEl.addEventListener( 'click', CustomListMenu.displayListResults )
+    screenWidth1180.addEventListener( 'change', MovieList.changeMovieListFormat )
 }
 
-if ( window.location.href.includes('add-movie') ) addMovie.form.addEventListener('click', addMovie.lockAndSubmitForm );
+if ( isOnAddMoviePage ) addMovie.form.addEventListener('click', addMovie.lockAndSubmitForm );
 
-if ( window.location.href.includes('movies/') ){
+if ( isOnMovieDetailsPage ){
     updateMovie.displayMovieDetails()
     updateMovie.form.addEventListener( 'click', updateMovie.lockAndSubmitForm )
 }

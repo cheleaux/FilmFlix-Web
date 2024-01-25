@@ -1,28 +1,36 @@
 import Movie from './Movie.js'
 
 
-const movieTbl = document.querySelector('.movie-table')
-const tblBody = document.querySelector('tbody')
-const errMsg = document.querySelector('.err-not-found')
+const movieListContainer = document.querySelector('movie-table-container')
 const confirmDelMenu = document.querySelector('#confirm-del-container')
+const movieTbl = movieListContainer.querySelector('.movie-table')
+const movieTBLBody = movieListContainer.querySelector('tbody')
+const movieRegisterUl = movieListContainer.querySelector('movie-register')
+const errMsg = movieListContainer.querySelector('.err-not-found')
 
 let movieList = []
-let confirmation;
 
-function populateTable( customListMovies = null ){
-    const movieData = customListMovies || JSON.parse(tblBody.dataset.movies);
+// MESSY 'populateTable' FUNCTION NEEDS TO BE REFACTORED
+// DEFINE MOVIE HTML TEMPLATE FOR CARD REGISTER FORMAT
+function populateTable( definedMovieList = null ){
+    const movieData = definedMovieList || JSON.parse(movieListContainer.dataset.movies);
+    const isTabularList = movieListContainer.classList.contains('tabular-register')
+    movieList = movieData
     if( movieData.length == 0 || movieData == undefined ) errMsg.style.display = 'block';
     clearTable()
     for (const item of movieData){
         const newMovie = new Movie( item.filmID, item.title, item.yearReleased, item.rating, item.duration, item.genre )
-        tblBody.insertAdjacentElement( 'afterbegin', newMovie._constructListItemHTML() )
-        movieList.push( newMovie )
+        isTabularList ? movieTBLBody.insertAdjacentElement( 'beforeend', newMovie._constructTableRowHTML() ) : movieRegisterUl.insertAdjacentElement( 'beforeend', newMovie._constructListItemHTML() );
     }
-    
 }
 
-function clearTable(){
-    Array.from(tblBody.children).forEach( elem => elem.remove())
+// DEFINE CSS TO SWITCH DISPLAY OF REGISTER LIST AND TABLE
+function changeMovieListFormat( format ){
+    switch(format) {
+        case 'tabular': setRegisterFormatToTabular();
+        case 'block': setRegisterFormatToBlock();
+    }
+    populateTable( movieList )
 }
 
 function enableMovieActionsMenu( e ){
@@ -56,7 +64,7 @@ function openMenuAndManualFocus( optMenu, disableMovieActionsMenu ){
 
 function getDeleteComfirmation( Btn ){
     const movieRow = Btn.closest('.mv-row')
-    const movie = movieList.find( (movie) => movieRow.id == movie.id )
+    const movie = movieList.find( (movie) => movieRow.id == movie.filmID )
     toggleConfirmWindow( movie.title )
     confirmDelMenu.querySelector('.confirm-del-btns').addEventListener( 'click', ( e ) => {
         ConfirmAndRemove( e, movie, movieRow )
@@ -85,7 +93,19 @@ function ConfirmAndRemove( e, movie, HTMLRow ){
     
 }
 
+function setRegisterFormatToTabular(){
+    movieListContainer.classList.remove('non-tabular-register')
+    movieListContainer.classList.add('tabular-register')
+}
 
+function setRegisterFormatToBlock(){
+    movieListContainer.classList.remove('tabular-register')
+    movieListContainer.classList.add('non-tabular-register')
+}
 
-const exports = { movieTbl, populateTable, enableMovieActionsMenu }
+function clearTable(){
+    Array.from(movieTBLBody.children).forEach( elem => elem.remove())
+}
+
+const exports = { movieTbl, populateTable, enableMovieActionsMenu, changeMovieListFormat }
 export default exports;
