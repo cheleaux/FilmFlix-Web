@@ -11,12 +11,13 @@ const screenWidth1180 = window.matchMedia('(max-width: 1180px)')
 
 search.icon.addEventListener( 'click', search.initialiseSearch )
 
+
 if ( isOnMovieListPage ){
-    MovieList.populateTable()
+    document.addEventListener( 'DOMContentLoaded', () => ( MovieList.populateTable() ) )
     MovieList.movieTbl.addEventListener( 'click', MovieList.enableMovieActionsMenu )
     CustomListMenu.renderListMenu()
     CustomListMenu.CustomListMenuEl.addEventListener( 'click', CustomListMenu.displayListResults )
-    screenWidth1180.addEventListener( 'change', MovieList.changeMovieListFormat )
+    screenWidth1180.addEventListener( 'change', MovieList.setMovieListFormat )
 }
 
 if ( isOnAddMoviePage ) addMovie.form.addEventListener('click', addMovie.lockAndSubmitForm );

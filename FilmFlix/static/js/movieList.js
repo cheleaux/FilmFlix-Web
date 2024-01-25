@@ -1,11 +1,11 @@
 import Movie from './Movie.js'
 
 
-const movieListContainer = document.querySelector('movie-table-container')
+const movieListContainer = document.querySelector('.movie-register-container')
 const confirmDelMenu = document.querySelector('#confirm-del-container')
 const movieTbl = movieListContainer.querySelector('.movie-table')
 const movieTBLBody = movieListContainer.querySelector('tbody')
-const movieRegisterUl = movieListContainer.querySelector('movie-register')
+const movieRegisterUl = movieListContainer.querySelector('.movie-register')
 const errMsg = movieListContainer.querySelector('.err-not-found')
 
 let movieList = []
@@ -17,7 +17,7 @@ function populateTable( definedMovieList = null ){
     const isTabularList = movieListContainer.classList.contains('tabular-register')
     movieList = movieData
     if( movieData.length == 0 || movieData == undefined ) errMsg.style.display = 'block';
-    clearTable()
+    clearRegister()
     for (const item of movieData){
         const newMovie = new Movie( item.filmID, item.title, item.yearReleased, item.rating, item.duration, item.genre )
         isTabularList ? movieTBLBody.insertAdjacentElement( 'beforeend', newMovie._constructTableRowHTML() ) : movieRegisterUl.insertAdjacentElement( 'beforeend', newMovie._constructListItemHTML() );
@@ -25,7 +25,7 @@ function populateTable( definedMovieList = null ){
 }
 
 // DEFINE CSS TO SWITCH DISPLAY OF REGISTER LIST AND TABLE
-function changeMovieListFormat( format ){
+function setMovieListFormat( format ){
     switch(format) {
         case 'tabular': setRegisterFormatToTabular();
         case 'block': setRegisterFormatToBlock();
@@ -103,9 +103,12 @@ function setRegisterFormatToBlock(){
     movieListContainer.classList.add('non-tabular-register')
 }
 
-function clearTable(){
-    Array.from(movieTBLBody.children).forEach( elem => elem.remove())
+function clearRegister(){
+    const isRegisterFormatTabular = movieListContainer.classList.contains('tabular-register')
+    const isRegisterFormatBlock = movieListContainer.classList.contains('non-tabular-register')
+    const activeRegisterChildren = isRegisterFormatTabular ? movieTBLBody.children : isRegisterFormatBlock ? movieRegisterUl.children : null;
+    Array.from(activeRegisterChildren).forEach( elem => elem.remove() )
 }
 
-const exports = { movieTbl, populateTable, enableMovieActionsMenu, changeMovieListFormat }
+const exports = { movieTbl, populateTable, enableMovieActionsMenu, setMovieListFormat }
 export default exports;

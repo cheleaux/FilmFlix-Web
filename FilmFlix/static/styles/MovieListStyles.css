@@ -5,6 +5,46 @@
     padding: 0 2%;
 }
 
+.movie-register-container {
+    margin: 2.4rem auto 0;
+    height: 75vh;
+    padding-right: 3%;
+    width: fit-content;
+    transform: translateX(5%);
+    overflow: scroll;
+    scroll-behavior: smooth;
+}
+
+.movie-register-container::-webkit-scrollbar {
+    width: 7px;
+}
+
+.movie-register-container::-webkit-scrollbar-thumb {
+    background-color: var(--clr-rule);
+    border-radius: 5px;
+}
+
+.movie-register-container.tabular-register .movie-table {
+    display: block;
+}
+
+.movie-register-container.non-tabular-register .movie-register {
+    display: flex;
+}
+
+.movie-register-container.tabular-register .movie-register,
+.movie-register-container.non-tabular-register .movie-table {
+    display: none;
+}
+
+.movie-register-container.non-tabular-register {
+    padding-right: .2rem;
+    margin: 2.4rem 5rem 0 0;
+    width: 60%;
+    flex-direction: column;
+    align-items: center;
+}
+
 .err-not-found {
     font-size: var(--fs-480);
     font-weight: var(--fw-bold);
@@ -111,27 +151,53 @@ aside {
     font-weight: var(--fw-bold);
 }
 
+/* --------------------------------------------------------------------- MOVIE REGISTER */
+
+.movie-register {
+    width: 95%;
+    max-width: 950px;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.mv-list-item {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--clr-rule);
+    padding-bottom: 1.2rem;
+    gap: 3.3rem
+}
+
+.mv-list-item:last-of-type {
+    border-bottom: none;
+}
+
+.mv-item-opt {
+    margin-right: 0.5rem;
+}
+
+.main-item-content {
+    flex-direction: column;
+    gap: .4rem;
+}
+
+.main-item-content .mv-item-title {
+    font-size: var(--fs-160);
+    font-weight: var(--fw-bold)
+}
+
+.mv-item-details {
+    flex-direction: row;
+    font-size: var(--fs-140);
+    gap: .6rem;
+}
+
+.item-details-divider {
+    transform: translateY(-.05rem);
+}
+
 /* --------------------------------------------------------------------- MOVIE TABLE */
-
-.movie-table-container {
-    margin: 2.4rem auto 0;
-    height: 75vh;
-    padding-right: 3%;
-    width: fit-content;
-    transform: translateX(5%);
-    overflow: scroll;
-    scroll-behavior: smooth;
-}
-
-.movie-table-container::-webkit-scrollbar {
-    width: 7px;
-}
-
-.movie-table-container::-webkit-scrollbar-thumb {
-    background-color: var(--clr-rule);
-    border-radius: 5px;
-}
-
 
 .movie-table {
     width: 95%;
@@ -173,7 +239,9 @@ tr {
 
 /* --------------------------------------------------------------------- OPTION MENU */
 
-.movie-table .tbl-row-opt {
+/* BUG FIX: OPTION MENU BUTTON NOT CLICKABLE MAY BE CSS ISSUE */
+
+.movie-register-container :is(.tbl-row-opt, .mv-item-menu){
     width: 5%;
     padding: none;
     text-align: center;
@@ -227,7 +295,7 @@ tr {
     padding-left: 0;
 }
 
-.movie-table .tbl-row-opt i {
+.movie-register-container :is(.tbl-row-opt, .mv-item-menu) i {
     display: inline-block;
     aspect-ratio: 1/1;
     height: auto;
@@ -237,18 +305,18 @@ tr {
     position: relative;
 }
 
-.movie-table .tbl-row-opt i:hover {
+.movie-register-container :is(.tbl-row-opt, .mv-item-menu) i:hover {
     background-color: var(--clr-accent);
     color: var(--clr-main);
     cursor: pointer;
 }
 
-.movie-table .tbl-row-opt i:active {
+.movie-register-container :is(.tbl-row-opt, .mv-item-menu) i:active {
     background-color: var(--clr-translucent-hover);
     color: var(--clr-icon);
 }
 
-.movie-table .tbl-row-opt i::before {
+.movie-register-container :is(.tbl-row-opt, .mv-item-menu) i::before {
     margin: 50% auto 0;
     position: absolute;
     right: 50%;
