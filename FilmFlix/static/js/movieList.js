@@ -7,6 +7,7 @@ const movieTbl = movieListContainer.querySelector('.movie-table')
 const movieTBLBody = movieListContainer.querySelector('tbody')
 const movieRegisterUl = movieListContainer.querySelector('.movie-register')
 const errMsg = movieListContainer.querySelector('.err-not-found')
+const taskbar = document.querySelector('.register-taskbar')
 
 let movieList = []
 
@@ -40,6 +41,12 @@ function enableMovieActionsMenu( e ){
         movieTbl.querySelectorAll('.row-opt-menu').forEach( menu => menu.style.display = 'none')
         getDeleteComfirmation( e.target )
     };
+}
+
+function handleUserTask( e ){
+    const taskComponent = e.target.closest('.taskbar-opt')
+    if( taskComponent.classList.contains('register-format-toggle') ) changeRegisterFormat( e );
+    else if( taskComponent.classList.contains('register-filter') ) console.log('filter clicked');
 }
 
 function toggleMenuVisibility( optBtn = undefined ){
@@ -77,9 +84,7 @@ function toggleConfirmWindow( title = undefined ){
         confirmDelMenu.style.display = 'flex'
         confirmDelMenu.querySelector('span').innerHTML = title
     }
-    else {
-        confirmDelMenu.style.display = 'none'
-    }
+    else confirmDelMenu.style.display = 'none';
 }
 
 function ConfirmAndRemove( e, movie, HTMLRow ){
@@ -88,10 +93,7 @@ function ConfirmAndRemove( e, movie, HTMLRow ){
         HTMLRow.style.display = 'none'
         movie._deleteMovie()
     }
-    else if (e.target.closest('button').id == 'cancel-del'){
-        toggleConfirmWindow()
-    }
-    
+    else if (e.target.closest('button').id == 'cancel-del') toggleConfirmWindow();
 }
 
 function setRegisterFormatToTabular(){
@@ -111,6 +113,38 @@ function clearRegister(){
     Array.from(activeRegisterChildren).forEach( elem => elem.remove() )
 }
 
+// implement enable format functions somehow
+function changeRegisterFormat( e ){
+    const formatToggler = e.target.closest('.format-toggler')
+    if( iconMatchesFormat( formatToggler ) ) return;
+    if( formatToggler.classList.contains('list-toggle') ) setRegisterFormat( formatToggler );
+    else if( formatToggler.classList.contains('card-toggle')) setRegisterFormat( formatToggler );
+    populateRegister( movieList )
+}
+
+function setRegisterFormat( userSelection ){
+    const isFormatTypeList = userSelection.classList.contains('list-toggle')
+    movieListContainer.classList.remove( isFormatTypeList ? 'non-tabular-register' : 'tabular-register' )
+    movieListContainer.classList.add( isFormatTypeList ? 'tabular-register' : 'non-tabular-register' )
+    selectFormatIcon()
+}
+
+function iconMatchesFormat( formatSelection ){
+    const iconAndRegisterAsList = movieListContainer.classList.contains('non-tabular-register') && formatSelection.classList.contains('card-toggle')
+    const iconAndRegisterAsCard = movieListContainer.classList.contains('tabular-register') && formatSelection.classList.contains('list-toggle')
+    const iconMatchesRegisterformat = ( iconAndRegisterAsCard || iconAndRegisterAsList )
+    return iconMatchesRegisterformat
+}
+
+function selectFormatIcon(){
+    const formatTogglerComponent = taskbar.querySelector('.register-format-toggle')
+    const formatToggleTypeCard = formatTogglerComponent.querySelector('.card-toggle')
+    const formatToggleTypelist = formatTogglerComponent.querySelector('.list-toggle')
+    Array.from( formatTogglerComponent.children ).forEach( toggler => { toggler.classList.remove('active') })
+    movieListContainer.classList.contains('non-tabular-register') ? formatToggleTypeCard.classList.add('active') :
+    movieListContainer.classList.contains('tabular-register') ? formatToggleTypelist.classList.add('active') : console.log('Element "movieListContainer" format class not matched')
+}
+
 function enableMenuManualFocus( { disableMovieFunc } ){
     document.querySelector('body').addEventListener( 'click', disableMovieFunc )
     movieListContainer.addEventListener( 'click', disableMovieFunc )
@@ -121,5 +155,5 @@ function disableMenuManualFocus( { disableMovieFunc } ){
     movieListContainer.removeEventListener( 'click', disableMovieFunc )
 }
 
-const exports = { movieListContainer, populateRegister, enableMovieActionsMenu, setMovieListFormat }
+const exports = { movieListContainer, taskbar, populateRegister, selectFormatIcon, enableMovieActionsMenu, setMovieListFormat, handleUserTask }
 export default exports;

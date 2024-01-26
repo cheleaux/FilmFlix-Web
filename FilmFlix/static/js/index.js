@@ -13,8 +13,12 @@ search.icon.addEventListener( 'click', search.initialiseSearch )
 
 
 if ( isOnMovieListPage ){
-    document.addEventListener( 'DOMContentLoaded', () => ( MovieList.populateRegister() ) )
+    document.addEventListener( 'DOMContentLoaded', () => {
+        MovieList.populateRegister()
+        MovieList.selectFormatIcon()
+    })
     MovieList.movieListContainer.addEventListener( 'click', MovieList.enableMovieActionsMenu )
+    MovieList.taskbar.addEventListener( 'click', MovieList.handleUserTask )
     CustomListMenu.renderListMenu()
     CustomListMenu.CustomListMenuEl.addEventListener( 'click', CustomListMenu.displayListResults )
     screenWidth1180.addEventListener( 'change', MovieList.setMovieListFormat )

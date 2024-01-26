@@ -3,16 +3,27 @@
     height: auto;
     width: 100%;
     padding: 0 2%;
+    gap: 5%;
 }
 
 .movie-register-container {
-    margin: 2.4rem auto 0;
+    margin-top: 2.4rem;
     height: 75vh;
-    padding-right: 3%;
-    width: fit-content;
-    transform: translateX(5%);
+    flex-grow: 1;
+    flex-direction: column;
     overflow: scroll;
     scroll-behavior: smooth;
+}
+
+.movie-register-container.tabular-register {
+    align-items: center;
+    padding-right: .5rem;
+}
+
+.movie-register-container.non-tabular-register {
+    padding-right: .2rem;
+    /* width: 60%; */
+    align-items: center;
 }
 
 .movie-register-container::-webkit-scrollbar {
@@ -37,14 +48,6 @@
     display: none;
 }
 
-.movie-register-container.non-tabular-register {
-    padding-right: .2rem;
-    margin: 2.4rem 5rem 0 0;
-    width: 60%;
-    flex-direction: column;
-    align-items: center;
-}
-
 .err-not-found {
     font-size: var(--fs-480);
     font-weight: var(--fw-bold);
@@ -67,10 +70,48 @@ aside {
     justify-content: space-between;
 }
 
+/* ----------- MOVIE REGISTER */
+
+.register-taskbar {
+    height: 1.4rem;
+    margin: 1rem 0;
+    flex-direction: row;
+    gap: .8rem
+}
+
+.register-format-toggle {
+    gap: .5rem;
+}
+
+.format-toggler {
+    border: transparent;
+    border-radius: .2rem;
+    padding: 0 .7rem;
+    flex-direction: row;
+    align-items: center;
+    font-size: var(--fs-140);
+    background-color: var(--clr-main-bg)
+}
+
+.format-toggler.active {
+    background-color: var(--clr-accent-pastel);
+    color: var(--clr-accent);
+}
+
+.format-toggler:hover {
+    background-color: var(--clr-aside-rule)
+}
+
+.format-toggler:active :not( .format-toggler.active:active ) {
+    color: var(--clr-main)
+}
+
+/* MOVIE REGISTER */
+
 .custom-list-subhead {
     font-size: var(--fs-180);
     font-weight: var(--fw-bold);
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.2rem;
 }
 
 .list-menu {
@@ -130,20 +171,20 @@ aside {
 }
 
 .opt-add-new {
-    background-color: var(--clr-aside-rule);
-    color: var(--clr-accent);
+    background-color: 'buttonface';
+    color: var(--clr-main-text);
     justify-content: space-between;
     align-items: center;
     border: none;
 }
 
 .opt-add-new:hover {
-    background-color: var(--clr-accent);
-    color: var(--clr-main);
+    background-color: var(--clr-aside-rule);
+    color: var(--clr-main-text);
 }
 
 .opt-add-new:active {
-    background-color: var(--clr-rule);
+    background-color: var(--clr-accent);
     color: var(--clr-main);
 }
 

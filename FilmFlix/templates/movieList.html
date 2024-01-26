@@ -8,6 +8,13 @@
         <div class="custom-list-menu">
             <h3 class="custom-list-subhead">Collections</h3>
 
+            <div class="register-taskbar flex">
+                <div class="register-format-toggle taskbar-opt flex">
+                    <button class="list-toggle format-toggler"><i class="bi bi-list-ul"></i></button>
+                    <button class="card-toggle format-toggler"><i class="bi bi-view-list"></i></button>
+                </div>
+            </div>
+
             <ul class="list-menu flex">
                 <li class="list-menu-opt flex tab-focus" data-list-id="0">
                     <h4 class="list-name">All</h4>
@@ -38,12 +45,6 @@
     </aside>
 
     <section class="movie-register-container flex tabular-register" data-movies="{{ movies }}">
-        <article class="register-task-bar flex">
-            <div class="register-format-toggle flex">
-                <button class="list-format-toggle"><i class="bi bi-list-ul"></i> List</button>
-                <button class="card-format-toggle"><i class="bi bi-view-list"></i> Card</button>
-            </div>
-        </article>
         <ul class="movie-register flex">
 
             <!-- <li class="flex">
