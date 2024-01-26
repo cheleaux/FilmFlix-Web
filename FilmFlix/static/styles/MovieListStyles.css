@@ -295,7 +295,7 @@ tr {
     padding-left: 0;
 }
 
-.movie-register-container :is(.tbl-row-opt, .mv-item-menu) i {
+.movie-register-container :is(.tbl-row-opt, .mv-item-opt) i {
     display: inline-block;
     aspect-ratio: 1/1;
     height: auto;
@@ -305,18 +305,18 @@ tr {
     position: relative;
 }
 
-.movie-register-container :is(.tbl-row-opt, .mv-item-menu) i:hover {
+.movie-register-container :is(.tbl-row-opt, .mv-item-opt) i:hover {
     background-color: var(--clr-accent);
     color: var(--clr-main);
     cursor: pointer;
 }
 
-.movie-register-container :is(.tbl-row-opt, .mv-item-menu) i:active {
+.movie-register-container :is(.tbl-row-opt, .mv-item-opt) i:active {
     background-color: var(--clr-translucent-hover);
     color: var(--clr-icon);
 }
 
-.movie-register-container :is(.tbl-row-opt, .mv-item-menu) i::before {
+.movie-register-container :is(.tbl-row-opt, .mv-item-opt) i::before {
     margin: 50% auto 0;
     position: absolute;
     right: 50%;

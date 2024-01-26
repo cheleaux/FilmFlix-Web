@@ -37,7 +37,13 @@
         </div>
     </aside>
 
-    <section class="movie-register-container flex non-tabular-register" data-movies="{{ movies }}">
+    <section class="movie-register-container flex tabular-register" data-movies="{{ movies }}">
+        <article class="register-task-bar flex">
+            <div class="register-format-toggle flex">
+                <button class="list-format-toggle"><i class="bi bi-list-ul"></i> List</button>
+                <button class="card-format-toggle"><i class="bi bi-view-list"></i> Card</button>
+            </div>
+        </article>
         <ul class="movie-register flex">
 
             <!-- <li class="flex">

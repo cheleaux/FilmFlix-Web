@@ -9,10 +9,10 @@ function displayListResults( e ){
     if( listOpt ){
         const listId = listOpt.dataset.list
         switchActiveStatus( listOpt )
-        if(listId == 0){ MovieList.populateTable() }
+        if(listId == 0){ MovieList.populateRegister() }
         else {
             const customMovies = CustomList._fetchCustomListMovies( listId )
-            customMovies.then( movies => MovieList.populateTable(movies))
+            customMovies.then( movies => MovieList.populateRegister(movies))
         }
     };
 }

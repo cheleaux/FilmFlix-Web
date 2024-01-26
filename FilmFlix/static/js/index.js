@@ -14,7 +14,7 @@ search.icon.addEventListener( 'click', search.initialiseSearch )
 
 if ( isOnMovieListPage ){
     document.addEventListener( 'DOMContentLoaded', () => ( MovieList.populateRegister() ) )
-    MovieList.movieTbl.addEventListener( 'click', MovieList.enableMovieActionsMenu )
+    MovieList.movieListContainer.addEventListener( 'click', MovieList.enableMovieActionsMenu )
     CustomListMenu.renderListMenu()
     CustomListMenu.CustomListMenuEl.addEventListener( 'click', CustomListMenu.displayListResults )
     screenWidth1180.addEventListener( 'change', MovieList.setMovieListFormat )

@@ -43,12 +43,13 @@ function enableMovieActionsMenu( e ){
 }
 
 function toggleMenuVisibility( optBtn = undefined ){
-    const optMenu = optBtn.closest('.tbl-row-opt').querySelector('.row-opt-menu')
+    const optMenu = ( optBtn.closest('.tbl-row-opt') || optBtn.closest('.mv-item-opt') ).querySelector('.row-opt-menu') 
 
     const disableMovieActionsMenu = ( e ) => {
+        console.log('click logged')
         if( !(e.target in optMenu.children) ){
             toggleMenuVisibility( optMenu )
-            document.querySelector('body').removeEventListener( 'click', disableMovieActionsMenu )
+            disableMenuManualFocus( { disableMovieFunc: disableMovieActionsMenu } )
         }
     }
 
@@ -57,9 +58,9 @@ function toggleMenuVisibility( optBtn = undefined ){
 }
 
 function openMenuAndManualFocus( optMenu, disableMovieActionsMenu ){
-    movieTbl.querySelectorAll('.row-opt-menu').forEach( menu => menu.style.display = 'none')
+    movieListContainer.querySelectorAll('.row-opt-menu').forEach( menu => menu.style.display = 'none')
     optMenu.style.display = 'revert';
-    document.querySelector('body').addEventListener( 'click', disableMovieActionsMenu )
+    enableMenuManualFocus( { disableMovieFunc: disableMovieActionsMenu} )
 }
 
 function getDeleteComfirmation( Btn ){
@@ -110,5 +111,15 @@ function clearRegister(){
     Array.from(activeRegisterChildren).forEach( elem => elem.remove() )
 }
 
-const exports = { movieTbl, populateRegister, enableMovieActionsMenu, setMovieListFormat }
+function enableMenuManualFocus( { disableMovieFunc } ){
+    document.querySelector('body').addEventListener( 'click', disableMovieFunc )
+    movieListContainer.addEventListener( 'click', disableMovieFunc )
+}
+
+function disableMenuManualFocus( { disableMovieFunc } ){
+    document.querySelector('body').removeEventListener( 'click', disableMovieFunc )
+    movieListContainer.removeEventListener( 'click', disableMovieFunc )
+}
+
+const exports = { movieListContainer, populateRegister, enableMovieActionsMenu, setMovieListFormat }
 export default exports;
