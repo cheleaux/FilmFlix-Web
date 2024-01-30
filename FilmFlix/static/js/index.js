@@ -1,27 +1,30 @@
 import search from './searchBar.js'
 import addMovie from './addMovie.js'
 import updateMovie from './updateMovie.js'
-import MovieList from './movieList.js'
-import CustomListMenu from './listsMenu.js '
+import Taskbar from './taskbar.js'
+import MovieRegister from './register.js'
+import customListMenu from './customListMenu.js'
+import enableMovieActionsMenu from './menu.js'
+
 
 const isOnMovieListPage = (window.location.href.includes('movies') && !window.location.href.includes('movies/'))
 const isOnMovieDetailsPage = ( window.location.href.includes('movies/'))
 const isOnAddMoviePage = (window.location.href.includes('add-movie'))
-const screenWidth1180 = window.matchMedia('(max-width: 1180px)')
 
 search.icon.addEventListener( 'click', search.initialiseSearch )
 
 
 if ( isOnMovieListPage ){
+    var registerEl = document.querySelector('.movie-register-container')
+    var register = new MovieRegister( registerEl )
     document.addEventListener( 'DOMContentLoaded', () => {
-        MovieList.populateRegister()
-        MovieList.selectFormatIcon()
+        register._populateRegister( JSON.parse(register.domElement.dataset.movies) )
+        Taskbar.setFormatIcon( register )
+        customListMenu.renderListMenu()
     })
-    MovieList.movieListContainer.addEventListener( 'click', MovieList.enableMovieActionsMenu )
-    MovieList.taskbar.addEventListener( 'click', MovieList.handleUserTask )
-    CustomListMenu.renderListMenu()
-    CustomListMenu.CustomListMenuEl.addEventListener( 'click', CustomListMenu.displayListResults )
-    screenWidth1180.addEventListener( 'change', MovieList.setMovieListFormat )
+    register.domElement.addEventListener( 'click', ( e ) => { enableMovieActionsMenu( e, register ) } )
+    Taskbar.domElement.addEventListener( 'click', ( e ) => { Taskbar.handleUserTask( e, register ) } )
+    customListMenu.domElement.addEventListener( 'click', ( e ) => { customListMenu.displayListResults( e, register ) } )
 }
 
 if ( isOnAddMoviePage ) addMovie.form.addEventListener('click', addMovie.lockAndSubmitForm );

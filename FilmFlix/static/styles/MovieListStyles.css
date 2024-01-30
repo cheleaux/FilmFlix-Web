@@ -13,6 +13,7 @@
     flex-direction: column;
     overflow: scroll;
     scroll-behavior: smooth;
+    position: relative;
 }
 
 .movie-register-container.tabular-register {
@@ -22,7 +23,6 @@
 
 .movie-register-container.non-tabular-register {
     padding-right: .2rem;
-    /* width: 60%; */
     align-items: center;
 }
 
@@ -57,6 +57,7 @@
     transform: translate( 50%, 50% );
     color: var(--clr-rule);
     display: none;
+    text-align: center;
 }
 
 /* --------------------------------------------------------------------- OPTION MENU */
@@ -70,7 +71,7 @@ aside {
     justify-content: space-between;
 }
 
-/* ----------- MOVIE REGISTER */
+/* ----------------------- TASKBAR */
 
 .register-taskbar {
     height: 1.4rem;
@@ -98,15 +99,15 @@ aside {
     color: var(--clr-accent);
 }
 
-.format-toggler:hover {
+.format-toggler:hover:not( .format-toggler.active:hover) {
     background-color: var(--clr-aside-rule)
 }
 
-.format-toggler:active :not( .format-toggler.active:active ) {
+.format-toggler:active:not( .format-toggler.active:active ) {
     color: var(--clr-main)
 }
 
-/* MOVIE REGISTER */
+/* TASKBAR ---< */
 
 .custom-list-subhead {
     font-size: var(--fs-180);
@@ -232,6 +233,10 @@ aside {
     flex-direction: row;
     font-size: var(--fs-140);
     gap: .6rem;
+}
+
+.mv-item-details * {
+    text-wrap: nowrap;
 }
 
 .item-details-divider {
@@ -381,19 +386,25 @@ body:has(#confirm-del-container){
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
     flex-direction: column;
     align-items: center;
-    position: sticky;
+    position: absolute;
     left: 50%;
     bottom: 50%;
+    z-index: 250;
     transform: translate( -50%, 50% );
     justify-content: space-around;
     display:none;
 }
 
 #confirm-del-container h2 {
-   font-size: var(--fs-180);
+    font-size: var(--fs-160);
     font-weight: var(--fw-bold);
+    text-align: center;
     width: 80%;
     height: fit-content;
+}
+
+#confirm-del-container .movie-title-del {
+    font-size: var(--fs-160)
 }
 
 .confirm-del-btns {

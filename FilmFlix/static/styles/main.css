@@ -123,3 +123,18 @@ a:has(.logo) {
 main {
     flex: 1 1 auto;
 }
+
+.menu-bg-filter {
+    display: none;
+}
+
+body.blurred .menu-bg-filter {
+    display: block;
+    position: absolute;
+    z-index: 200;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(.1rem);
+}

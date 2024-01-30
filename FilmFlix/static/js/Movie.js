@@ -9,7 +9,7 @@ export default class Movie {
         this.genre = genre
     }
 
-    _constructTableRowHTML(){
+    _constructListItemHTML(){
         const row = document.createElement('tr')
         row.classList.add('mv-row')
         row.id = String(this.id)
@@ -31,7 +31,7 @@ export default class Movie {
         return row
     }
 
-    _constructListItemHTML(){
+    _constructCardItemHTML(){
         const li = document.createElement('li')
         li.classList.add('mv-list-item', 'flex')
         li.id = String(this.id)

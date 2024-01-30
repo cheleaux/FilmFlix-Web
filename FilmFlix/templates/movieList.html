@@ -4,6 +4,7 @@
 
 {% block main %}
 <main id="movie-list-main" class="flex">
+    <div class="menu-bg-filter"></div>
     <aside class="page-menu flex">
         <div class="custom-list-menu">
             <h3 class="custom-list-subhead">Collections</h3>
@@ -45,17 +46,25 @@
     </aside>
 
     <section class="movie-register-container flex tabular-register" data-movies="{{ movies }}">
+        <div class="menu-bg-filter"></div>
         <ul class="movie-register flex">
 
-            <!-- <li class="flex">
-                <h3 class="mv-title-card">title</h3>
-                <div class="mv-item-details flex">
-                    <span class="mv-item-release">2017</span>
-                    <span class="mv-item-duration">120</span>
-                    <span class="mv-item-rating">G</span>
-                    <span class="mv-item-genre">fantasy</span>
+            <!-- <div class="main-item-content flex">
+                    <h3 class="mv-item-title">${ this.title }</h3>
+                    <div class="mv-item-details flex">
+                        <span class="mv-item-release">2017</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-duration">120 mins</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-rating">G</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-genre">fantasy</span>
+                    </div>
                 </div>
-            </li> -->
+                <div class="mv-item-opt">
+                    <i class="bi bi-three-dots"></i>
+                    <ul class="row-opt-menu">
+                        <a href="/api/movies/${ String( this.id ) }"><li class="row-option flex"><span>Update</span></li></a>
+                        <li class="row-option delete-btn flex"><span>Delete</span></li>
+                    </ul>
+                </div> -->
 
         </ul>
         <table class="movie-table">

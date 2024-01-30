@@ -6,7 +6,7 @@ export default class CustomList {
         this.quantity = quantity
     }
 
-    constructListOptionHTML(){
+    _constructListMrnuItemHTML(){
         const li = document.createElement('li')
         li.classList.add('list-menu-opt', 'flex');
         li.dataset.list = this.id
@@ -17,13 +17,23 @@ export default class CustomList {
         return li
     }
     // CHECK IF FETCH REQUEST RESOLVED WITH DESIRED MOVIE DATA
-    static async _fetchCustomListMovies( ID ){
+    static async fetchCustomListMovies( ID ){
         const url = `/api/custom-list?list=${ ID }`
         const listMoviesData = await fetch(url)
         .then( res => res.json() )
         .catch( err => console.log( err ))
 
         return listMoviesData
+    }
+
+    static async fetchMetaData(){
+        const listsRetrievalURL = '/api/custom-list/all'
+        try {
+            const listData = await fetch( listsRetrievalURL ).then( data => data.json() )
+            return listData
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     static _toggleActiveStatus( element ){
