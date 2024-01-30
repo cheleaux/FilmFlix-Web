@@ -28,27 +28,43 @@ export default class Register {
         Taskbar.setFormatIcon( this )
     }
 
-    _formatForScreenWidth(){
-        const screenWidth1180 = window.matchMedia('(max-width: 1180px)')
-        if( screenWidth1180.matches ) this.setFormatToCard();
-        else this.setFormatToList();
+    _formatForScreenWidth( screenWidth1090 ){
+        console.log('in "_formatForScreenWidth"')
+        if( screenWidth1090.matches ) this._setLockedFormat( this._setFormatToCard.bind(this) );
+        else this._unlockFormat();
     }
-
-    _setFormatToCard(){
-        this.domElement.classList.remove( 'tabular-register' )
-        this.domElement.classList.add( 'non-tabular-register' )
-    }
-
-    _setFormatToList(){
-        this.domElement.classList.remove( 'non-tabular-register' )
-        this.domElement.classList.add( 'tabular-register' )
-    }
-
+    
     _fetchActiveRegister(){
         const formatSetToList = this.domElement.classList.contains('tabular-register')
         const formatSetToCard = this.domElement.classList.contains('non-tabular-register')
         const activeRegister = formatSetToList ? this.domElement.querySelector('tbody') : formatSetToCard ? this.domElement.querySelector('.movie-register') : null;
         return activeRegister
+    }
+    
+    _setLockedFormat( formatSetter ){
+        const formatToggler = Taskbar.domElement.querySelector('.register-format-toggle')
+        if( !formatToggler ) return;
+        formatToggler.style.display = 'none'
+        formatSetter()
+    }
+
+    _unlockFormat(){
+        const formatToggler = Taskbar.domElement.querySelector('.register-format-toggle')
+        if( !formatToggler ) return;
+        formatToggler.style.display = 'flex'
+        Taskbar.setFormatIcon( this )
+    }
+
+    _setFormatToCard(){
+        if( this.domElement.classList.contains('non-tabular-register') ) return;
+        this.domElement.classList.remove('tabular-register')
+        this.domElement.classList.add('non-tabular-register')
+    }
+
+    _setFormatToList(){
+        if( this.domElement.classList.contains('tabular-register') ) return;
+        this.domElement.classList.remove( 'non-tabular-register' )
+        this.domElement.classList.add( 'tabular-register' )
     }
 
     _clearRegister(){

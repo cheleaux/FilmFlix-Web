@@ -2,10 +2,7 @@ import CustomList from './customList.js'
 
 
 const domElement = document.querySelector('.register-taskbar')
-const movieListContainer = document.querySelector('.movie-register-container')
 const formatTogglerComponent = domElement.querySelector('.register-format-toggle')
-
-
 
 function handleUserTask( e, register ){
     const taskComponent = e.target.closest('.taskbar-opt')
