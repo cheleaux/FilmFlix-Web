@@ -6,6 +6,7 @@
     gap: 5%;
 }
 
+/* SET MAX WIDTH TO <= 900px AT SCREEN '1090px' */
 .movie-register-container {
     margin-top: 2.4rem;
     height: 75vh;
@@ -14,6 +15,7 @@
     overflow: scroll;
     scroll-behavior: smooth;
     position: relative;
+    transition: ease-in-out 0.15s;
 }
 
 .movie-register-container.tabular-register {
@@ -62,6 +64,9 @@
 
 /* --------------------------------------------------------------------- OPTION MENU */
 
+/* SKRINK SLIGHTLY AT '770px' SCREEN WIDTH */
+/*  FIND BREAK POINT FOR DEFAULT CLOSED STATE*/
+
 aside {
     width: 24rem;
     gap: 3.5rem;
@@ -69,6 +74,65 @@ aside {
     padding: 3.3rem 1.8rem 2rem 3.7em;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
+    transition: ease-in-out 0.15s;
+}
+
+aside.open {
+    position: relative;
+    left: 0;
+}
+
+aside.closed {
+    position: fixed;
+    left: -24rem;
+}
+
+aside.closed .bi-arrow-left-short {
+    display: none;
+}
+
+aside.open .bi-arrow-bar-right {
+    display: none;
+}
+
+.bi-arrow-left-short {
+    display: block;
+    font-size: var(--fs-240);
+    top: 1.5rem;
+    right: 2rem;
+}
+
+.bi-arrow-bar-right {
+    display: block;
+    font-size: var(--fs-200);
+    top: 1.7rem;
+    right: -4.5rem;
+}
+
+.bi-arrow-left-short,
+.bi-arrow-bar-right {
+    color: var(--clr-rule);
+    transition: ease-in-out 0.15s;
+    position: absolute;
+}
+
+.bi-arrow-left-short:hover,
+.bi-arrow-bar-right:hover {
+    transition-duration:  0.09s;
+}
+
+.bi-arrow-left-short:hover {
+    transform: translateX(-0.15rem);
+}
+
+.bi-arrow-bar-right:hover {
+    transform: translateX(0.15rem);
+}
+
+.bi-arrow-left-short:active,
+.bi-arrow-bar-right:active {
+    color: var(--clr-icon);
 }
 
 /* ----------------------- TASKBAR */
@@ -185,8 +249,8 @@ aside {
 }
 
 .opt-add-new:active {
-    background-color: var(--clr-accent);
-    color: var(--clr-main);
+    background-color: var(--clr-accent-pastel);
+    color: var(--clr-accent);
 }
 
 .opt-add-new * {
@@ -208,7 +272,7 @@ aside {
     align-items: center;
     border-bottom: 1px solid var(--clr-rule);
     padding-bottom: 1.2rem;
-    gap: 3.3rem
+    gap: 2rem
 }
 
 .mv-list-item:last-of-type {
@@ -220,6 +284,7 @@ aside {
 }
 
 .main-item-content {
+    min-width: 14.9rem;
     flex-direction: column;
     gap: .4rem;
 }
@@ -284,8 +349,6 @@ tr {
 
 
 /* --------------------------------------------------------------------- OPTION MENU */
-
-/* BUG FIX: OPTION MENU BUTTON NOT CLICKABLE MAY BE CSS ISSUE */
 
 .movie-register-container :is(.tbl-row-opt, .mv-item-menu){
     width: 5%;
@@ -438,7 +501,6 @@ body:has(#confirm-del-container){
 }
 
 /* --------------------------------------------------------------------- RESPONSIVITY */
-
 
 @media ( max-width: 880px ){
     

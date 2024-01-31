@@ -29,7 +29,6 @@ export default class Register {
     }
 
     _formatForScreenWidth( screenWidth1090 ){
-        console.log('in "_formatForScreenWidth"')
         if( screenWidth1090.matches ) this._setLockedFormat( this._setFormatToCard.bind(this) );
         else this._unlockFormat();
     }
