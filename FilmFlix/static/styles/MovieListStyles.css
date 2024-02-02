@@ -79,7 +79,6 @@ aside {
 }
 
 aside.open {
-    position: relative;
     left: 0;
 }
 
@@ -88,23 +87,23 @@ aside.closed {
     left: -24rem;
 }
 
-aside.closed .bi-arrow-left-short {
-    display: none;
+aside.open .bi-arrow-left-short {
+    display: block;
 }
 
-aside.open .bi-arrow-bar-right {
-    display: none;
+aside.closed .bi-arrow-bar-right {
+    display: block;
 }
 
 .bi-arrow-left-short {
-    display: block;
+    display: none;
     font-size: var(--fs-240);
     top: 1.5rem;
     right: 2rem;
 }
 
 .bi-arrow-bar-right {
-    display: block;
+    display: none;
     font-size: var(--fs-200);
     top: 1.7rem;
     right: -4.5rem;

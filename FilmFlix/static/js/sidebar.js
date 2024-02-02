@@ -15,7 +15,7 @@ function activeConcealableSidebar(){
 
 function deactiveConcealableSidebar(){
     domElement.classList.remove('concealable')
-    if( !domElement.classList.contains('open') ) openSidebar();
+    domElement.classList.contains('open') ? domElement.classList.remove('open') : domElement.classList.remove('closed');
     domElement.removeEventListener( 'click', toggleSidebarVisibily )
 }
 

@@ -11,10 +11,16 @@ export default class Register {
     }
 
     _populateRegister( definedMovieList = null ){
-        const movieData = definedMovieList || this.listContent
+        console.log('inside populate register function')
+        const movieData = definedMovieList || ( this.listContent || JSON.parse( this.domElement.dataset.movies ) )
         const activeRegister = this.activeRegister()
         this.listContent = movieData
-        if( movieData.length == 0 || movieData == undefined ) errMsg.style.display = 'block';
+
+        if( movieData.length == 0 || movieData == undefined ){
+            this.errMsg.style.display = 'block';
+            return
+        } else this.errMsg.style.display = 'none';
+
         this._clearRegister()
         for (const item of movieData){
             const newMovie = new Movie( item.filmID, item.title, item.yearReleased, item.rating, item.duration, item.genre )
@@ -29,7 +35,10 @@ export default class Register {
     }
 
     _formatForScreenWidth( screenWidth1090 ){
-        if( screenWidth1090.matches ) this._setLockedFormat( this._setFormatToCard.bind(this) );
+        if( screenWidth1090.matches ){
+            this._setLockedFormat( this._setFormatToCard.bind(this) );
+            this._populateRegister()
+        }
         else this._unlockFormat();
     }
     
@@ -66,9 +75,10 @@ export default class Register {
         this.domElement.classList.add( 'tabular-register' )
     }
 
+    //update so that both register elements are cleared
     _clearRegister(){
         const activeRegister = this.activeRegister()
-        if(activeRegister.children || Array.from(activeRegister.children).length != 0 ) Array.from(activeRegister.children).forEach( elem => elem.remove() );
+        if( activeRegister.children || Array.from(activeRegister.children).length != 0 ) Array.from(activeRegister.children).forEach( elem => elem.remove() );
     }
 
 }
