@@ -104,9 +104,9 @@ aside.closed .bi-arrow-bar-right {
 
 .bi-arrow-bar-right {
     display: none;
-    font-size: var(--fs-200);
-    top: 1.7rem;
-    right: -4.5rem;
+    font-size: var(--fs-240);
+    top: 1rem;
+    right: -4.2rem;
 }
 
 .bi-arrow-left-short,
@@ -501,29 +501,9 @@ body:has(#confirm-del-container){
 
 /* --------------------------------------------------------------------- RESPONSIVITY */
 
-@media ( max-width: 880px ){
-    
-    .movie-table tbody {
-        overflow: visible;
-    }
+@media ( max-width: 1090px ){
 
-    .movie-table-container {
-        width: 90%;
-        transform: translate(0);
-        overflow-X: scroll;
+    aside.closed + .movie-register-container {
+        padding: 0 7%;
     }
-
-    .movie-table-container::-webkit-scrollbar {
-        width: 7px;
-    }
-    
-    .movie-table-container::-webkit-scrollbar-thumb {
-        background-color: var(--clr-rule);
-        border-radius: 5px;
-    }
-
-    .movie-table {
-        width: 1300px;
-    }
-
 }

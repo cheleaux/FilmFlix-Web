@@ -18,17 +18,23 @@ search.icon.addEventListener( 'click', search.initialiseSearch )
 if ( isOnMovieListPage ){
     var registerEl = document.querySelector('.movie-register-container')
     var register = new MovieRegister( registerEl )
-    var screenWidth1090 = window.matchMedia('(max-width: 1090px)')
+    const queries = {
+        screenQuery770: window.matchMedia('(max-width: 770px)'),
+        screenQuery1090: window.matchMedia('(max-width: 1090px)')
+    }
     document.addEventListener( 'DOMContentLoaded', () => {
-        register._formatForScreenWidth( screenWidth1090 )
-        sidebar.formatForScreenWidth( screenWidth1090 )
+        register._formatForScreenWidth( queries.screenQuery1090 )
+        sidebar.formatForScreenWidth( queries )
         register._populateRegister( JSON.parse(register.domElement.dataset.movies) )
         Taskbar.setFormatIcon( register )
         customListMenu.renderListMenu()
     })
-    screenWidth1090.addEventListener( 'change', () => {
-        register._formatForScreenWidth( screenWidth1090 )
-        sidebar.formatForScreenWidth( screenWidth1090 )
+    queries.screenQuery1090.addEventListener( 'change', () => {
+        register._formatForScreenWidth( queries.screenQuery1090 )
+        sidebar.formatForScreenWidth( queries )
+    } )
+    queries.screenQuery770.addEventListener( 'change', () => {
+        sidebar.formatForScreenWidth( queries )
     } )
     register.domElement.addEventListener( 'click', ( e ) => { enableMovieActionsMenu( e, register ) } )
     Taskbar.domElement.addEventListener( 'click', ( e ) => { Taskbar.handleUserTask( e, register ) } )

@@ -2,14 +2,22 @@
 
 const domElement = document.querySelector('.page-menu')
 
-function formatForScreenWidth( screenWidth1090 ){
-    if( screenWidth1090.matches ) activeConcealableSidebar();
+const isWithinQueryRange = ( widthRangeStart, queries ) => {
+    if( widthRangeStart == '1090' ) return ( queries.screenQuery1090.matches && !queries.screenQuery770.matches );
+    else if( widthRangeStart == '770' ) return ( queries.screenQuery770.matches );
+}
+
+
+function formatForScreenWidth( queries ){
+    if( isWithinQueryRange( '1090', queries ) ) activeConcealableSidebar('open');
+    else if( isWithinQueryRange( '770', queries ) ) activeConcealableSidebar('closed');
     else deactiveConcealableSidebar();
 }
 
-function activeConcealableSidebar(){
+function activeConcealableSidebar( lockState ){
     domElement.classList.add('concealable')
-    if( !domElement.classList.contains('open') ) openSidebar();
+    if( lockState == 'open' ) openSidebar(); 
+    else if( lockState == 'closed' ) closeSidebar();
     domElement.addEventListener( 'click', toggleSidebarVisibily )
 }
 
@@ -26,11 +34,13 @@ function toggleSidebarVisibily( e ){
 }
 
 function openSidebar(){
+    if( domElement.classList.contains('open') ) return;
     domElement.classList.remove('closed')
     domElement.classList.add('open')
 }
 
 function closeSidebar(){
+    if( domElement.classList.contains('closed') ) return;
     domElement.classList.remove('open')
     domElement.classList.add('closed')
 }

@@ -11,7 +11,6 @@ export default class Register {
     }
 
     _populateRegister( definedMovieList = null ){
-        console.log('inside populate register function')
         const movieData = definedMovieList || ( this.listContent || JSON.parse( this.domElement.dataset.movies ) )
         const activeRegister = this.activeRegister()
         this.listContent = movieData
@@ -75,10 +74,10 @@ export default class Register {
         this.domElement.classList.add( 'tabular-register' )
     }
 
-    //update so that both register elements are cleared
     _clearRegister(){
-        const activeRegister = this.activeRegister()
-        if( activeRegister.children || Array.from(activeRegister.children).length != 0 ) Array.from(activeRegister.children).forEach( elem => elem.remove() );
+        this.domElement.querySelectorAll('.register').forEach( register => {
+            if( register.children || Array.from( register.children ).length != 0 ) Array.from( register.children ).forEach( elem => elem.remove() );
+        })
     }
 
 }
