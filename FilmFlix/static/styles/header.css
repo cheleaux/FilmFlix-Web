@@ -1,14 +1,17 @@
 /* --------------------------------------------------------------------- header SECTION */
 
 .header {
-    width: 100vw;
-    height: 250px;
+    width: 96vw;
+    height: 13.125rem;
+    margin: 0 auto;
     background-image: url('../assets/img/pexels-roberto-nickson-3131971.jpg');
     background-color: var(--clr-table-text);
     background-position: 0 69%;
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
+    border-radius: 0 0 0.5rem 0.5rem;
+    flex: 0 1 auto;
 }
 
 .header a {
@@ -18,7 +21,7 @@
 .header-bg-shadow {
     position: absolute;
     width: 100%;
-    height: 200px;
+    height: 100%;
     background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(255,255,255,0) 100%);
     z-index: 5;
 }

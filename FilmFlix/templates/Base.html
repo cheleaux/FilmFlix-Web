@@ -1,5 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" 
+    {% if request.path == '/' %}
+        style="
+            height: fit-content;
+            overflow: revert;
+            scroll-behavior: smooth;"
+    {% else %}
+        style="
+            height: 100%;
+            overflow: hidden;
+            scroll-behavior: none;"
+    {% endif %}
+    >
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,8 +29,19 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.ico') }}">
     <title>{% block title %}FilmFlix{% endblock %}</title>
     </head>
-    <body>
-
+    <body
+    {% if request.path == '/' %}
+        style="
+            height: fit-content;
+            overflow: revert;
+            scroll-behavior: smooth;"
+    {% else %}
+        style="
+            height: 100vh;
+            overflow: hidden;
+            scroll-behavior: none;"
+    {% endif %}
+    >
         {% block header %}
         <Section class="header">
             <div class="header-bg-shadow"></div>
@@ -29,28 +52,6 @@
         {% block main %}
             <main></main>
         {% endblock %}
-
-        <footer>
-            <section class="ftr-content flex">
-                <a href="/"><h1 class="logo">FilmFlix</h1></a>
-                <div class="small-print flex">
-                    <article class="ftr-content-col flex">
-                        <a class="ftr-link" href="/"><h4>FilmFlix Shop</h4></a>
-                        <a class="ftr-link" href="/"><h4>Contact Us</h4></a>
-                        <a class="ftr-link" href="/"><h4>Corp Information</h4></a>
-                    </article>
-                    <article class="ftr-content-col flex">
-                        <a class="ftr-link" href="/"><h4>Ways To Watch</h4></a>
-                        <a class="ftr-link" href="/"><h4>Help Center</h4></a>
-                        <a class="ftr-link" href="/"><h4>FAQ</h4></a>
-                    </article>
-                    <article class="ftr-content-col flex">
-                        <a class="ftr-link" href="/"><h4>Privacy Policy</h4></a>
-                        <a class="ftr-link" href="/"><h4>Terms Of Use</h4></a>
-                    </article>
-                </div>
-            </section>
-        </footer>
         <script type="module" src="{{ url_for('static', filename='js/index.js') }}"></script>
     </body>
 </html>

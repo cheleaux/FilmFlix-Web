@@ -31,6 +31,32 @@ export default class Movie {
         return row
     }
 
+    _constructCardItemHTML(){
+        const li = document.createElement('li')
+        li.classList.add('mv-list-item', 'flex')
+        li.id = String(this.id)
+        li.innerHTML = `
+                <div class="main-item-content flex">
+                    <h3 class="mv-item-title">${ this.title }</h3>
+                    <div class="mv-item-details flex">
+                        <span class="mv-item-release">${ this.yearReleased }</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-duration">${ this.duration } mins</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-rating">${ this.rating }</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-genre">${ this.genre }</span>
+                    </div>
+                </div>
+                <div class="mv-item-opt">
+                    <i class="bi bi-three-dots"></i>
+                    <ul class="row-opt-menu">
+                        <a href="/api/movies/${ String( this.id ) }"><li class="row-option flex"><span>Update</span></li></a>
+                        <li class="row-option delete-btn flex"><span>Delete</span></li>
+                    </ul>
+                </div>
+            `
+        this.HTMLElement = li
+        return li
+    }
+
     _deleteMovie(){
         const xhttp = new XMLHttpRequest()
         xhttp.open( 'DELETE', `/api/movies/${ String( this.id ) }`, true )

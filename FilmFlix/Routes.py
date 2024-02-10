@@ -1,34 +1,67 @@
 from flask import Response
 from .TouchDB import *
-from .MovieList import *
-from .Movie import Movie
+from .Packager import *
+from .Models import Movie
 import json
 
 
-def respondToPOST( movie ):
+def respondToMovieInsert( movie ):
     insertMovie( movie )
-    movieID = getMovieIdByTitle( movie.get('title') )
+    movieID = getID( { 'title': movie.get('title') } )
     res = Response( f'Deleted record { movieID }', 201, mimetype='text/plain' )
     return res
 
-def respondToDELETE( movieID ):
+
+def respondToMovieDelete( movieID ):
     res = Response( f'Deleted record { movieID }', 204, mimetype='text/plain' )
     removeMovie( movieID )
     return res
 
-def respondToPUT( movie ):
+
+def respondToMovieUpdate( movie ):
     res = Response( f'Updated record { movie["id"] }', 201, mimetype='text/plain' )
     updateMovieDetails( movie )
     return res
         
+        
 def fetchMovieDetails( ID ):
-    details = fetchMovieByID( ID )
-    movieID, title, release, rating, duration, genre = makeMovieDict( details ).values()
-    movie = Movie( movieID, title, release, rating, duration, genre )
-    movieJson = json.dumps( movie.__dict__ )
+    movie = fetchMovieByID( ID )
+    movieJson = serializeObjects( movie )
     return movieJson
 
-def fetchMovieList( query ):
-    movieList = fetchMoviesFromSearch( query )
-    movieJson = json.dumps( makeMovieDict( movieList ))
+
+def fetchMovies( param ):
+    movies = fetchMoviesBasedOnParams( param )
+    movieJson = serializeObjects( movies )
     return movieJson
+
+
+def fetchCustomListMemuDetails():
+    allCustomLists = fetchListMeta()
+    listJson = serializeObjects( allCustomLists )
+    res = Response( listJson, 200, mimetype='application/json' )
+    return res
+
+
+def createCustomList( listDetails ):
+    insertList( listDetails )
+    listID = getID( { 'name': listDetails.get('name') } )
+    instateListMembership( listID, listDetails.get( 'movieIDs' ) )
+    res = Response( f'New cutsom list { listID }', 201, mimetype='text/plain')
+    return res
+
+
+def fetchMoviesBasedOnParams( param ):
+    if param[list(param)[0]] == None or param[list(param)[0]] == 'undefined':
+        movies = fetchMoviesFromList( None )
+    elif 'listID' in param.keys():
+        movies = fetchMoviesFromList( param['listID'] )
+    elif 'query' in param.keys() and param['query'] != None:
+        movies = fetchMoviesFromSearch( param['query'] )
+    return movies
+
+
+# def DEVops():
+    # updateListQuantity( 13 )
+    # movieIDs = [ 15 ]
+    # instateListMembership( 13, movieIDs )

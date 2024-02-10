@@ -3,44 +3,92 @@
 {% block title %}FilmFlix - Full movie list{% endblock %}
 
 {% block main %}
-<main>
-    <div class="opt-tabs flex">
-        <div class="divider">|</div>
-        <a href="/api/add-movie"><h3 class="opt-add-new">Add New Movie</h3></a>
-        <div class="divider">|</div>
-    </div>
+<main id="movie-list-main" class="flex">
+    <div class="menu-bg-filter"></div>
+    <aside class="page-menu flex">
+        <i class="bi bi-arrow-left-short sidebar-toggler sidebar-close"></i>
+        <i class="bi bi-arrow-bar-right sidebar-toggler sidebar-open"></i>
+        <div class="custom-list-menu">
+            <h3 class="custom-list-subhead">Collections</h3>
 
-    <section class="movie-table-container">
+            <div class="register-taskbar flex">
+                <div class="register-format-toggle taskbar-opt flex">
+                    <button class="list-toggle format-toggler"><i class="bi bi-list-ul"></i></button>
+                    <button class="card-toggle format-toggler"><i class="bi bi-view-list"></i></button>
+                </div>
+            </div>
+
+            <ul class="list-menu flex">
+                <li class="list-menu-opt flex tab-focus" data-list-id="0">
+                    <h4 class="list-name">All</h4>
+                    <span class="quantity"><h4></h4></span>
+                </li>
+
+                <!-- 
+                    <li class="list-menu-opt flex" data-list-id="...">
+                    <h4 class="list-name">...</h4>
+                    <span class="quantity"><h4>...</h4></span>
+                    </li>
+                -->
+
+            </ul>
+        </div>
+        <div class="add-new-section flex">
+            <a href="/api/add-movie">
+                <button class="opt-add-new flex">
+                    <h4>Add New Movie</h4><i class="bi bi-camera-reels-fill"></i>
+                </button>
+            </a>
+            <a href="/api/custom-list">
+                <button class="opt-add-new flex">
+                    <h4>Make New Custom List</h4><i class="bi bi-collection-play-fill"></i>
+                </button>
+            </a>
+        </div>
+    </aside>
+
+    <section class="movie-register-container flex tabular-register" data-movies="{{ movies }}">
+        <div class="menu-bg-filter"></div>
+        <h1 class="err-not-found">No Results found</h1>
+        <ul class="movie-register flex register">
+
+            <!-- <div class="main-item-content flex">
+                    <h3 class="mv-item-title">${ this.title }</h3>
+                    <div class="mv-item-details flex">
+                        <span class="mv-item-release">2017</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-duration">120 mins</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-rating">G</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-genre">fantasy</span>
+                    </div>
+                </div>
+                <div class="mv-item-opt">
+                    <i class="bi bi-three-dots"></i>
+                    <ul class="row-opt-menu">
+                        <a href="/api/movies/${ String( this.id ) }"><li class="row-option flex"><span>Update</span></li></a>
+                        <li class="row-option delete-btn flex"><span>Delete</span></li>
+                    </ul>
+                </div> -->
+
+        </ul>
         <table class="movie-table">
-            <thead>
-                <tr class="tbl-keys">
-                    <th class="tbl-key">Title</th>
-                    <th class="tbl-key">Release</th>
-                    <th class="tbl-key">Rating</th>
-                    <th class="tbl-key">Duration</th>
-                    <th class="tbl-key">Genre</th>
-                    <th></th>
-                </tr>
-            </thead>
-                <tbody data-movies="{{ movies }}">
-                    <h1 class="err-not-found">No Results found</h1>
+            <tbody class="register">
 
-                    <!-- <tr class="mv-row">
-                        <td class="mv-title">The Grinch</td>
-                        <td class="mv-release">2017</td>
-                        <td class="mv-duration">120</td>
-                        <td class="mv-rating">G</td>
-                        <td class="mv-genre">Fantasy</td>
-                        <td class="tbl-row-opt">
-                            <i class="bi bi-three-dots"></i>
-                            <ul class="row-opt-menu">
-                                <a href="#"><li class="row-option flex"><span>Update</span></li></a>
-                                <a href="#"><li class="row-option flex"><span>Delete</span></li></a>
-                            </ul>
-                        </td>
-                    </tr> -->
-                    
-                </tbody>
+                <!-- <tr class="mv-row">
+                    <td class="mv-title">The Grinch</td>
+                    <td class="mv-release">2017</td>
+                    <td class="mv-duration">120</td>
+                    <td class="mv-rating">G</td>
+                    <td class="mv-genre">Fantasy</td>
+                    <td class="tbl-row-opt">
+                        <i class="bi bi-three-dots"></i>
+                        <ul class="row-opt-menu">
+                            <a href="#"><li class="row-option flex"><span>Update</span></li></a>
+                            <a href="#"><li class="row-option flex"><span>Delete</span></li></a>
+                        </ul>
+                    </td>
+                </tr> -->
+                
+            </tbody>
         </table>
     </section>
 </main>
