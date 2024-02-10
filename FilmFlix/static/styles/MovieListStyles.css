@@ -4,6 +4,7 @@
     width: 100%;
     padding: 0 2%;
     gap: 5%;
+    position: relative;
 }
 
 /* SET MAX WIDTH TO <= 900px AT SCREEN '1090px' */
@@ -64,9 +65,6 @@
 
 /* --------------------------------------------------------------------- OPTION MENU */
 
-/* SKRINK SLIGHTLY AT '770px' SCREEN WIDTH */
-/*  FIND BREAK POINT FOR DEFAULT CLOSED STATE*/
-
 aside {
     width: 24rem;
     gap: 3.5rem;
@@ -76,6 +74,8 @@ aside {
     justify-content: space-between;
     position: relative;
     transition: ease-in-out 0.15s;
+    z-index: 200;
+    background-color: var(--clr-main-bg);
 }
 
 aside.open {
@@ -240,6 +240,7 @@ aside.closed .bi-arrow-bar-right {
     justify-content: space-between;
     align-items: center;
     border: none;
+    gap: 1rem;
 }
 
 .opt-add-new:hover {
@@ -254,6 +255,7 @@ aside.closed .bi-arrow-bar-right {
 
 .opt-add-new * {
     font-weight: var(--fw-bold);
+    text-align: left;
 }
 
 /* --------------------------------------------------------------------- MOVIE REGISTER */
@@ -502,8 +504,36 @@ body:has(#confirm-del-container){
 /* --------------------------------------------------------------------- RESPONSIVITY */
 
 @media ( max-width: 1090px ){
-
     aside.closed + .movie-register-container {
         padding: 0 7%;
+    }
+}
+
+@media ( max-width: 770px ){
+    aside.open {
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        max-width: 90%;
+        padding-left: 10%;
+        box-shadow: 8px 0px 11px -8px rgba(0,0,0,0.1);
+    }
+    
+    .opt-add-new {
+        font-size: var(--fs-120)
+    }
+}
+
+@media ( max-width: 450px ){
+    .main-item-content {
+        min-width: 12.4rem
+    }
+
+    .main-item-content .mv-item-title {
+        font-size: var(--fs-140)
+    }
+
+    .mv-item-details {
+        font-size: var(--fs-120)
     }
 }
