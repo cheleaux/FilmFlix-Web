@@ -17,7 +17,7 @@ function onLoadPageBuffer( register, mediaQueries ){
     Taskbar.setFormatIcon( register )
     customListMenu.renderListMenu()
     register.domElement.addEventListener( 'click', ( e ) => { enableMovieActionsMenu( e, register ) } )
-    Taskbar.domElement.addEventListener( 'click', ( e ) => { Taskbar.handleUserTask( e, register ) } )
+    Taskbar.getDomElement().addEventListener( 'click', ( e ) => { Taskbar.handleUserTask( e, register ) } )
     customListMenu.domElement.addEventListener( 'click', ( e ) => { customListMenu.displayListResults( e, register ) } )
 }
 

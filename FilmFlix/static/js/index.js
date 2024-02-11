@@ -3,6 +3,8 @@ import movieDetailsPage from './movieDetailsPage.js'
 import MovieListPage from './movieListPage.js'
 
 
+//GET RID OF ALL GLOBAL VARIABLES!!
+
 const isOnMovieListPage = (window.location.href.includes('movies') && !window.location.href.includes('movies/'))
 const isOnMovieDetailsPage = ( window.location.href.includes('movies/'))
 const isOnAddMoviePage = (window.location.href.includes('add-movie'))
@@ -26,7 +28,7 @@ if ( isOnAddMoviePage ){
     const form = movieDetailsPage.initialiseForm( formEl, 'insert' )
     form.domElement.addEventListener('click', ( e ) => { movieDetailsPage.lockAndSubmitForm( form, e ) } );
 }
-// STOP MOVIE LIST PAGE IMPORTS INTERUPTING DETAILS LOADING BECAUSE NOT NON-EXISTENT ELEMENTS - DYNAMIC IMPORTS?
+
 if ( isOnMovieDetailsPage ){
     const formEl = document.querySelector('#insertForm')
     const form = movieDetailsPage.initialiseForm( formEl, 'update' )

@@ -1,8 +1,10 @@
 import CustomList from './customList.js'
 
 
-const domElement = document.querySelector('.register-taskbar') || null
-const formatTogglerComponent = domElement.querySelector('.register-format-toggle') || null
+function getDomElement(){
+    const domElement = document.querySelector('.register-taskbar')
+    return domElement
+}
 
 function handleUserTask( e, register ){
     const taskComponent = e.target.closest('.taskbar-opt')
@@ -20,6 +22,7 @@ function iconMatchesFormat( formatSelection, register ){
 }
 
 function setFormatIcon( register ){
+    const formatTogglerComponent = getDomElement().querySelector('.register-format-toggle')
     const formatToggleTypeCard = formatTogglerComponent.querySelector('.card-toggle')
     const formatToggleTypelist = formatTogglerComponent.querySelector('.list-toggle')
     Array.from( formatTogglerComponent.children ).forEach( toggler => { toggler.classList.remove('active') })
@@ -27,4 +30,4 @@ function setFormatIcon( register ){
     register.domElement.classList.contains('tabular-register') ? formatToggleTypelist.classList.add('active') : console.log('Element "movieListContainer" format class not matched')
 }
 
-export default { domElement, handleUserTask, setFormatIcon };
+export default { handleUserTask, setFormatIcon };
