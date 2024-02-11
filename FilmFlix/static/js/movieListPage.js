@@ -18,7 +18,7 @@ function onLoadPageBuffer( register, mediaQueries ){
     customListMenu.renderListMenu()
     register.domElement.addEventListener( 'click', ( e ) => { enableMovieActionsMenu( e, register ) } )
     Taskbar.getDomElement().addEventListener( 'click', ( e ) => { Taskbar.handleUserTask( e, register ) } )
-    customListMenu.domElement.addEventListener( 'click', ( e ) => { customListMenu.displayListResults( e, register ) } )
+    customListMenu.getDomElement().addEventListener( 'click', ( e ) => { customListMenu.displayListResults( e, register ) } )
 }
 
 function formatPageFromQueryEvent( mediaWidth, mediaQueries ){

@@ -1,7 +1,10 @@
 import CustomList from "./customList.js";
 
 
-const domElement = document.querySelector('.list-menu') || null
+function getDomElement(){
+    const domElement = document.querySelector('.list-menu')
+    return domElement
+}
 
 function displayListResults( e, register ){
     if( !e.target ) return;
@@ -18,7 +21,7 @@ function displayListResults( e, register ){
 }
 
 function switchActiveListStatus( listOpt ){
-    const menuOptions = Array.from( domElement.children )
+    const menuOptions = Array.from( getDomElement().children )
     menuOptions.forEach( ( element ) => {
         if( element.classList.contains('tab-focus') ) CustomList._toggleActiveStatus( element );
     })
@@ -29,9 +32,9 @@ function renderListMenu() {
     const listData = CustomList.fetchMetaData()
     listData.then( data => data.forEach( item => {
         const customList = new CustomList( item.list_id, item.name, item.movie_count )
-        domElement.insertAdjacentElement( 'beforeend', customList._constructListMrnuItemHTML() )
+        getDomElement().insertAdjacentElement( 'beforeend', customList._constructListMrnuItemHTML() )
     }))
     .catch( err => console.log(err) )
 }
 
-export default { renderListMenu, displayListResults, domElement };
+export default { renderListMenu, displayListResults, getDomElement };
