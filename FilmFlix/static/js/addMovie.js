@@ -1,7 +1,7 @@
 import Movie from './movie.js'
 
-const form = document.querySelector('#insertForm')
-const submitBtn = document.querySelector('.submitBtn')
+const form = document.querySelector('#insertForm') || null
+const submitBtn = document.querySelector('.submitBtn') || null
 
 function lockAndSubmitForm( e ) {
     if (e.target != submitBtn) return;

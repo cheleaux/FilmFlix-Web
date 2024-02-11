@@ -1,7 +1,7 @@
 import CustomList from "./customList.js";
 
 
-const domElement = document.querySelector('.list-menu')
+const domElement = document.querySelector('.list-menu') || null
 
 function displayListResults( e, register ){
     if( !e.target ) return;

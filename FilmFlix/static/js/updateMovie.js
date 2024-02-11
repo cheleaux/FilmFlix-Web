@@ -1,13 +1,13 @@
 import Movie from './movie.js'
 
 
-const titleInp = document.querySelector('#title-input')
-const releaseInp = document.querySelector('#release-input')
-const ratingInp = document.querySelector('#rating-input')
-const durationInp = document.querySelector('#duration-input')
-const genreInp = document.querySelector('#genre-input')
-const form = document.querySelector('#insertForm')
-const submitBtn = document.querySelector('.submitBtn')
+const titleInp = document.querySelector('#title-input') || null
+const releaseInp = document.querySelector('#release-input') || null
+const ratingInp = document.querySelector('#rating-input') || null
+const durationInp = document.querySelector('#duration-input') || null
+const genreInp = document.querySelector('#genre-input') || null
+const form = document.querySelector('#insertForm') || null
+const submitBtn = document.querySelector('.submitBtn') || null
 
 
 function displayMovieDetails(){

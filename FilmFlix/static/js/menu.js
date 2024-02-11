@@ -1,6 +1,6 @@
 
 
-const confirmDelMenu = document.querySelector('#confirm-del-container')
+const confirmDelMenu = document.querySelector('#confirm-del-container') || null
 
 export default function enableMovieActionsMenu( e, register ){
     e.stopPropagation()

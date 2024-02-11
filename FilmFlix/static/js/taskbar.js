@@ -1,8 +1,8 @@
 import CustomList from './customList.js'
 
 
-const domElement = document.querySelector('.register-taskbar')
-const formatTogglerComponent = domElement.querySelector('.register-format-toggle')
+const domElement = document.querySelector('.register-taskbar') || null
+const formatTogglerComponent = domElement.querySelector('.register-format-toggle') || null
 
 function handleUserTask( e, register ){
     const taskComponent = e.target.closest('.taskbar-opt')

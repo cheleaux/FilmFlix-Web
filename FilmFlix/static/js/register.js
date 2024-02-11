@@ -6,7 +6,7 @@ export default class Register {
     constructor( domElement ){
         this.domElement = domElement
         this.listContent = []
-        this.errMsg = domElement.querySelector('.err-not-found')
+        this.errMsg = domElement.querySelector('.err-not-found') || null
         this.activeRegister = this._fetchActiveRegister
     }
 

@@ -1,6 +1,6 @@
 
 
-const domElement = document.querySelector('.page-menu')
+const domElement = document.querySelector('.page-menu') || null
 
 const isWithinQueryRange = ( widthRangeStart, queries ) => {
     if( widthRangeStart == '1090' ) return ( queries.screenQuery1090.matches && !queries.screenQuery770.matches );
