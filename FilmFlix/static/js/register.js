@@ -1,5 +1,5 @@
 import Taskbar from './taskbar.js'
-import Movie from './Movie.js'
+import Movie from './movie.js'
 
 
 export default class Register {
