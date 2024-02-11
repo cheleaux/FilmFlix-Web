@@ -1,4 +1,4 @@
-import CustomList from './customList.js'
+import CustomList from './CustomList.js'
 
 
 const domElement = document.querySelector('.register-taskbar')

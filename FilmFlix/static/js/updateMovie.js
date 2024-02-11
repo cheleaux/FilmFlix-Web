@@ -1,4 +1,4 @@
-import Movie from './movie.js'
+import Movie from './Movie.js'
 
 
 const titleInp = document.querySelector('#title-input')
