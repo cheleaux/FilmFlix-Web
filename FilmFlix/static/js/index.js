@@ -1,13 +1,11 @@
 import search from './searchBar.js'
-import addMovie from './addMovie.js'
-import updateMovie from './updateMovie.js'
+import movieDetailsPage from './movieDetailsPage.js'
 import MovieListPage from './movieListPage.js'
 
 
 const isOnMovieListPage = (window.location.href.includes('movies') && !window.location.href.includes('movies/'))
 const isOnMovieDetailsPage = ( window.location.href.includes('movies/'))
 const isOnAddMoviePage = (window.location.href.includes('add-movie'))
-
 
 search.icon.addEventListener( 'click', search.initialiseSearch )
 
@@ -23,10 +21,15 @@ if ( isOnMovieListPage ){
     queries.screenQuery770.addEventListener( 'change', () => { MovieListPage.formatPageFromQueryEvent( '770', mediaWidth ) })
 }
 
-if ( isOnAddMoviePage ) addMovie.form.addEventListener('click', addMovie.lockAndSubmitForm );
-
+if ( isOnAddMoviePage ){
+    const formEl = document.querySelector('#insertForm')
+    const form = movieDetailsPage.initialiseForm( formEl, 'insert' )
+    form.domElement.addEventListener('click', ( e ) => { movieDetailsPage.lockAndSubmitForm( form, e ) } );
+}
 // STOP MOVIE LIST PAGE IMPORTS INTERUPTING DETAILS LOADING BECAUSE NOT NON-EXISTENT ELEMENTS - DYNAMIC IMPORTS?
 if ( isOnMovieDetailsPage ){
-    updateMovie.displayMovieDetails()
-    updateMovie.form.addEventListener( 'click', updateMovie.lockAndSubmitForm )
+    const formEl = document.querySelector('#insertForm')
+    const form = movieDetailsPage.initialiseForm( formEl, 'update' )
+    movieDetailsPage.displayMovieDetails( form )
+    form.domElement.addEventListener( 'click', ( e ) => { movieDetailsPage.lockAndSubmitForm( form, e ) } )
 }
