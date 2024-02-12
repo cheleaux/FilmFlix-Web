@@ -48,7 +48,7 @@ function getDeleteComfirmation( Btn, register ){
     const confirmDelMenu = document.querySelector('#confirm-del-container')
     toggleConfirmWindow( confirmDelMenu, movie.title )
     confirmDelMenu.querySelector('.confirm-del-btns').addEventListener( 'click', ( e ) => {
-        ConfirmAndRemove( e, movie, movieRow )
+        ConfirmAndRemove( e, movie, movieRow, confirmDelMenu )
     }, { once: true })
 }
 
@@ -63,11 +63,11 @@ function toggleConfirmWindow( confirmDelMenu, title = undefined ){
     }
 }
 
-function ConfirmAndRemove( e, movie, HTMLRow ){
+function ConfirmAndRemove( e, movie, HTMLRow, confirmDelMenu ){
     if ( e.target.closest('button').id == 'confirm-del' ){
-        toggleConfirmWindow()
+        toggleConfirmWindow( confirmDelMenu )
         HTMLRow.style.display = 'none'
         movie._deleteMovie()
     }
-    else if ( e.target.closest('button').id == 'cancel-del' ) toggleConfirmWindow();
+    else if ( e.target.closest('button').id == 'cancel-del' ) toggleConfirmWindow( confirmDelMenu );
 }

@@ -7,13 +7,13 @@ function initialiseForm( domElement, operation ){
 }
 
 function displayMovieDetails( form ){
-    const movieDetails = form.domElement.dataset.movie
+    const movieDetails = JSON.parse( form.domElement.dataset.movie )
     form._displayMovieDetails( movieDetails )
 }
 
 function lockAndSubmitForm( form, e ) {
-    if (e.target != submitBtn) return;
-    const ID = JSON.parse( form.domElement.dataset.movie ).id
+    if ( e.target != form.submit ) return;
+    const ID = JSON.parse( form.domElement.dataset.movie ).filmID || undefined
     const successStatement = form.operation === 'update' ? 'Successfully Updated' : 'Successfully Added' ;
     form._lockForm()
     form._submit( ID, successStatement )

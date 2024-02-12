@@ -30,4 +30,4 @@ function setFormatIcon( register ){
     register.domElement.classList.contains('tabular-register') ? formatToggleTypelist.classList.add('active') : console.log('Element "movieListContainer" format class not matched')
 }
 
-export default { handleUserTask, setFormatIcon };
+export default { handleUserTask, setFormatIcon, getDomElement };

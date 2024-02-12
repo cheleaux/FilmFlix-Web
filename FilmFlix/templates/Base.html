@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" 
-    {% if request.path == '/' %}
-        style="
-            height: fit-content;
-            overflow: revert;
-            scroll-behavior: smooth;"
+    {% if request.path == '/api/movies' %}
+    style="
+        height: 100vh;
+        overflow: hidden;
+        scroll-behavior: none;"
+
     {% else %}
-        style="
-            height: 100%;
-            overflow: hidden;
-            scroll-behavior: none;"
+    style="
+        height: fit-content;
+        overflow: revert;
+        scroll-behavior: smooth;"
     {% endif %}
     >
     <head>
@@ -30,16 +31,17 @@
     <title>{% block title %}FilmFlix{% endblock %}</title>
     </head>
     <body
-    {% if request.path == '/' %}
-        style="
-            height: fit-content;
-            overflow: revert;
-            scroll-behavior: smooth;"
-    {% else %}
+    {% if request.path == '/api/movies' %}
         style="
             height: 100vh;
             overflow: hidden;
             scroll-behavior: none;"
+
+    {% else %}
+        style="
+            height: fit-content;
+            overflow: revert;
+            scroll-behavior: smooth;"
     {% endif %}
     >
         {% block header %}

@@ -49,14 +49,14 @@ export default class Register {
     }
     
     _setLockedFormat( formatSetter ){
-        const formatToggler = Taskbar.domElement.querySelector('.register-format-toggle')
+        const formatToggler = Taskbar.getDomElement().querySelector('.register-format-toggle')
         if( !formatToggler ) return;
         formatToggler.style.display = 'none'
         formatSetter()
     }
 
     _unlockFormat(){
-        const formatToggler = Taskbar.domElement.querySelector('.register-format-toggle')
+        const formatToggler = Taskbar.getDomElement().querySelector('.register-format-toggle')
         if( !formatToggler ) return;
         formatToggler.style.display = 'flex'
         Taskbar.setFormatIcon( this )

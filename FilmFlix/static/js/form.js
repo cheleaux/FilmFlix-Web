@@ -15,7 +15,7 @@ export default class Form{
 
     _displayMovieDetails( movieDetails ){
         this.titleInp.value = movieDetails.title
-        this.releaseInp.value = movieDetails.release
+        this.releaseInp.value = movieDetails.yearReleased
         this.ratingInp.value = movieDetails.rating
         this.durationInp.value = movieDetails.duration
         this.genreInp.value = movieDetails.genre
