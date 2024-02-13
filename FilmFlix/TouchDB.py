@@ -1,8 +1,6 @@
-from .Models import Movie, CustomList, db, CustomList
+from .Models import Movie, CustomList, db
 from sqlalchemy.orm.attributes import flag_modified
 from sqlalchemy.sql import text
-import json
-
 
 def insertMovie( details ):
     title, year, rating, duration, genre, lists = details.values()
@@ -109,9 +107,3 @@ def getID( ref ):
     elif ref.__contains__('name'):
         ID = CustomList.query.filter_by(name=ref['name']).first().list_id
     return ID
-
-# def DEVFetchMovieLists( movieID ):
-#     movie = Movie.query.filter_by(filmID=movieID).first()
-#     # movie.lists = 
-#     # db.session.commit()
-#     print(movie.lists)

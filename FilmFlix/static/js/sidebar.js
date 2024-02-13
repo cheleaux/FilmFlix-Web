@@ -1,5 +1,4 @@
 
-
 //CONSIDER CLASSIFYING THE SIDERBAR
 
 const isWithinQueryRange = ( widthRangeStart, queries ) => {
@@ -9,8 +8,8 @@ const isWithinQueryRange = ( widthRangeStart, queries ) => {
 
 function formatForScreenWidth( queries ){
     const domElement = document.querySelector('.page-menu')
-    if( isWithinQueryRange( '1090', queries ) ) activeConcealableSidebar('open', domElement );
-    else if( isWithinQueryRange( '770', queries ) ) activeConcealableSidebar('closed', domElement );
+    if( isWithinQueryRange( '1090', queries ) ) activeConcealableSidebar( 'open', domElement );
+    else if( isWithinQueryRange( '770', queries ) ) activeConcealableSidebar( 'closed', domElement );
     else deactiveConcealableSidebar( domElement );
 }
 
@@ -18,19 +17,20 @@ function activeConcealableSidebar( lockState, domElement ){
     domElement.classList.add('concealable')
     if( lockState == 'open' ) openSidebar( domElement ); 
     else if( lockState == 'closed' ) closeSidebar( domElement );
-    domElement.addEventListener( 'click', toggleSidebarVisibily )
+    domElement.addEventListener( 'click', ( e ) => { toggleSidebarVisibily( e, domElement ) } )
 }
 
 function deactiveConcealableSidebar( domElement ){
     domElement.classList.remove('concealable')
     domElement.classList.contains('open') ? domElement.classList.remove('open') : domElement.classList.remove('closed');
-    domElement.removeEventListener( 'click', toggleSidebarVisibily )
+    domElement.removeEventListener( 'click', ( e ) => { toggleSidebarVisibily( e, domElement ) } )
 }
 
-function toggleSidebarVisibily( e ){
+function toggleSidebarVisibily( e, domElement ){
     const toggleBtn = e.target.classList.contains('sidebar-toggler') ? e.target : e.target.closest('sidebar-toggler')
-    if( toggleBtn.classList.contains('sidebar-close') ) closeSidebar( toggleBtn );
-    else if( toggleBtn.classList.contains('sidebar-open') ) openSidebar( toggleBtn );
+    console.log( toggleBtn )
+    if( toggleBtn.classList.contains('sidebar-close') ) closeSidebar( domElement )
+    else if( toggleBtn.classList.contains('sidebar-open') ) openSidebar( domElement );
 }
 
 function openSidebar( domElement ){

@@ -1,8 +1,6 @@
 from flask import Response
 from .TouchDB import *
 from .Packager import *
-from .Models import Movie
-import json
 
 
 def respondToMovieInsert( movie ):
@@ -59,9 +57,3 @@ def fetchMoviesBasedOnParams( param ):
     elif 'query' in param.keys() and param['query'] != None:
         movies = fetchMoviesFromSearch( param['query'] )
     return movies
-
-
-# def DEVops():
-    # updateListQuantity( 13 )
-    # movieIDs = [ 15 ]
-    # instateListMembership( 13, movieIDs )

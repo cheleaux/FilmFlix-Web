@@ -44,6 +44,7 @@ def fetchListData():
     customListDataRes = fetchCustomListMemuDetails()
     return customListDataRes
 
+
 @views.route("/api/add-movie", methods=["GET", "POST"])
 def AddMovie():
     if request.method == "GET":

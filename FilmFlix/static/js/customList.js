@@ -16,7 +16,7 @@ export default class CustomList {
         `
         return li
     }
-    // CHECK IF FETCH REQUEST RESOLVED WITH DESIRED MOVIE DATA
+    
     static async fetchCustomListMovies( ID ){
         const url = `/api/custom-list?list=${ ID }`
         const listMoviesData = await fetch(url)

@@ -21,7 +21,7 @@ function onLoadPageBuffer( register, mediaQueries ){
     customListMenu.getDomElement().addEventListener( 'click', ( e ) => { customListMenu.displayListResults( e, register ) } )
 }
 
-function formatPageFromQueryEvent( mediaWidth, mediaQueries ){
+function formatPageFromQueryEvent( mediaWidth, mediaQueries, register ){
     if( mediaWidth === '1090' ){
         register._formatForScreenWidth( mediaQueries.screenQuery1090 )
         Sidebar.formatForScreenWidth( mediaQueries )

@@ -19,8 +19,8 @@ if ( isOnMovieListPage ){
         screenQuery1090: window.matchMedia('(max-width: 1090px)')
     }
     document.addEventListener( 'DOMContentLoaded', () => { MovieListPage.onLoadPageBuffer( register, queries ) })
-    queries.screenQuery1090.addEventListener( 'change', () => { MovieListPage.formatPageFromQueryEvent( '1090', mediaWidth ) })
-    queries.screenQuery770.addEventListener( 'change', () => { MovieListPage.formatPageFromQueryEvent( '770', mediaWidth ) })
+    queries.screenQuery1090.addEventListener( 'change', () => { MovieListPage.formatPageFromQueryEvent( '1090', queries, register ) })
+    queries.screenQuery770.addEventListener( 'change', () => { MovieListPage.formatPageFromQueryEvent( '770', queries, register ) })
 }
 
 if ( isOnAddMoviePage ){
