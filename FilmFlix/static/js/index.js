@@ -3,8 +3,6 @@ import movieDetailsPage from './movieDetailsPage.js'
 import MovieListPage from './movieListPage.js'
 
 
-//GET RID OF ALL GLOBAL VARIABLES!!
-
 const isOnMovieListPage = (window.location.href.includes('movies') && !window.location.href.includes('movies/'))
 const isOnMovieDetailsPage = ( window.location.href.includes('movies/'))
 const isOnAddMoviePage = (window.location.href.includes('add-movie'))
@@ -12,15 +10,12 @@ const isOnAddMoviePage = (window.location.href.includes('add-movie'))
 search.icon.addEventListener( 'click', search.initialiseSearch )
 
 if ( isOnMovieListPage ){
-    var registerEl = document.querySelector('.movie-register-container')
-    var register = MovieListPage.initialiseRegister( registerEl )
-    const queries = {
-        screenQuery770: window.matchMedia('(max-width: 770px)'),
-        screenQuery1090: window.matchMedia('(max-width: 1090px)')
-    }
-    document.addEventListener( 'DOMContentLoaded', () => { MovieListPage.onLoadPageBuffer( register, queries ) })
-    queries.screenQuery1090.addEventListener( 'change', () => { MovieListPage.formatPageFromQueryEvent( '1090', queries, register ) })
-    queries.screenQuery770.addEventListener( 'change', () => { MovieListPage.formatPageFromQueryEvent( '770', queries, register ) })
+    var register = MovieListPage.initialiseRegister()  // RETURNS INSTANTIATED REGISTER OBJECT WHERE 'domELement' IS THE MOVIE REGISTER CONTAINER
+    var sidebar = MovieListPage.initialiseSidebar()  // RETURNS INSTANTIATED SIDEBAR OBJECT WHERE 'domELement' IS THE SIDEBAR MENU CONTAINER
+    var queries = MovieListPage.fetchFunctionalScreenBreakpointQueries()  // RETURNS OBJECT OF MEDIA QUERY OBJECTS KEYED BY QUERY WIDTH
+    document.addEventListener( 'DOMContentLoaded', () => { MovieListPage.onLoadPageBuffer( register, sidebar, queries ) })
+    queries.screenQuery1090.addEventListener( 'change', () => { MovieListPage.formatPageFromQueryEvent( '1090', queries, register, sidebar ) })
+    queries.screenQuery770.addEventListener( 'change', () => { MovieListPage.formatPageFromQueryEvent( '770', queries, register, sidebar ) })
 }
 
 if ( isOnAddMoviePage ){

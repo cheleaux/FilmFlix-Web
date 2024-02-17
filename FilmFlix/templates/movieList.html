@@ -1,6 +1,6 @@
 {% extends 'Base.html' %}
 
-{% block title %}FilmFlix - Full movie list{% endblock %}
+{% block title %}FilmFlix - Full movie list{% endblock %}   
 
 {% block main %}
 <main id="movie-list-main" class="flex">
@@ -16,6 +16,23 @@
                     <button class="list-toggle format-toggler"><i class="bi bi-list-ul"></i></button>
                     <button class="card-toggle format-toggler"><i class="bi bi-view-list"></i></button>
                 </div>
+                <button class="filter-btn taskbar-opt"><i class="bi bi-funnel"></i> filter</button>
+            </div>
+
+            <div class="filter-section flex closed">
+                <section class="filter-by-year filter-field">
+                    <span class="filter-label flex">Year Release <i class="bi bi-chevron-down"></i></span>
+                    <div class="filter-field-opts flex"></div>
+                </section>
+                <section class="filter-by-rating filter-field">
+                    <span class="filter-label flex">Rating <i class="bi bi-chevron-down"></i></span>
+                </section>
+                <section class="filter-by-duration filter-field">
+                    <span class="filter-label flex">Duration <i class="bi bi-chevron-down"></i></span>
+                </section>
+                <section class="filter-by-genre filter-field">
+                    <span class="filter-label flex">Genre <i class="bi bi-chevron-down"></i></span>
+                </section>
             </div>
 
             <ul class="list-menu flex">

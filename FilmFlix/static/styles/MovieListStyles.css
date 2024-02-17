@@ -147,14 +147,31 @@ aside.closed .bi-arrow-bar-right {
     gap: .5rem;
 }
 
-.format-toggler {
-    border: transparent;
-    border-radius: .2rem;
+.format-toggler, .filter-btn {
     padding: 0 .7rem;
+    font-size: var(--fs-140);
+    border-radius: .2rem;
+    border: transparent;
+}
+
+.filter-btn {
+    color: var(--clr-icon);
+    background-color: var(--clr-aside-rule);
+    letter-spacing: .03rem;
+}
+
+.filter-btn:hover {
+    background-color: var(--clr-accent-pastel);
+}
+
+.filter-btn:active, .format-toggler:active:not( .format-toggler.active:active ) {
+    color: var(--clr-main);
+}
+
+.format-toggler {
     flex-direction: row;
     align-items: center;
-    font-size: var(--fs-140);
-    background-color: var(--clr-main-bg)
+    background-color: var(--clr-main-bg);
 }
 
 .format-toggler.active {
@@ -166,11 +183,58 @@ aside.closed .bi-arrow-bar-right {
     background-color: var(--clr-aside-rule)
 }
 
-.format-toggler:active:not( .format-toggler.active:active ) {
-    color: var(--clr-main)
+/* TASKBAR ---< */
+
+/* ----------------------- TASKBAR */
+
+.filter-section {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.4rem;
+    padding: 1.06rem  0.73rem 1.06rem;
+    margin-bottom: 1.06rem;
+    border-radius: 0.8rem;
+    border: 1px solid var(--clr-rule);
+}
+
+.filter-section .filter-field {
+    font-size: var(--fs-140);
+}
+
+.filter-label {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-field i.bi-chevron-down {
+    font-size: var(--fs-110);
+    color: var(--clr-accent);
+}
+
+.filter-field i.bi-chevron-down::before {
+    transform: rotate(90deg)
+}
+
+.filter-field-opts *{
+    height: 0.9rem;
+    gap: 1.2rem;
+    flex-direction: column;
+}
+
+.filter-field-opts input[type=checkbox]{
+    width: 0.6rem;
+    margin-right: 0.65rem;
+    margin-top: 0.187rem;
+}
+
+.filter-field-opts label {
+    font-size: var(--fs-110)
 }
 
 /* TASKBAR ---< */
+
 
 .custom-list-subhead {
     font-size: var(--fs-180);

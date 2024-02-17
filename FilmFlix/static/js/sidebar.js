@@ -1,49 +1,65 @@
+import taskbar from './taskbar.js'
+import customListMenu from './customListMenu.js'
 
-//CONSIDER CLASSIFYING THE SIDERBAR
+export default class Sidebar{
+    constructor( domElement ){
+        this.domElement = domElement
+        this.taskbarElement = taskbar.getDomElement()
+        this.filter = this.domElement.querySelector('.filter-section')
+        this.listMenuElement = customListMenu.getDomElement()
+    }
 
-const isWithinQueryRange = ( widthRangeStart, queries ) => {
-    if( widthRangeStart == '1090' ) return ( queries.screenQuery1090.matches && !queries.screenQuery770.matches );
-    else if( widthRangeStart == '770' ) return ( queries.screenQuery770.matches );
+    _formatAndRenderContent( register, mediaQueries ){
+        this._formatForScreenWidth( mediaQueries )
+        taskbar.setFormatIcon( register )
+        customListMenu.renderListMenu()
+    }
+
+    _handleUserAction( e, register ){
+        if( this.taskbarElement.contains( e.target ) ) taskbar.handleUserTask( e, register );
+        else if( this.listMenuElement.contains( e.target ) ) customListMenu.displayListResults( e, register );
+    }
+
+    _formatForScreenWidth( queries ){
+        if( this._isWithinQueryRange( '1090', queries ) ) this._activeConcealableSidebar( 'open', this.domElement );
+        else if( this._isWithinQueryRange( '770', queries ) ) this._activeConcealableSidebar( 'closed', this.domElement );
+        else this._deactiveConcealableSidebar( this.domElement );
+    }
+    
+    _isWithinQueryRange( widthRangeStart, queries ){
+        if( widthRangeStart == '1090' ) return ( queries.screenQuery1090.matches && !queries.screenQuery770.matches );
+        else if( widthRangeStart == '770' ) return ( queries.screenQuery770.matches );
+    }
+
+    _activeConcealableSidebar( lockState,){
+        this.domElement.classList.add('concealable')
+        if( lockState == 'open' ) this._openSidebar( this.domElement ); 
+        else if( lockState == 'closed' ) this._closeSidebar( this.domElement );
+        this.domElement.addEventListener( 'click', ( e ) => { this._toggleSidebarVisibily( e, this.domElement ) } )
+    }
+
+    _deactiveConcealableSidebar(){
+        this.domElement.classList.remove('concealable')
+        this.domElement.classList.contains('open') ? this.domElement.classList.remove('open') : this.domElement.classList.remove('closed');
+        this.domElement.removeEventListener( 'click', ( e ) => { this._toggleSidebarVisibily( e, this.domElement ) } )
+    }
+
+    _toggleSidebarVisibily( e ){
+        const toggleBtn = e.target.classList.contains('sidebar-toggler') ? e.target : e.target.closest('sidebar-toggler')
+        if( !toggleBtn ) return;
+        if( toggleBtn.classList.contains('sidebar-close') ) this._closeSidebar( this.domElement )
+        else if( toggleBtn.classList.contains('sidebar-open') ) this._openSidebar( this.domElement );
+    }
+
+    _openSidebar(){
+        if( this.domElement.classList.contains('open') ) return;
+        this.domElement.classList.remove('closed')
+        this.domElement.classList.add('open')
+    }
+
+    _closeSidebar(){
+        if( this.domElement.classList.contains('closed') ) return;
+        this.domElement.classList.remove('open')
+        this.domElement.classList.add('closed')
+    }
 }
-
-function formatForScreenWidth( queries ){
-    const domElement = document.querySelector('.page-menu')
-    if( isWithinQueryRange( '1090', queries ) ) activeConcealableSidebar( 'open', domElement );
-    else if( isWithinQueryRange( '770', queries ) ) activeConcealableSidebar( 'closed', domElement );
-    else deactiveConcealableSidebar( domElement );
-}
-
-function activeConcealableSidebar( lockState, domElement ){
-    domElement.classList.add('concealable')
-    if( lockState == 'open' ) openSidebar( domElement ); 
-    else if( lockState == 'closed' ) closeSidebar( domElement );
-    domElement.addEventListener( 'click', ( e ) => { toggleSidebarVisibily( e, domElement ) } )
-}
-
-function deactiveConcealableSidebar( domElement ){
-    domElement.classList.remove('concealable')
-    domElement.classList.contains('open') ? domElement.classList.remove('open') : domElement.classList.remove('closed');
-    domElement.removeEventListener( 'click', ( e ) => { toggleSidebarVisibily( e, domElement ) } )
-}
-
-function toggleSidebarVisibily( e, domElement ){
-    const toggleBtn = e.target.classList.contains('sidebar-toggler') ? e.target : e.target.closest('sidebar-toggler')
-    console.log( toggleBtn )
-    if( toggleBtn.classList.contains('sidebar-close') ) closeSidebar( domElement )
-    else if( toggleBtn.classList.contains('sidebar-open') ) openSidebar( domElement );
-}
-
-function openSidebar( domElement ){
-    if( domElement.classList.contains('open') ) return;
-    domElement.classList.remove('closed')
-    domElement.classList.add('open')
-}
-
-function closeSidebar( domElement ){
-    if( domElement.classList.contains('closed') ) return;
-    domElement.classList.remove('open')
-    domElement.classList.add('closed')
-}
-
-
-export default { formatForScreenWidth }
