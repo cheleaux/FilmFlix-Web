@@ -51,6 +51,7 @@
 
     /* TRANSITION ANIMATION DURATIONS */
     --td-btn-scale-up: 0.05s;
+    --td-drop-down-toggle: 0.03s;
 }
 
 /* ------------------------------------ RESET */

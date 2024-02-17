@@ -5,7 +5,7 @@ export default class Sidebar{
     constructor( domElement ){
         this.domElement = domElement
         this.taskbarElement = taskbar.getDomElement()
-        this.filter = this.domElement.querySelector('.filter-section')
+        this.filterElement = this.domElement.querySelector('.filter-options')
         this.listMenuElement = customListMenu.getDomElement()
     }
 
@@ -16,8 +16,8 @@ export default class Sidebar{
     }
 
     _handleUserAction( e, register ){
-        if( this.taskbarElement.contains( e.target ) ) taskbar.handleUserTask( e, register );
-        else if( this.listMenuElement.contains( e.target ) ) customListMenu.displayListResults( e, register );
+        if( this.taskbarElement.contains( e.target ) ) taskbar.handleUserTask( e, register, this.filterElement );
+        else if( this.listMenuElement.contains( e.target ) ) customListMenu.displayListMembers( e, register );
     }
 
     _formatForScreenWidth( queries ){

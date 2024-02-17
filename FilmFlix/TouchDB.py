@@ -1,6 +1,7 @@
 from .Models import Movie, CustomList, db
 from sqlalchemy.orm.attributes import flag_modified
 from sqlalchemy.sql import text
+from sqlalchemy import exc
 
 def insertMovie( details ):
     title, year, rating, duration, genre, lists = details.values()
@@ -40,10 +41,15 @@ def removeList( listID ):
 
 
 def fetchMoviesFromList( listID ):
-    mvList = Movie.query.all()
-    if listID:
-        mvList = [ movie for movie in mvList if movie.lists and int(listID) in movie.lists['list_ids']  ]
-    return mvList
+    try:
+        mvList = Movie.query.all()
+        if listID:
+            mvList = [ movie for movie in mvList if movie.lists and int(listID) in movie.lists['list_ids']  ]
+        return mvList
+    except exc.OperationalError.orig as err:
+        print( err )
+        print( 'Exception code: ', err.pgcode )
+
 
     
 def fetchMoviesFromSearch( query ):

@@ -154,20 +154,6 @@ aside.closed .bi-arrow-bar-right {
     border: transparent;
 }
 
-.filter-btn {
-    color: var(--clr-icon);
-    background-color: var(--clr-aside-rule);
-    letter-spacing: .03rem;
-}
-
-.filter-btn:hover {
-    background-color: var(--clr-accent-pastel);
-}
-
-.filter-btn:active, .format-toggler:active:not( .format-toggler.active:active ) {
-    color: var(--clr-main);
-}
-
 .format-toggler {
     flex-direction: row;
     align-items: center;
@@ -183,21 +169,44 @@ aside.closed .bi-arrow-bar-right {
     background-color: var(--clr-aside-rule)
 }
 
+.filter-btn, .filter-btn.inactive {
+    color: var(--clr-icon);
+    background-color: var(--clr-aside-rule);
+    letter-spacing: .03rem;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background-color: var(--clr-accent-pastel);
+}
+
+
+
+.filter-btn:active, .format-toggler:active:not( .format-toggler.active:active ) {
+    color: var(--clr-main);
+}
+
 /* TASKBAR ---< */
 
 /* ----------------------- TASKBAR */
 
-.filter-section {
+.filter-options, .filter-options.open {
     flex-direction: column;
+    height: fit-content;
     width: 100%;
     gap: 0.4rem;
     padding: 1.06rem  0.73rem 1.06rem;
     margin-bottom: 1.06rem;
     border-radius: 0.8rem;
     border: 1px solid var(--clr-rule);
+    transition: ease-in-out var(--td-drop-down-toggle);
 }
 
-.filter-section .filter-field {
+.filter-options.closed {
+    display: none;
+    height: 0;
+}
+
+.filter-options .filter-field {
     font-size: var(--fs-140);
 }
 

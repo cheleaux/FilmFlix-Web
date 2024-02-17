@@ -6,7 +6,7 @@ function getDomElement(){
     return domElement
 }
 
-function displayListResults( e, register ){
+function displayListMembers( e, register ){
     if( !e.target ) return;
         const listOpt = e.target.closest('.list-menu-opt')
     if( listOpt ){
@@ -37,4 +37,4 @@ function renderListMenu() {
     .catch( err => console.log(err) )
 }
 
-export default { renderListMenu, displayListResults, getDomElement };
+export default { renderListMenu, displayListMembers, getDomElement };
