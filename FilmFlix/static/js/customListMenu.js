@@ -30,11 +30,17 @@ function switchActiveListStatus( listOpt ){
 
 function renderListMenu() {
     const listData = CustomList.fetchMetaData()
-    listData.then( data => data.forEach( item => {
-        const customList = new CustomList( item.list_id, item.name, item.movie_count )
-        getDomElement().insertAdjacentElement( 'beforeend', customList._constructListMrnuItemHTML() )
-    }))
+    listData.then( data => {
+        data.forEach( item => {
+            const customList = new CustomList( item.list_id, item.name, item.movie_count )
+            getDomElement().insertAdjacentElement( 'beforeend', customList._constructListMrnuItemHTML() )
+    })})
     .catch( err => console.log(err) )
+}
+
+function setMainMovieListQuantity( quantity ){
+    const AllMoviesOption = document.querySelector('#all-movies-menu-opt')
+    AllMoviesOption.querySelector('.quantity').innerHTML = String(quantity)
 }
 
 export default { renderListMenu, displayListMembers, getDomElement };

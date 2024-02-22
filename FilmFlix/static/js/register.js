@@ -1,6 +1,6 @@
 import Taskbar from './taskbar.js'
 import Movie from './movie.js'
-
+import { Filterables } from './filter.js'
 
 export default class Register {
     constructor( domElement ){
@@ -8,6 +8,7 @@ export default class Register {
         this.listContent = []
         this.errMsg = domElement.querySelector('.err-not-found') || null
         this.activeRegister = this._fetchActiveRegister
+        this.mainListMeta = this._fetchListMeta()
     }
 
     _populateRegister( definedMovieList = null ){
@@ -47,7 +48,16 @@ export default class Register {
         const activeRegister = formatSetToList ? this.domElement.querySelector('tbody') : formatSetToCard ? this.domElement.querySelector('.movie-register') : null;
         return activeRegister
     }
-    
+
+    _fetchListMeta( list = undefined ){
+        const movies = list !== undefined ? list : JSON.parse( this.domElement.dataset.movies );
+        const metaData = {
+            length: movies.length, // RETURNS AN INTEGER
+            filterables: Register.extractUniqueValues( movies ), // RETURNS AN OBJECT WITH PROPS IDENTICAl TO A MOVIE INSTANCE WITHOUT 'title' OR 'filmID'
+        }
+        return metaData
+    }
+
     _setLockedFormat( formatSetter ){
         const formatToggler = Taskbar.getDomElement().querySelector('.register-format-toggle')
         if( !formatToggler ) return;
@@ -79,5 +89,14 @@ export default class Register {
             if( register.children || Array.from( register.children ).length != 0 ) Array.from( register.children ).forEach( elem => elem.remove() );
         })
     }
-
+    
+    static extractUniqueValues( movieList ){
+        const uniqueValues = new Filterables()
+        movieList.forEach( movie => {
+            for( const key of Object.keys( uniqueValues )){
+                if( !uniqueValues[key].includes( movie[key] ) ) uniqueValues[key].push( movie[key] );
+            }
+        })
+        return uniqueValues
+    }
 }

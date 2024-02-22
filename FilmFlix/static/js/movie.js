@@ -8,7 +8,7 @@ export default class Movie {
         this.duration = duration
         this.genre = genre
     }
-
+    
     _constructListItemHTML(){
         const row = document.createElement('tr')
         row.classList.add('mv-row')

@@ -1,4 +1,5 @@
 import taskbar from './taskbar.js'
+import filter from './filter.js'
 import customListMenu from './customListMenu.js'
 
 export default class Sidebar{
@@ -9,15 +10,16 @@ export default class Sidebar{
         this.listMenuElement = customListMenu.getDomElement()
     }
 
-    _formatAndRenderContent( register, mediaQueries ){
+    _formatAndRenderContent( Register, mediaQueries ){
         this._formatForScreenWidth( mediaQueries )
-        taskbar.setFormatIcon( register )
+        taskbar.setFormatIcon( Register )
         customListMenu.renderListMenu()
+        filter.renderfilterFields( this.filterElement, Register.mainListMeta )
     }
 
-    _handleUserAction( e, register ){
-        if( this.taskbarElement.contains( e.target ) ) taskbar.handleUserTask( e, register, this.filterElement );
-        else if( this.listMenuElement.contains( e.target ) ) customListMenu.displayListMembers( e, register );
+    _handleUserAction( e, Register ){
+        if( this.taskbarElement.contains( e.target ) ) taskbar.handleUserTask( e, Register, this.filterElement );
+        else if( this.listMenuElement.contains( e.target ) ) customListMenu.displayListMembers( e, Register );
     }
 
     _formatForScreenWidth( queries ){
