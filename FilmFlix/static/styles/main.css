@@ -15,8 +15,9 @@
 :root {
 
     /*  COLOURS  */
-    --clr-accent: #33CA70;
+    --clr-accent: #33ca70;
     --clr-accent-pastel: #d7f0e1;
+    --clr-accent-pastel-002: #b4ddc4;
     --clr-main: #ffffff;
     --clr-icon: #757D8A;
     --clr-main-text: #000000;

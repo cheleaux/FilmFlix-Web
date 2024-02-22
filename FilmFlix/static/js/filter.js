@@ -1,10 +1,10 @@
 
 const isfilterOptionsOpen = filterOptionElement => filterOptionElement.classList.contains('open');
 const isfilterOptionsClosed = filterOptionElement => filterOptionElement.classList.contains('closed');
+const isfilterFieldOpen = filterField => filterField.classList.contains('open')
+const isfilterFieldClosed = filterField => filterField.classList.contains('closed')
 const isActive = false
-// const isfilterFieldContainer = ( e ) => {
-//     e.target.classList.contains('filter-field') || ( (e.target) )
-// }
+
 
 function toggleFilterOptions( filterOptionElement ){
     if( isfilterOptionsClosed( filterOptionElement ) ) openFilterOptions( filterOptionElement )
@@ -24,11 +24,27 @@ function openFilterOptions( filterOptionElement ){
 }
 
 function handleFieldSelections( e ){
-    if( e.target.classList.contains('filter-field') ) togglefilterField( e.target );
+    if( e.target.classList.contains('filter-label') ){
+        const filterField = e.target.closest('.filter-field')
+        togglefilterField( filterField );
+    }
+    // HANDLE THE FILTER EVENT WITH THE SIDEBAR USING THE FILTER AS API
 }
 
 function togglefilterField( filterField ){
-    console.log(filterField)
+    if( !filterField ) return;
+    if( isfilterFieldClosed( filterField ) ) openFilterField( filterField )
+    else if( isfilterFieldOpen( filterField ) ) closeFilterField( filterField )
+}
+
+function openFilterField( filterField ){
+    filterField.classList.remove('closed')
+    filterField.classList.add('open')
+}
+
+function closeFilterField( filterField ){
+    filterField.classList.remove('open')
+    filterField.classList.add('closed')
 }
 
 function constructFieldSelectionHTML( value, fieldName ){
