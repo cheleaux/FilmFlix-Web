@@ -5,8 +5,11 @@ import customListMenu from './customListMenu.js'
 export default class Sidebar{
     constructor( domElement ){
         this.domElement = domElement
+        // TASKBAR DOM ELEMENT GETTER
         this.taskbarElement = taskbar.getDomElement()
+        // FILTERS DOM ELEMENT GETTER
         this.filterElement = this.domElement.querySelector('.filter-options')
+        // LIST MENU DOM ELEMENT GETTER
         this.listMenuElement = customListMenu.getDomElement()
     }
 
@@ -20,6 +23,7 @@ export default class Sidebar{
     _handleUserAction( e, Register ){
         if( this.taskbarElement.contains( e.target ) ) taskbar.handleUserTask( e, Register, this.filterElement );
         else if( this.listMenuElement.contains( e.target ) ) customListMenu.displayListMembers( e, Register );
+        else if( e.target.classList.contains('apply-filter-btn') ) filter.getFilters( document.forms['filter-form'].elements );
     }
 
     _formatForScreenWidth( queries ){
