@@ -3,8 +3,9 @@ const isfilterOptionsOpen = filterOptionElement => filterOptionElement.classList
 const isfilterOptionsClosed = filterOptionElement => filterOptionElement.classList.contains('closed');
 const isfilterFieldOpen = filterField => filterField.classList.contains('open')
 const isfilterFieldClosed = filterField => filterField.classList.contains('closed')
-const isDurationFilter = filterGroup => ( filterGroup.id && filterGroup.id.toLowerCase().includes('duration') )
+const isDurationFilter = filterGroup => (( filterGroup.id && filterGroup.id.toLowerCase().includes('duration') ) || ( filterGroup.hasOwnProperty('min' || 'max') ))
 const hasInput = filterGroup => ( ( filterGroup.type === 'number' && filterGroup.value ) || ( filterGroup.type === 'checkbox' && filterGroup.checked ) )
+const hasValue = filterGroup => ( filterGroup.length >= 1 || filterGroup.min || filterGroup.max )
 
 const durationInputTemplate = ( { min, max }, fieldName ) => `
         <span><input type="number" name="${ fieldName }Min" id="${ fieldName }MinInp" style="margin-right: 0.35rem;" /> <label for="${ fieldName }MinInp">min</span>
@@ -12,10 +13,10 @@ const durationInputTemplate = ( { min, max }, fieldName ) => `
     `
 const defaultInputTemplate = ( value, fieldName, id ) => `
         <input type="checkbox" value="${ value }" name="${ fieldName }" id="${ fieldName }Inp-${ id }" />
-        <label for="${ fieldName }Inp">${value}</label>
+        <label for="${ fieldName }Inp">${ value }</label>
     `
 const movieDuraitonWithinRange = ( movie, min = 0, max = 5100 ) => {
-    const durationFilterRange = Array.from( { length: Number( max ) - Number( min ) }, ( j, i) => i + Number( min ) )
+    const durationFilterRange = Array.from( { length: Number( max ) - ( Number( min ) )}, ( _, i) => i + Number( min ) + 1 )
     return durationFilterRange.includes( Number( movie.duration ) ) ? true : false;
 }
 
@@ -23,16 +24,18 @@ const movieDuraitonWithinRange = ( movie, min = 0, max = 5100 ) => {
 // NEED WORK CHECK FILTERING LOGIC AS IT EITHER FILTERS OUT ALL MOVIE OR NONE
 function filterMovies( movieList, formElements ){
     const filterValues = makeFilters( formElements )
-    const filteredMovies = movieList.filter( movie => {
-        for( const key of Object.keys( filterValues ) ){
-            if( filterValues[key].min || filterValues[key].max ){
-                const durationFilters = filterValues[key]
-                if( !movieDuraitonWithinRange( movie, durationFilters.min, durationFilters.max ) ) return false;
-            } else if( filterValues[key] ){
-                if( !filterValues[key].includes( movie[key] ) ) return false;
-            } else return true
-    }})
+    const filteredMovies = movieList.filter( (movie) => { return evaluateMovieAgainstFilters( movie, filterValues ) } )
     console.log( filteredMovies )
+}
+
+function evaluateMovieAgainstFilters( movie, filters ){
+    let meetsFilters;
+    for( const key of Object.keys( filters ) ){
+        if( isDurationFilter( filters[key] ) && hasValue( filters[key] ) ){ meetsFilters = movieDuraitonWithinRange( movie, filters[key].min, filters[key].max ) ? true : false; }
+        else if( hasValue( filters[key] ) && !isDurationFilter( filters[key] ) ) meetsFilters = filters[key].includes( String( movie[key] ) ) ? true : false;
+        if( meetsFilters === false ) break;
+    }
+    return meetsFilters
 }
 
 function clearFilters(){
@@ -124,9 +127,9 @@ export function Filterables( duration = undefined, yearReleased = undefined, rat
 
 // GRABS THE FILTER VALUES FROM THE FORM OBJECT AND PUTS THEM IN A NEW OBJECT SCOPED TO 'values' VARIABLE
 function makeFilters( formElements ){
-    const arr = [ formElements['rating'], formElements['genre'], formElements['yearReleased'], formElements['durationMin'], formElements['durationMax'] ]
-    const filterValues = { rating: [], genre: [], yearReleased: [], duration: { min: '', max: '' } }
-    arr.forEach( ( filterGroup ) => {
+    const filterGroups = [ formElements['rating'], formElements['genre'], formElements['yearReleased'], formElements['durationMin'], formElements['durationMax'] ]
+    const filterValues = { rating: [], genre: [], yearReleased: [], duration: { min: undefined, max: undefined } }
+    filterGroups.forEach( ( filterGroup ) => {
         if( isDurationFilter( filterGroup ) && hasInput( filterGroup ) ) insertInputsIntoFilterValuesDurationProperties( filterGroup, filterValues.duration );
         else insertInputsIntoFilterValues( filterGroup, filterValues )
     } )
@@ -145,7 +148,7 @@ function insertInputsIntoFilterValues( filterGroup, filterValues ){
 
 function insertInputsIntoFilterValuesDurationProperties( filterInp, durationFilterObj ){
     for( const key of Object.keys( durationFilterObj ) ){
-        if( filterInp.id.toLowerCase().includes( key ) ) durationFilterObj[key] = filterInp.value 
+        if( filterInp.id.toLowerCase().includes( key ) ) durationFilterObj[key] = filterInp.value.trim() ? filterInp.value : undefined;
     }
 }
 
