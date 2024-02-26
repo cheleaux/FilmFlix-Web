@@ -5,6 +5,7 @@ const isfilterFieldOpen = filterField => filterField.classList.contains('open')
 const isfilterFieldClosed = filterField => filterField.classList.contains('closed')
 const isDurationFilter = filterGroup => ( filterGroup.id && filterGroup.id.toLowerCase().includes('duration') )
 const hasInput = filterGroup => ( ( filterGroup.type === 'number' && filterGroup.value ) || ( filterGroup.type === 'checkbox' && filterGroup.checked ) )
+
 const durationInputTemplate = ( { min, max }, fieldName ) => `
         <span><input type="number" name="${ fieldName }Min" id="${ fieldName }MinInp" style="margin-right: 0.35rem;" /> <label for="${ fieldName }MinInp">min</span>
         <span><input type="number" name="${ fieldName }Max" id="${ fieldName }MaxInp" style="margin-right: 0.35rem;" /> <label for="${ fieldName }MaxInp">max</span>
@@ -13,8 +14,30 @@ const defaultInputTemplate = ( value, fieldName, id ) => `
         <input type="checkbox" value="${ value }" name="${ fieldName }" id="${ fieldName }Inp-${ id }" />
         <label for="${ fieldName }Inp">${value}</label>
     `
-const isActive = false
+const movieDuraitonWithinRange = ( movie, min = 0, max = 5100 ) => {
+    const durationFilterRange = Array.from( { length: Number( max ) - Number( min ) }, ( j, i) => i + Number( min ) )
+    return durationFilterRange.includes( Number( movie.duration ) ) ? true : false;
+}
 
+
+// NEED WORK CHECK FILTERING LOGIC AS IT EITHER FILTERS OUT ALL MOVIE OR NONE
+function filterMovies( movieList, formElements ){
+    const filterValues = makeFilters( formElements )
+    const filteredMovies = movieList.filter( movie => {
+        for( const key of Object.keys( filterValues ) ){
+            if( filterValues[key].min || filterValues[key].max ){
+                const durationFilters = filterValues[key]
+                if( !movieDuraitonWithinRange( movie, durationFilters.min, durationFilters.max ) ) return false;
+            } else if( filterValues[key] ){
+                if( !filterValues[key].includes( movie[key] ) ) return false;
+            } else return true
+    }})
+    console.log( filteredMovies )
+}
+
+function clearFilters(){
+    // CLEAR FILTERS AND REPOPULATE THE MOVIE REGISTER
+}
 
 // MAIN FILTER SECTION ELEMENT HANDLER
 function toggleFilterOptions( filterOptionElement ){
@@ -99,7 +122,8 @@ export function Filterables( duration = undefined, yearReleased = undefined, rat
     this.rating = rating || []
 }
 
-function getFilters( formElements ){
+// GRABS THE FILTER VALUES FROM THE FORM OBJECT AND PUTS THEM IN A NEW OBJECT SCOPED TO 'values' VARIABLE
+function makeFilters( formElements ){
     const arr = [ formElements['rating'], formElements['genre'], formElements['yearReleased'], formElements['durationMin'], formElements['durationMax'] ]
     const filterValues = { rating: [], genre: [], yearReleased: [], duration: { min: '', max: '' } }
     arr.forEach( ( filterGroup ) => {
@@ -125,4 +149,4 @@ function insertInputsIntoFilterValuesDurationProperties( filterInp, durationFilt
     }
 }
 
-export default { toggleFilterOptions, isActive, renderfilterFields, getFilters }
+export default { toggleFilterOptions, filterMovies, renderfilterFields, clearFilters }

@@ -23,7 +23,7 @@ export default class Sidebar{
     _handleUserAction( e, Register ){
         if( this.taskbarElement.contains( e.target ) ) taskbar.handleUserTask( e, Register, this.filterElement );
         else if( this.listMenuElement.contains( e.target ) ) customListMenu.displayListMembers( e, Register );
-        else if( e.target.classList.contains('apply-filter-btn') ) filter.getFilters( document.forms['filter-form'].elements );
+        else if( e.target.classList.contains('apply-filter-btn') ) filter.filterMovies( Register.listContent, document.forms['filter-form'].elements );
     }
 
     _formatForScreenWidth( queries ){
