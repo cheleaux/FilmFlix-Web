@@ -28,7 +28,7 @@ export default class Sidebar{
     _handleUserAction( e, Register ){
         if( this.taskbarElement.contains( e.target ) ) handleUserTask( e, Register, this.filterComponent );
         else if( this.listMenuElement.contains( e.target ) ) customListMenu.displayListMembers( e, Register );
-        else if( e.target.classList.contains('apply-filter-btn') ) Register._runFilter( FilterComponent.getUserFilterSelections() );
+        else if( e.target.classList.contains('apply-filter-btn') ) Register._populateRegister( { filterActive: true } );
     }
 
     _formatForScreenWidth( queries ){

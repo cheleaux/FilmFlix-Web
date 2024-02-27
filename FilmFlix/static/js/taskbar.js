@@ -9,12 +9,13 @@ export function getTaskbarDomElement(){
 export function handleUserTask( e, register, FilterCompenent ){
     const taskComponent = e.target.closest('.taskbar-opt')
     const formatToggler = e.target.closest('.format-toggler')
-    if( taskComponent.classList.contains('register-format-toggle') && !iconMatchesFormat( formatToggler, register ) ) register._switchFormat( formatToggler );
-    else if( taskComponent.classList.contains('filter-btn') ){
+    if( taskComponent.classList.contains('register-format-toggle') && !iconMatchesFormat( formatToggler, register ) ){
+        register._switchFormat( formatToggler );
+        register._populateRegister()
+    } else if( taskComponent.classList.contains('filter-btn') ){
         FilterCompenent._toggleFilterOptions();
         toggleFilterBtnStyle( e.target, FilterCompenent.domElement )
     }
-    register._populateRegister()
 }
 
 export function setFormatIcon( register ){

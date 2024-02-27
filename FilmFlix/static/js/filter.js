@@ -9,7 +9,7 @@ export default class Filter {
             min: undefined,
             max: undefined,
             isWithinRange: ( movie ) => {
-                const durationFilterRange = Array.from( { length: Number( this.max || '5100' ) - ( Number( this.min || '0' ) )}, ( _, i) => i + Number( min ) + 1 )
+                const durationFilterRange = Array.from( { length: Number( this.duration.max || '5100' ) - ( Number( this.duration.min || '0' ) )}, ( _, i) => i + Number( this.duration.min ) + 1 )
                 return durationFilterRange.includes( Number( movie.duration ) ) ? true : false;
             }
         }    
@@ -21,7 +21,10 @@ export default class Filter {
         
         this.isEmpty = () => {
             let threshold = 0
-            for( const key of Object.keys( this ) ) if( !Filter.hasValue( this[key] ) ) threshold ++;
+            for( const key of Object.keys( this ) ){
+                if( key === 'isEmpty') continue;
+                if( !Filter.hasValue( this[key] ) ) threshold ++;
+            }
             return threshold === 4 ? true : false ;
         }
     }
@@ -48,8 +51,7 @@ export default class Filter {
             else if( Filter.isDurationFilter( this[key] ) && Filter.hasValue( this[key] ) ){ meetsFilters = this.duration.isWithinRange( movie, this[key].min, this[key].max ) ? true : false; }
             else if( Filter.hasValue( this[key] ) && !Filter.isDurationFilter( this[key] ) ) meetsFilters = this[key].includes( String( movie[key] ) ) ? true : false;
             if( meetsFilters === false ) break;
-        }
-        return meetsFilters
+        } return meetsFilters
     }
 
     _insertFilterValues( filterGroup ){

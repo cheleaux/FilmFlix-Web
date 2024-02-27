@@ -12,10 +12,11 @@ function displayListMembers( e, Register ){
     if( listOpt ){
         const listId = listOpt.dataset.list
         switchActiveListStatus( listOpt )
-        if( listId == 0 ){ Register._populateRegister() }
+        if( listId == 0 ){ Register.filterActive ? Register._populateRegister( { filterActive: true } ) : Register._populateRegister() }
         else {
             const customMovies = CustomList.fetchCustomListMovies( listId )
-            customMovies.then( movies => Register.filterActive ? Register._runFilter( FilterComponent.getUserFilterSelections(), movies ) : Register._populateRegister( movies ) )
+            customMovies.then( movies => Register.filterActive ? Register._populateRegister( movies, { filterActive: true } ) : Register._populateRegister( movies ) )
+            console.log(`filter status: ${Register.filterActive}`)
         }
     };
 }

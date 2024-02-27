@@ -338,6 +338,10 @@ aside.closed .bi-arrow-bar-right {
     padding: 1.2rem 0.52rem;
 }
 
+.filter-field-opts input[type=number]::-webkit-inner-spin-button {
+    display: none;
+}
+
 .filter-field-opts input[type=number]{
     height: 0.965rem;
     width: 1.78rem;

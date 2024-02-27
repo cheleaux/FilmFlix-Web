@@ -1,6 +1,7 @@
 import { getTaskbarDomElement, setFormatIcon } from './taskbar.js'
 import Movie from './movie.js'
 import Filter from './Filter.js'
+import FilterComponent from './FilterComponent.js'
 import { Filterables } from './Filter.js'
 
 export default class Register {
@@ -17,28 +18,27 @@ export default class Register {
         }
     }
 
-    _populateRegister( definedMovieList = null ){
+    _populateRegister(){
+        const { definedMovieList, filterActive } = Register.sortArguments( arguments, '_populateRegister' )
         const movieData = definedMovieList || ( this.listContent || JSON.parse( this.mainListMeta.movieJson ) )
-        Register.checkIfEmpty( movieData ) ? this._NonFoundProtocol() : this._preInsertProtocol( movieData );
-        this._insertMovies( movieData )
+        Register.isEmpty( movieData ) ? this._NonFoundProtocol() : this._preInsertProtocol( movieData );
+        filterActive ? this._insertMovies( this._runFilter( movieData ) ) : this._insertMovies( movieData ) ;
     }
 
     _insertMovies( movieData ){
         const activeRegister = this.activeRegister()
-        for (const item of movieData){
+        for(const item of movieData){
             const newMovie = new Movie( item.filmID, item.title, item.yearReleased, item.rating, item.duration, item.genre )
             activeRegister.insertAdjacentElement( 'beforeend',  activeRegister.classList.contains('movie-register') ? newMovie._constructCardItemHTML() : newMovie._constructListItemHTML() );
         }
     }
 
-    _runFilter( formElements, movieList = undefined ){
+    _runFilter( movieList = undefined ){
         const movies = movieList || this.listContent
-        const filter = new Filter( formElements )
-        console.log( filter )
-        console.log( filter.isEmpty() )
-        const filteredMovies = filter.isEmpty() ? movies.filter( ( movie ) => { return filter._satisfiesFilter( movie ) } ) : movies ;
-        this.filterActive = true
-        this._populateRegister( filteredMovies )
+        const filter = new Filter( FilterComponent.getUserFilterSelections() )
+        const filteredMovies = !filter.isEmpty() ? movies.filter( ( movie ) => { return filter._satisfiesFilter( movie ) } ) : movies ;
+        this.filterActive = !filter.isEmpty() ? true : false;
+        return filteredMovies
     }
 
     _preInsertProtocol( movieData ){
@@ -50,10 +50,6 @@ export default class Register {
     _NonFoundProtocol(){
         this._clearRegister()
         this.errMsg.style.display = 'block';
-    }
-
-    static checkIfEmpty( movieList ){
-        return movieList.length == 0 || movieList == undefined
     }
 
     _switchFormat( formatToggler ){
@@ -117,6 +113,10 @@ export default class Register {
         })
     }
     
+    static isEmpty( movieList ){
+        return movieList.length == 0 || movieList == undefined
+    }
+
     static extractUniqueValues( movieList ){
         const uniqueValues = new Filterables()
         movieList.forEach( movie => {
@@ -125,5 +125,19 @@ export default class Register {
             }
         })
         return uniqueValues
+    }
+
+    static sortArguments( args, func ){
+        switch( func ){
+            case '_populateRegister':
+                const definedMovieList = Object.values( args ).find( arg => Array.isArray( arg ) ) || null
+                const attributes = Object.values( args ).find( arg => typeof arg === 'object' && !Array.isArray( arg ) ) || null
+                const filterActive = attributes && attributes.hasOwnProperty('filterActive') ? attributes['filterActive'] : null; 
+                var sortedArgs = { definedMovieList, filterActive }
+                break;
+            default:
+                var sortedArgs = args
+        }
+        return sortedArgs
     }
 }
