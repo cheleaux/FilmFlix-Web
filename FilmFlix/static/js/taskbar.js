@@ -1,24 +1,33 @@
-import filter from './filter.js'
+import Filter from './filter.js'
 
 
-function getDomElement(){
+export function getTaskbarDomElement(){
     const domElement = document.querySelector('.register-taskbar')
     return domElement
 }
 
-function handleUserTask( e, register, filterOptionsElement ){
+export function handleUserTask( e, register, FilterCompenent ){
     const taskComponent = e.target.closest('.taskbar-opt')
     const formatToggler = e.target.closest('.format-toggler')
     if( taskComponent.classList.contains('register-format-toggle') && !iconMatchesFormat( formatToggler, register ) ) register._switchFormat( formatToggler );
     else if( taskComponent.classList.contains('filter-btn') ){
-        filter.toggleFilterOptions( filterOptionsElement );
-        toggleFilterBtnStyle( e.target, filterOptionsElement )
+        FilterCompenent._toggleFilterOptions();
+        toggleFilterBtnStyle( e.target, FilterCompenent.domElement )
     }
     register._populateRegister()
 }
 
+export function setFormatIcon( register ){
+    const formatTogglerComponent = getTaskbarDomElement().querySelector('.register-format-toggle')
+    const formatToggleTypeCard = formatTogglerComponent.querySelector('.card-toggle')
+    const formatToggleTypelist = formatTogglerComponent.querySelector('.list-toggle')
+    Array.from( formatTogglerComponent.children ).forEach( toggler => { toggler.classList.remove('active') })
+    register.domElement.classList.contains('non-tabular-register') ? formatToggleTypeCard.classList.add('active') :
+    register.domElement.classList.contains('tabular-register') ? formatToggleTypelist.classList.add('active') : console.log('Element "movieListContainer" format class not matched')
+}
+
 function toggleFilterBtnStyle( filterBtn, filterOptionsElement ){
-    if( filterOptionsElement.classList.contains('open') || filter.isActive ) styleFilterBtnActive( filterBtn )
+    if( filterOptionsElement.classList.contains('open') ) styleFilterBtnActive( filterBtn )
     else if( filterOptionsElement.classList.contains('closed') ) styleFilterBtnInactive( filterBtn );
 }
 
@@ -38,14 +47,3 @@ function iconMatchesFormat( formatSelection, register ){
     const iconMatchesRegisterformat = ( iconAndRegisterAsCard || iconAndRegisterAsList )
     return iconMatchesRegisterformat
 }
-
-function setFormatIcon( register ){
-    const formatTogglerComponent = getDomElement().querySelector('.register-format-toggle')
-    const formatToggleTypeCard = formatTogglerComponent.querySelector('.card-toggle')
-    const formatToggleTypelist = formatTogglerComponent.querySelector('.list-toggle')
-    Array.from( formatTogglerComponent.children ).forEach( toggler => { toggler.classList.remove('active') })
-    register.domElement.classList.contains('non-tabular-register') ? formatToggleTypeCard.classList.add('active') :
-    register.domElement.classList.contains('tabular-register') ? formatToggleTypelist.classList.add('active') : console.log('Element "movieListContainer" format class not matched')
-}
-
-export default { handleUserTask, setFormatIcon, getDomElement };

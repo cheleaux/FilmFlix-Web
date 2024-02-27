@@ -1,21 +1,21 @@
-import CustomList from "./customList.js";
-
+import CustomList from "./customList.js"
+import FilterComponent from "./FilterComponent.js"
 
 function getDomElement(){
     const domElement = document.querySelector('.list-menu')
     return domElement
 }
 
-function displayListMembers( e, register ){
+function displayListMembers( e, Register ){
     if( !e.target ) return;
         const listOpt = e.target.closest('.list-menu-opt')
     if( listOpt ){
         const listId = listOpt.dataset.list
         switchActiveListStatus( listOpt )
-        if(listId == 0){ register._populateRegister() }
+        if( listId == 0 ){ Register._populateRegister() }
         else {
             const customMovies = CustomList.fetchCustomListMovies( listId )
-            customMovies.then( movies => register._populateRegister( movies ))
+            customMovies.then( movies => Register.filterActive ? Register._runFilter( FilterComponent.getUserFilterSelections(), movies ) : Register._populateRegister( movies ) )
         }
     };
 }
@@ -28,8 +28,9 @@ function switchActiveListStatus( listOpt ){
     CustomList._toggleActiveStatus( listOpt )
 }
 
-function renderListMenu() {
+function renderListMenu( { length } ) {
     const listData = CustomList.fetchMetaData()
+    setMainListQuantity( length )
     listData.then( data => {
         data.forEach( item => {
             const customList = new CustomList( item.list_id, item.name, item.movie_count )
@@ -38,7 +39,7 @@ function renderListMenu() {
     .catch( err => console.log(err) )
 }
 
-function setMainMovieListQuantity( quantity ){
+function setMainListQuantity( quantity ){
     const AllMoviesOption = document.querySelector('#all-movies-menu-opt')
     AllMoviesOption.querySelector('.quantity').innerHTML = String(quantity)
 }

@@ -1,6 +1,7 @@
-import Taskbar from './taskbar.js'
+import { getTaskbarDomElement, setFormatIcon } from './taskbar.js'
 import Movie from './movie.js'
-import { Filterables } from './filter.js'
+import Filter from './Filter.js'
+import { Filterables } from './Filter.js'
 
 export default class Register {
     constructor( domElement ){
@@ -8,30 +9,57 @@ export default class Register {
         this.listContent = []
         this.errMsg = domElement.querySelector('.err-not-found') || null
         this.activeRegister = this._fetchActiveRegister
-        this.mainListMeta = this._fetchListMeta()
+        this.filterActive = false
+        this.mainListMeta = {
+            mainJson: this.domElement.dataset.movies,
+            length: JSON.parse( this.domElement.dataset.movies ).length, // RETURNS AN INTEGER
+            filterables: Register.extractUniqueValues( JSON.parse( this.domElement.dataset.movies ) ), // RETURNS AN OBJECT WITH PROPS IDENTICAl TO A MOVIE INSTANCE WITHOUT 'title' OR 'filmID'
+        }
     }
 
     _populateRegister( definedMovieList = null ){
-        const movieData = definedMovieList || ( this.listContent || JSON.parse( this.domElement.dataset.movies ) )
+        const movieData = definedMovieList || ( this.listContent || JSON.parse( this.mainListMeta.movieJson ) )
+        Register.checkIfEmpty( movieData ) ? this._NonFoundProtocol() : this._preInsertProtocol( movieData );
+        this._insertMovies( movieData )
+    }
+
+    _insertMovies( movieData ){
         const activeRegister = this.activeRegister()
-        this.listContent = movieData
-
-        if( movieData.length == 0 || movieData == undefined ){
-            this.errMsg.style.display = 'block';
-            return
-        } else this.errMsg.style.display = 'none';
-
-        this._clearRegister()
         for (const item of movieData){
             const newMovie = new Movie( item.filmID, item.title, item.yearReleased, item.rating, item.duration, item.genre )
             activeRegister.insertAdjacentElement( 'beforeend',  activeRegister.classList.contains('movie-register') ? newMovie._constructCardItemHTML() : newMovie._constructListItemHTML() );
         }
     }
 
+    _runFilter( formElements, movieList = undefined ){
+        const movies = movieList || this.listContent
+        const filter = new Filter( formElements )
+        console.log( filter )
+        console.log( filter.isEmpty() )
+        const filteredMovies = filter.isEmpty() ? movies.filter( ( movie ) => { return filter._satisfiesFilter( movie ) } ) : movies ;
+        this.filterActive = true
+        this._populateRegister( filteredMovies )
+    }
+
+    _preInsertProtocol( movieData ){
+        this.listContent = this.filterActive ? this.listContent : movieData;
+        this._clearRegister()
+        this.errMsg.style.display = 'none';
+    }
+
+    _NonFoundProtocol(){
+        this._clearRegister()
+        this.errMsg.style.display = 'block';
+    }
+
+    static checkIfEmpty( movieList ){
+        return movieList.length == 0 || movieList == undefined
+    }
+
     _switchFormat( formatToggler ){
         if( formatToggler.classList.contains('list-toggle') ) this._setFormatToList();
         else if( formatToggler.classList.contains('card-toggle')) this._setFormatToCard();
-        Taskbar.setFormatIcon( this )
+        setFormatIcon( this )
     }
 
     _formatForScreenWidth( screenWidth1090 ){
@@ -49,27 +77,26 @@ export default class Register {
         return activeRegister
     }
 
-    _fetchListMeta( list = undefined ){
+    _fetchRegisterMeta( list = undefined ){
         const movies = list !== undefined ? list : JSON.parse( this.domElement.dataset.movies );
         const metaData = {
-            length: movies.length, // RETURNS AN INTEGER
-            filterables: Register.extractUniqueValues( movies ), // RETURNS AN OBJECT WITH PROPS IDENTICAl TO A MOVIE INSTANCE WITHOUT 'title' OR 'filmID'
+            
         }
         return metaData
     }
 
     _setLockedFormat( formatSetter ){
-        const formatToggler = Taskbar.getDomElement().querySelector('.register-format-toggle')
+        const formatToggler = getTaskbarDomElement().querySelector('.register-format-toggle')
         if( !formatToggler ) return;
         formatToggler.style.display = 'none'
         formatSetter()
     }
 
     _unlockFormat(){
-        const formatToggler = Taskbar.getDomElement().querySelector('.register-format-toggle')
+        const formatToggler = getTaskbarDomElement().querySelector('.register-format-toggle')
         if( !formatToggler ) return;
         formatToggler.style.display = 'flex'
-        Taskbar.setFormatIcon( this )
+        setFormatIcon( this )
     }
 
     _setFormatToCard(){

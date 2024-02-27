@@ -1,29 +1,34 @@
-import taskbar from './taskbar.js'
-import filter from './filter.js'
+import { setFormatIcon, handleUserTask, getTaskbarDomElement } from './taskbar.js'
 import customListMenu from './customListMenu.js'
-
+import FilterComponent from './FilterComponent.js'
 export default class Sidebar{
     constructor( domElement ){
         this.domElement = domElement
         // TASKBAR DOM ELEMENT GETTER
-        this.taskbarElement = taskbar.getDomElement()
-        // FILTERS DOM ELEMENT GETTER
-        this.filterElement = this.domElement.querySelector('.filter-options')
+        this.taskbarElement = getTaskbarDomElement()
+        // FILTER COMPONENT INSTANCE
+        this.filterComponent = this._initialiseFilterComponent()
         // LIST MENU DOM ELEMENT GETTER
         this.listMenuElement = customListMenu.getDomElement()
     }
 
+    _initialiseFilterComponent(){
+        const filterElement = this.domElement.querySelector('.filter-options')
+        const filterComponent = new FilterComponent( filterElement )
+        return filterComponent
+    }
+
     _formatAndRenderContent( Register, mediaQueries ){
         this._formatForScreenWidth( mediaQueries )
-        taskbar.setFormatIcon( Register )
-        customListMenu.renderListMenu()
-        filter.renderfilterFields( this.filterElement, Register.mainListMeta )
+        setFormatIcon( Register )
+        customListMenu.renderListMenu( Register.mainListMeta )
+        this.filterComponent._renderfilterFields( Register.mainListMeta )
     }
 
     _handleUserAction( e, Register ){
-        if( this.taskbarElement.contains( e.target ) ) taskbar.handleUserTask( e, Register, this.filterElement );
+        if( this.taskbarElement.contains( e.target ) ) handleUserTask( e, Register, this.filterComponent );
         else if( this.listMenuElement.contains( e.target ) ) customListMenu.displayListMembers( e, Register );
-        else if( e.target.classList.contains('apply-filter-btn') ) filter.filterMovies( Register.listContent, document.forms['filter-form'].elements );
+        else if( e.target.classList.contains('apply-filter-btn') ) Register._runFilter( FilterComponent.getUserFilterSelections() );
     }
 
     _formatForScreenWidth( queries ){
