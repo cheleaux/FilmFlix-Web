@@ -1,6 +1,10 @@
 {% extends 'Base.html' %}
 
-{% block title %}FilmFlix - Full movie list{% endblock %}   
+{% block title %}FilmFlix - Full movie list{% endblock %}
+
+{% block pageStylesRel %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/MovieListStyles.css') }}">
+{% endblock %}
 
 {% block main %}
 <main id="movie-list-main" class="flex">
@@ -66,7 +70,7 @@
             </a>
             <a href="/api/custom-list">
                 <button class="opt-add-new flex">
-                    <h4>Make New Custom List</h4><i class="bi bi-collection-play-fill"></i>
+                    <h4>Make New Collection</h4><i class="bi bi-collection-play-fill"></i>
                 </button>
             </a>
         </div>

@@ -30,8 +30,11 @@ def fetchMovieDetails( ID ):
 
 def fetchMovies( param ):
     movies = fetchMoviesBasedOnParams( param )
-    movieJson = serializeObjects( movies )
-    return movieJson
+    if movies != []:
+        movieJson = serializeObjects( movies )
+        return movieJson
+    else:
+        return errorResponse( 'invalid listID', 404 )
 
 
 def fetchCustomListMemuDetails():
@@ -44,7 +47,7 @@ def fetchCustomListMemuDetails():
 def createCustomList( listDetails ):
     insertList( listDetails )
     listID = getID( { 'name': listDetails.get('name') } )
-    instateListMembership( listID, listDetails.get( 'movieIDs' ) )
+    instateListMembership( listID, listDetails.get('movieIDs') )
     res = Response( f'New cutsom list { listID }', 201, mimetype='text/plain')
     return res
 
@@ -57,3 +60,8 @@ def fetchMoviesBasedOnParams( param ):
     elif 'query' in param.keys() and param['query'] != None:
         movies = fetchMoviesFromSearch( param['query'] )
     return movies
+
+
+def errorResponse( errMessage, errCode ):
+    res = Response( errMessage, errCode, mimetype='text/plain' )
+    return res

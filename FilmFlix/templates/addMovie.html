@@ -2,6 +2,10 @@
 
 {% block title %}FilmFlix - Add a new movie{% endblock %}
 
+{% block pageStylesRel %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/AddMovieStyles.css') }}">
+{% endblock %}
+
 {% block main %}
 <main id="add-movie-section">
     <h3 class="subtitle">Enter the movie details</h3>

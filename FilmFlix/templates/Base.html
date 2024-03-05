@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" 
-    {% if request.path == '/api/movies' %}
+    {% if request.path == '/api/movies' or request.path == '/custom-list/add-new' %}
     style="
         height: 100vh;
         overflow: hidden;
-        scroll-behavior: none;"
+        scroll-behavior: auto;"
 
     {% else %}
     style="
@@ -19,23 +19,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/HomeStyles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/AddMovieStyles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/MovieListStyles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/nav.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/footer.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/header.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/heroHeader.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/nav.css') }}">
+    {% block pageStylesRel %}{% endblock %}
     <title>{% block title %}FilmFlix{% endblock %}</title>
     </head>
     <body
-    {% if request.path == '/api/movies' %}
+    {% if request.path == '/api/movies' or request.path == '/custom-list/add-new' %}
         style="
             height: 100vh;
             overflow: hidden;
-            scroll-behavior: none;"
+            scroll-behavior: auto;"
 
     {% else %}
         style="

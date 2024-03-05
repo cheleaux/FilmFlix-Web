@@ -1,0 +1,104 @@
+{% extends 'Base.html' %}
+
+{% block title %}FilmFlix - Full movie list{% endblock %}
+
+{% block pageStylesRel %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/addCustomList.css') }}">
+{% endblock %}
+
+{% block main %}
+<main id="add-collection-main" class="flex">
+    <section class="collection-details-menu-section flex">
+        <div class="details-menu-section-info">
+            <h2 class="section-title">Create Your Collection</h2>
+            <p class="menu-descriptor">Give your collection a name click create when your happy when your happy with your selection.</p>
+        </div>
+        <div class="collection-details">
+            <div class="custom-name flex">
+                <label for="list-name">Collection Name</label>
+                <input type="text" name="listName" placeholder="enter name..." id="list-name">
+            </div>
+            <span class="collection-quantity">Collection Size: <span id="quantity-value"></span></span>
+        </div>
+        <button id="create-btn">Create</button>
+    </section>
+    <section class="movie-selector-section flex">
+        <div class="movie-selector-section-header flex">
+            <p class="menu-descriptor">Select the movies for your collection here or search for a specific one.</p>
+            <div class="search-bar flex">
+                <input type="text" name="movie-title" id="movie-title-search">
+                <i class="bi bi-search"></i>
+            </div>
+        </div>
+        <div class="movie-selector-container">
+            <div class="movie-selector-register flex">
+
+                <div class="movie-reg-item selected flex" id="${ this.id }">
+                    <h3 class="mv-item-title">${ this.title }</h3>
+                    <div class="mv-item-details flex">
+                        <span class="mv-item-release">2017</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-duration">120 mins</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-rating">G</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-genre">fantasy</span>
+                    </div>
+                </div>
+                <div class="movie-reg-item flex" id="${ this.id }">
+                    <h3 class="mv-item-title">${ this.title }</h3>
+                    <div class="mv-item-details flex">
+                        <span class="mv-item-release">2017</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-duration">120 mins</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-rating">G</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-genre">fantasy</span>
+                    </div>
+                </div>
+                <div class="movie-reg-item selected flex" id="${ this.id }">
+                    <h3 class="mv-item-title">${ this.title }</h3>
+                    <div class="mv-item-details flex">
+                        <span class="mv-item-release">2017</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-duration">120 mins</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-rating">G</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-genre">fantasy</span>
+                    </div>
+                </div>
+                <div class="movie-reg-item selected flex" id="${ this.id }">
+                    <h3 class="mv-item-title">${ this.title }</h3>
+                    <div class="mv-item-details flex">
+                        <span class="mv-item-release">2017</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-duration">120 mins</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-rating">G</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-genre">fantasy</span>
+                    </div>
+                </div>
+                <div class="movie-reg-item flex" id="${ this.id }">
+                    <h3 class="mv-item-title">${ this.title }</h3>
+                    <div class="mv-item-details flex">
+                        <span class="mv-item-release">2017</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-duration">120 mins</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-rating">G</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-genre">fantasy</span>
+                    </div>
+                </div>
+                <div class="movie-reg-item flex" id="${ this.id }">
+                    <h3 class="mv-item-title">${ this.title }</h3>
+                    <div class="mv-item-details flex">
+                        <span class="mv-item-release">2017</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-duration">120 mins</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-rating">G</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-genre">fantasy</span>
+                    </div>
+                </div>
+                <div class="movie-reg-item flex" id="${ this.id }">
+                    <h3 class="mv-item-title">${ this.title }</h3>
+                    <div class="mv-item-details flex">
+                        <span class="mv-item-release">2017</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-duration">120 mins</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-rating">G</span><span class="item-details-divider">•</span>
+                        <span class="mv-item-genre">fantasy</span>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

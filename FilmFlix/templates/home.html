@@ -2,6 +2,11 @@
 
 {% block title %}FilmFlix{% endblock %}
 
+{% block pageStylesRel %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/heroHeader.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/HomeStyles.css') }}">
+{% endblock %}
+
 {% block header %}
 <Section class="hero">
     <div class="hero-bg-shadow"></div>
