@@ -1,4 +1,5 @@
-
+import { getTitleFromElement } from './movie.js'
+import searchBM from './search.js'
 
 export default class Filter {
     constructor( filterGroups ){
@@ -44,6 +45,19 @@ export default class Filter {
         return ( ( filterGroup.type === 'number' && filterGroup.value ) || ( filterGroup.type === 'checkbox' && filterGroup.checked ) ) ? true : false ;
     }
 
+    static filterByTitle( searchTitle, register ){
+        if( searchTitle ){
+            // SPLIT THE SEARCH TITLE INTO INDIVIDUAL WORDS IS MORE THAT ONE AND FILTER BY EACH
+            // MAKE THE LIST OF THOSE ARRAYS AND MERGE THEM
+            // ADDITION: ORDER BY HOW MANY OF THOSE ARRAYS THE TITLE CAME UP IN
+            const filterMovieItems = Array.from( register.children ).filter( movieElement => {
+                const elementTitle = getTitleFromElement( movieElement ) 
+                return searchBM( elementTitle, searchTitle )
+            })
+            return filterMovieItems
+        }
+    }
+
     _satisfiesFilter( movie ){
         let meetsFilters;
         for( const key of Object.keys( this ) ){
@@ -71,6 +85,7 @@ export default class Filter {
     }
 }
 
+export const titleFilter = Movie.filterByTitle
 
 // CLASS FACTORY FUNCTION THAT BUILDS AN OBJECT WITH ARRAYS KEYED TO ALL FILTERABLE MOVIE PROPERTIES
 export function Filterables( duration = undefined, yearReleased = undefined, rating = undefined, genre = undefined ){

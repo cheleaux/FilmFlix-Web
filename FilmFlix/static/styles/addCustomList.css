@@ -165,22 +165,22 @@
     border-bottom: none;
 }
 
-.mv-item-opt {
+.mv-reg-item-opt {
     margin-right: 0.5rem;
 }
 
-.mv-item-title {
+.mv-reg-item-title {
     font-size: var(--fs-160);
     font-weight: var(--fw-bold)
 }
 
-.mv-item-details {
+.mv-reg-item-details {
     flex-direction: row;
     font-size: var(--fs-140);
     gap: .6rem;
 }
 
-.mv-item-details * {
+.mv-reg-item-details * {
     text-wrap: nowrap;
 }
 

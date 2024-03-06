@@ -9,6 +9,13 @@ export default class Movie {
         this.genre = genre
     }
     
+    static getMovieTitle( movieElement ){
+        if( movieElement.classList.contains('mv-row') ) var title = movieElement.querySelector('mv-title span').innerHTML
+        else if( movieElement.classList.contains('mv-list-item') ) title = movieElement.querySelector('mv-item-title').innerHTML
+        else if( movieElement.classList.contains('movie-reg-item') ) title = movieElement.querySelector('mv-reg-item-title').innerHTML
+        return String( title )
+    }
+
     _constructListItemHTML(){
         const row = document.createElement('tr')
         row.classList.add('mv-row')
@@ -57,6 +64,23 @@ export default class Movie {
         return li
     }
 
+    constructSelectorRegItem(){
+        const li = document.createElement('li')
+        li.classList.add('movie-reg-item', 'flex')
+        li.id = String(this.id)
+        li.innerHTML = `
+                <h3 class="mv-reg-item-title">${ this.title }</h3>
+                <div class="mv-reg-item-details flex">
+                    <span class="mv-reg-item-release">${ this.yearReleased }</span><span class="item-details-divider">•</span>
+                    <span class="mv-reg-item-duration">${ this.duration }</span><span class="item-details-divider">•</span>
+                    <span class="mv-reg-item-rating">${ this.rating }</span><span class="item-details-divider">•</span>
+                    <span class="mv-reg-item-genre">${ this.genre }</span>
+                </div>
+                `
+        this.HTMLElement = li
+        return li
+    }
+
     _deleteMovie(){
         const xhttp = new XMLHttpRequest()
         xhttp.open( 'DELETE', `/api/movies/${ String( this.id ) }`, true )
@@ -77,3 +101,5 @@ export default class Movie {
         xhttp.send( JSON.stringify(this) )
     }
 }
+
+export const getTitleFromElement = Movie.getMovieTitle

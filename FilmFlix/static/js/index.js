@@ -3,9 +3,10 @@ import movieDetailsPage from './movieDetailsPage.js'
 import MovieListPage from './movieListPage.js'
 
 
-const isOnMovieListPage = (window.location.href.includes('movies') && !window.location.href.includes('movies/'))
-const isOnMovieDetailsPage = ( window.location.href.includes('movies/'))
-const isOnAddMoviePage = (window.location.href.includes('add-movie'))
+const isOnMovieListPage = ( window.location.href.includes('movies') && !window.location.href.includes('movies/'))
+const isOnMovieDetailsPage = ( window.location.href.includes('movies/') )
+const isOnAddMoviePage = ( window.location.href.includes('add-movie') )
+const isOnAddCustomList = ( window.location.href.includes('add-list') )
 
 search.icon.addEventListener( 'click', search.initialiseSearch )
 
@@ -20,13 +21,20 @@ if ( isOnMovieListPage ){
 
 if ( isOnAddMoviePage ){
     const formEl = document.querySelector('#insertForm')
-    const form = movieDetailsPage.initialiseForm( formEl, 'insert' )
+    const form = movieDetailsPage.initialiseForm( formEl, 'insert' ) // INITITALISED WITH THE DOM ELEMENT IN index.js SO THAT THA PAGE OPERATION CAN BE SPECIFIED
     form.domElement.addEventListener('click', ( e ) => { movieDetailsPage.lockAndSubmitForm( form, e ) } );
+}
+
+if ( isOnAddCustomList ){
+    const movieSelector = addCustomListPage.initialiseMovieSelector()
+    document.addEventListener( 'DOMContentLoaded', addCustomListPage.onLoadPageBuffer( movieSelector ) )
 }
 
 if ( isOnMovieDetailsPage ){
     const formEl = document.querySelector('#insertForm')
-    const form = movieDetailsPage.initialiseForm( formEl, 'update' )
+    const form = movieDetailsPage.initialiseForm( formEl, 'update' ) // INITITALISED WITH THE DOM ELEMENT IN index.js SO THAT THA PAGE OPERATION CAN BE SPECIFIED
     movieDetailsPage.displayMovieDetails( form )
     form.domElement.addEventListener( 'click', ( e ) => { movieDetailsPage.lockAndSubmitForm( form, e ) } )
 }
+
+
