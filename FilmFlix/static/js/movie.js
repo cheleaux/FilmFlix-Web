@@ -22,7 +22,7 @@ export default class Movie {
                 <td class="tbl-row-opt">
                     <i class="bi bi-three-dots"></i>
                     <ul class="row-opt-menu">
-                        <a href="/api/movies/${ String( this.id ) }"><li class="row-option flex"><span>Update</span></li></a>
+                        <a href="/movies/${ String( this.id ) }"><li class="row-option flex"><span>Update</span></li></a>
                         <li class="row-option delete-btn flex"><span>Delete</span></li>
                     </ul>
                 </td>
@@ -48,7 +48,7 @@ export default class Movie {
                 <div class="mv-item-opt">
                     <i class="bi bi-three-dots"></i>
                     <ul class="row-opt-menu">
-                        <a href="/api/movies/${ String( this.id ) }"><li class="row-option flex"><span>Update</span></li></a>
+                        <a href="/movies/${ String( this.id ) }"><li class="row-option flex"><span>Update</span></li></a>
                         <li class="row-option delete-btn flex"><span>Delete</span></li>
                     </ul>
                 </div>

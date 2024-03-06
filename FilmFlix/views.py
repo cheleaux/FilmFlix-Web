@@ -10,13 +10,13 @@ def home():
     return render_template("home.html")
 
 
-@views.route("/api/movies")
+@views.route("/movies")
 def ListMovies():
     query = request.args.get("query") if request.args.get("query") else None
     return render_template( "movieList.html", movies=fetchMovies( { 'query': query } ) )   
 
 
-@views.route("/api/movies/<movieId>", methods=[ "GET", "DELETE", "PUT" ])
+@views.route("/movies/<movieId>", methods=[ "GET", "DELETE", "PUT" ])
 def selectMovie( movieId ):
     if request.method == "GET":
         return render_template( "addMovie.html", details=fetchMovieDetails( movieId ) )
@@ -26,7 +26,7 @@ def selectMovie( movieId ):
         return respondToMovieDelete( movieId )
 
 
-@views.route("/api/add-movie", methods=[ "GET", "POST" ])
+@views.route("/movies/add-movie", methods=[ "GET", "POST" ])
 def AddMovie():
     if request.method == "GET":
         return render_template("addMovie.html")
@@ -50,7 +50,7 @@ def fetchListData():
     return customListDataRes
 
 
-@views.route("/custom-list/add-new", methods=[ "GET", "POST" ])
+@views.route("/custom-list/add-list", methods=[ "GET", "POST" ])
 def addCustomList():
     if request.method == 'GET':
         return render_template( 'addCustomList.html', lists=fetchCustomListMemuDetails )
