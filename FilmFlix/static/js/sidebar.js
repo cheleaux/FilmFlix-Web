@@ -1,6 +1,6 @@
 import { setFormatIcon, handleUserTask, getTaskbarDomElement } from './taskbar.js'
 import customListMenu from './customListMenu.js'
-import FilterComponent from './FilterComponent.js'
+import FilterComponent from './filterComponent.js'
 export default class Sidebar{
     constructor( domElement ){
         this.domElement = domElement

@@ -1,8 +1,8 @@
-import { getTaskbarDomElement, setFormatIcon } from './taskbar.js'
 import Movie from './movie.js'
-import Filter from './Filter.js'
-import FilterComponent from './FilterComponent.js'
-import { Filterables } from './Filter.js'
+import Filter from './filter.js'
+import FilterComponent from './filterComponent.js'
+import { getTaskbarDomElement, setFormatIcon } from './taskbar.js'
+import { Filterables } from './filter.js'
 
 export default class Register {
     constructor( domElement ){

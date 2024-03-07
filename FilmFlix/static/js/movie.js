@@ -16,6 +16,12 @@ export default class Movie {
         return String( title )
     }
 
+    static async fetchAllMoviesJson(){
+        const movies = await fetch('/api/movies')
+        .then( ( movieData ) => { return JSON.parse( movieData.json() ) })
+        .catch( err => console.log(err))
+    }
+
     _constructListItemHTML(){
         const row = document.createElement('tr')
         row.classList.add('mv-row')
@@ -103,3 +109,5 @@ export default class Movie {
 }
 
 export const getTitleFromElement = Movie.getMovieTitle
+
+export const fetchAllMovies = Movie.fetchAllMoviesJson

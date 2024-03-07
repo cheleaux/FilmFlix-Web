@@ -45,14 +45,13 @@ export default class Filter {
         return ( ( filterGroup.type === 'number' && filterGroup.value ) || ( filterGroup.type === 'checkbox' && filterGroup.checked ) ) ? true : false ;
     }
 
-    static filterByTitle( searchTitle, register ){
+    static filterByTitle( searchTitle, movies ){
         if( searchTitle ){
             // SPLIT THE SEARCH TITLE INTO INDIVIDUAL WORDS IS MORE THAT ONE AND FILTER BY EACH
             // MAKE THE LIST OF THOSE ARRAYS AND MERGE THEM
             // ADDITION: ORDER BY HOW MANY OF THOSE ARRAYS THE TITLE CAME UP IN
-            const filterMovieItems = Array.from( register.children ).filter( movieElement => {
-                const elementTitle = getTitleFromElement( movieElement ) 
-                return searchBM( elementTitle, searchTitle )
+            const filterMovieItems = movies.filter( movie => {
+                return searchBM( movie.title, searchTitle )
             })
             return filterMovieItems
         }

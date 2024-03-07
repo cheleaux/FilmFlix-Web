@@ -1,6 +1,7 @@
 import search from './searchBar.js'
 import movieDetailsPage from './movieDetailsPage.js'
 import MovieListPage from './movieListPage.js'
+import addCustomListPage from './addCustomListPage.js'
 
 
 const isOnMovieListPage = ( window.location.href.includes('movies') && !window.location.href.includes('movies/'))

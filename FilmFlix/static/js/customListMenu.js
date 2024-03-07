@@ -1,5 +1,5 @@
 import CustomList from "./customList.js"
-import FilterComponent from "./FilterComponent.js"
+import FilterComponent from "./filterComponent.js"
 
 function getDomElement(){
     const domElement = document.querySelector('.list-menu')
