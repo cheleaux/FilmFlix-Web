@@ -7,8 +7,9 @@ function initialiseMovieSelector(){
 }
 
 function onLoadPageBuffer( movieSelector ){
-    movieSelector.register.addEvenetListener( 'click', movieSelector.handleMovieSelection() )
-    movieSelector.searchbar.addEvenetListener( 'input', movieSelector.searchRegister() )
+    movieSelector._populateRegister()
+    movieSelector.registerElement.addEventListener( 'click', movieSelector._handleMovieSelection )
+    movieSelector.searchbar.addEventListener( 'input', movieSelector._searchRegister )
 }
 
 export default { initialiseMovieSelector, onLoadPageBuffer }

@@ -84,7 +84,7 @@ export default class Filter {
     }
 }
 
-export const titleFilter = Movie.filterByTitle
+export const filterRegisterByTitle = Filter.filterByTitle
 
 // CLASS FACTORY FUNCTION THAT BUILDS AN OBJECT WITH ARRAYS KEYED TO ALL FILTERABLE MOVIE PROPERTIES
 export function Filterables( duration = undefined, yearReleased = undefined, rating = undefined, genre = undefined ){

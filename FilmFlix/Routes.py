@@ -37,7 +37,7 @@ def fetchMovies( param ):
         return errorResponse( 'invalid listID', 404 )
 
 
-def fetchCustomListMemuDetails():
+def fetchCustomListMenuDetails():
     allCustomLists = fetchListMeta()
     listJson = serializeObjects( allCustomLists )
     res = Response( listJson, 200, mimetype='application/json' )

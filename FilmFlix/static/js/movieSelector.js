@@ -1,52 +1,61 @@
+import Movie from './movie.js'
 import { fetchAllMovies } from './movie.js'
-import Movie from './filter.js'
+import { filterRegisterByTitle } from './filter.js'
 
 export default class MovieSelector {
     constructor( domElement ){
         this.domElement = domElement
         this.searchbar = this.domElement.querySelector('#movie-title-search')
         this.registerElement = this.domElement.querySelector('.movie-selector-register')
+        this.searchErrMsg = this.domElement.querySelector('.search-err-msg')
         this.allMovies = fetchAllMovies()
         this.collection = []
     }
 
-    _populateRegister( definedMovieList = null ){
+    async _populateRegister( definedMovieList = null ){
         try {
-            const movieData = definedMovieList || this.allMovies
-            Register.isEmpty( movieData ) ? this._NonFoundProtocol() : this._preInsertProtocol( movieData );
+            const movieData = definedMovieList || await this.allMovies
+            movieData.length < 1 ? this._NonFoundProtocol() : this._preInsertProtocol( movieData );
             this._insertMovies( movieData )
         } catch ( error ){
             console.log(`register error: ${ error } `)
         }
     }
 
+    _handleMovieSelection( e ){
+        console.log( e.target )
+    }
+
+    _searchRegister(){
+        const titleQuery = this.searchbar.value
+        const queriedMovieList = filterRegisterByTitle( titleQuery )
+        this._populateRegister( queriedMovieList )
+    }
+
     async fetchAllMovies(){
-        const movies = await Movie.fetchAllMoviesJson()
+        const movies = await fetchAllMovies()
         return movies
     }
 
     _NonFoundProtocol(){
         this._clearRegister()
-        console.log('register empty')
+        this.searchErrMsg.style.display = 'block'
     }
 
     _preInsertProtocol(){
         this._clearRegister()
+        this.searchErrMsg.style.display = 'none'
     }
 
     _insertMovies( movies ){
-        for(const item of movieData){
+        for(const item of movies){
             const newMovie = new Movie( item.filmID, item.title, item.yearReleased, item.rating, item.duration, item.genre )
-            activeRegister.insertAdjacentElement( 'beforeend',  activeRegister.classList.contains('movie-register') ? newMovie._constructCardItemHTML() : newMovie._constructListItemHTML() );
+            this.registerElement.insertAdjacentElement( 'beforeend',  newMovie._constructSelectorRegItem() );
         }
     }
 
     _clearRegister(){
-        if( registerElement.children || Array.from( registerElement.children ).length != 0 ) Array.from( registerElement.children ).forEach( elem => elem.remove() );
-    }
-
-    _searchRegister(){
-
+        if( this.registerElement.children || Array.from( this.registerElement.children ).length != 0 ) Array.from( this.registerElement.children ).forEach( elem => elem.remove() );
     }
 
     _handleMovieSelection(){

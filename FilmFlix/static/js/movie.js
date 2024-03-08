@@ -9,17 +9,23 @@ export default class Movie {
         this.genre = genre
     }
     
-    static getMovieTitle( movieElement ){
+    static _getMovieTitle( movieElement ){
         if( movieElement.classList.contains('mv-row') ) var title = movieElement.querySelector('mv-title span').innerHTML
         else if( movieElement.classList.contains('mv-list-item') ) title = movieElement.querySelector('mv-item-title').innerHTML
         else if( movieElement.classList.contains('movie-reg-item') ) title = movieElement.querySelector('mv-reg-item-title').innerHTML
         return String( title )
     }
 
-    static async fetchAllMoviesJson(){
-        const movies = await fetch('/api/movies')
-        .then( ( movieData ) => { return JSON.parse( movieData.json() ) })
-        .catch( err => console.log(err))
+    static async _fetchAllMoviesJson(){
+        try {
+            const movieData = await fetch('/api/movies')
+            if (!movieData.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            const movieJson = await movieData.json()
+            return movieJson
+        } catch ( err ){
+            console.error('Error fetching movies:', err);
+        }
+
     }
 
     _constructListItemHTML(){
@@ -70,7 +76,7 @@ export default class Movie {
         return li
     }
 
-    constructSelectorRegItem(){
+    _constructSelectorRegItem(){
         const li = document.createElement('li')
         li.classList.add('movie-reg-item', 'flex')
         li.id = String(this.id)
@@ -108,6 +114,6 @@ export default class Movie {
     }
 }
 
-export const getTitleFromElement = Movie.getMovieTitle
+export const getTitleFromElement = Movie._getMovieTitle
 
-export const fetchAllMovies = Movie.fetchAllMoviesJson
+export const fetchAllMovies = Movie._fetchAllMoviesJson

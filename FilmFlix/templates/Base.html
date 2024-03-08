@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" 
-    {% if request.path == '/movies' or request.path == '/custom-list/add-new' %}
+    {% if request.path == '/movies' or request.path == '/custom-lists/add-new' %}
     style="
         height: 100vh;
         overflow: hidden;
@@ -27,7 +27,7 @@
     <title>{% block title %}FilmFlix{% endblock %}</title>
     </head>
     <body
-    {% if request.path == '/movies' or request.path == '/custom-list/add-new' %}
+    {% if request.path == '/movies' or request.path == '/custom-lists/add-new' %}
         style="
             height: 100vh;
             overflow: hidden;
