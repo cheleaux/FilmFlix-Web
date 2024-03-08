@@ -4,8 +4,7 @@
     margin: 0 auto;
     max-width: 80rem;
     width: 100%;
-    padding: 4rem 5%;
-    flex: 1 1 auto;
+    padding: 3rem 5%;
     flex-direction: row;
     justify-content: space-between;
     align-items: start;
@@ -15,7 +14,7 @@
 /* ------------------------------------------------------------------------------ COLLECTION DETAILS */
 
 .collection-details-menu-section {
-    padding: 4rem;
+    padding: 3rem;
     border-right: 1px solid var(--clr-aside-rule);
     flex-direction: column;
     gap: 1.8rem;
@@ -116,6 +115,7 @@
     overflow-y: scroll;
     padding-right: 1rem;
     position: relative;
+    flex-grow: 1;
     width: 100%;
 }
 
@@ -184,6 +184,7 @@
 }
 
 .search-err-msg {
+    display: none;
     color: var(--clr-rule);
     font-weight: var(--fw-bold);
     font-size: var(--fs-180);

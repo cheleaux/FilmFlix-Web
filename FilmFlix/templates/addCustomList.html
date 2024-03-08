@@ -1,6 +1,6 @@
 {% extends 'Base.html' %}
 
-{% block title %}FilmFlix - Full movie list{% endblock %}
+{% block title %}FilmFlix - add Collection{% endblock %}
 
 {% block pageStylesRel %}
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/addCustomList.css') }}">
@@ -18,7 +18,7 @@
                 <label for="list-name">Collection Name</label>
                 <input type="text" name="listName" placeholder="enter name..." id="list-name">
             </div>
-            <span class="collection-quantity">Collection Size: <span id="quantity-value"></span></span>
+            <span class="collection-quantity">Collection Size: <span id="quantity-value">0</span></span>
         </div>
         <button id="create-btn">Create</button>
     </section>

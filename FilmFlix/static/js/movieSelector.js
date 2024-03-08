@@ -3,13 +3,19 @@ import { fetchAllMovies } from './movie.js'
 import { filterRegisterByTitle } from './filter.js'
 
 export default class MovieSelector {
-    constructor( domElement ){
+    constructor( domElement, submitter, counter ){
         this.domElement = domElement
+        this.submitter = submitter
+        this.counter = counter
         this.searchbar = this.domElement.querySelector('#movie-title-search')
         this.registerElement = this.domElement.querySelector('.movie-selector-register')
         this.searchErrMsg = this.domElement.querySelector('.search-err-msg')
         this.allMovies = fetchAllMovies()
         this.collection = []
+    }
+    
+    static isMovieSelected( movie ){
+        return movie.classList.contains('selected')
     }
 
     async _populateRegister( definedMovieList = null ){
@@ -23,13 +29,40 @@ export default class MovieSelector {
     }
 
     _handleMovieSelection( e ){
-        console.log( e.target )
+        const selection = e.target.closest('.movie-reg-item')
+        if( !selection ) console.error('Selection Error: not found');
+        MovieSelector.isMovieSelected( selection ) ? this._deselectMovie( selection ) : this._selectMovie( selection );
+        this.counter.innerHTML = this.collection.length
+    }
+
+    _deselectMovie( movie ){
+        try {
+            const idx = this.collection.indexOf( movie.id );
+            if (idx > -1) this.collection.splice(idx, 1);
+            movie.classList.remove('selected')
+        } catch ( err ){
+            console.log(`Selection Error: ${ err }`)
+        }
+    }
+
+    _selectMovie( movie ){
+        try {
+            this.collection.push( movie.id );
+            movie.classList.add('selected')
+
+        } catch ( err ){
+            console.log(`Selection Error: ${ err }`)
+        }
     }
 
     _searchRegister(){
         const titleQuery = this.searchbar.value
         const queriedMovieList = filterRegisterByTitle( titleQuery )
         this._populateRegister( queriedMovieList )
+    }
+
+    _createCollecion(){
+        console.log( this.collection )
     }
 
     async fetchAllMovies(){
@@ -56,10 +89,5 @@ export default class MovieSelector {
 
     _clearRegister(){
         if( this.registerElement.children || Array.from( this.registerElement.children ).length != 0 ) Array.from( this.registerElement.children ).forEach( elem => elem.remove() );
-    }
-
-    _handleMovieSelection(){
-        // WHEN CLICKED ON HIGHLIGHT THE CHOSEN MOVIE ELEMENT
-        // THEN CHECK ALL 'selected' MOVIE ELEMENTS AND ADD THEM TO THE COLLECTION
     }
 }

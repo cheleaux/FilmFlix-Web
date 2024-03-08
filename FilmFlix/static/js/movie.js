@@ -8,15 +8,15 @@ export default class Movie {
         this.duration = duration
         this.genre = genre
     }
-    
-    static _getMovieTitle( movieElement ){
+
+    static getMovieTitle( movieElement ){
         if( movieElement.classList.contains('mv-row') ) var title = movieElement.querySelector('mv-title span').innerHTML
         else if( movieElement.classList.contains('mv-list-item') ) title = movieElement.querySelector('mv-item-title').innerHTML
         else if( movieElement.classList.contains('movie-reg-item') ) title = movieElement.querySelector('mv-reg-item-title').innerHTML
         return String( title )
     }
 
-    static async _fetchAllMoviesJson(){
+    static async fetchAllMoviesJson(){
         try {
             const movieData = await fetch('/api/movies')
             if (!movieData.ok) throw new Error(`HTTP error! Status: ${response.status}`);
@@ -84,7 +84,7 @@ export default class Movie {
                 <h3 class="mv-reg-item-title">${ this.title }</h3>
                 <div class="mv-reg-item-details flex">
                     <span class="mv-reg-item-release">${ this.yearReleased }</span><span class="item-details-divider">•</span>
-                    <span class="mv-reg-item-duration">${ this.duration }</span><span class="item-details-divider">•</span>
+                    <span class="mv-reg-item-duration">${ this.duration } mins</span><span class="item-details-divider">•</span>
                     <span class="mv-reg-item-rating">${ this.rating }</span><span class="item-details-divider">•</span>
                     <span class="mv-reg-item-genre">${ this.genre }</span>
                 </div>
@@ -114,6 +114,5 @@ export default class Movie {
     }
 }
 
-export const getTitleFromElement = Movie._getMovieTitle
-
-export const fetchAllMovies = Movie._fetchAllMoviesJson
+export const getTitleFromElement = Movie.getMovieTitle
+export const fetchAllMovies = Movie.fetchAllMoviesJson

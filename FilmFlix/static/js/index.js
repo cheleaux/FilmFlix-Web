@@ -28,7 +28,8 @@ if ( isOnAddMoviePage ){
 
 if ( isOnAddCustomList ){
     const movieSelector = addCustomListPage.initialiseMovieSelector()
-    document.addEventListener( 'DOMContentLoaded', addCustomListPage.onLoadPageBuffer( movieSelector ) )
+    const submitter = document.querySelector('#create-btn')
+    document.addEventListener( 'DOMContentLoaded', addCustomListPage.onLoadPageBuffer( movieSelector, submitter ) )
 }
 
 if ( isOnMovieDetailsPage ){
