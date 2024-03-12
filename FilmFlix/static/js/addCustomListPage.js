@@ -11,8 +11,8 @@ function initialiseMovieSelector(){
 function onLoadPageBuffer( movieSelector ){
     movieSelector._populateRegister()
     movieSelector.registerElement.addEventListener( 'click', movieSelector._handleMovieSelection.bind( movieSelector ) )
-    movieSelector.searchbar.addEventListener( 'input', movieSelector._searchRegister )
-    movieSelector.submitter.addEventListener( 'click',movieSelector._createCollecion.bind( movieSelector ) )
+    movieSelector.searchbar.addEventListener( 'input', movieSelector._searchRegister.bind( movieSelector ) )
+    movieSelector.submitter.addEventListener( 'click',movieSelector._submitCollection.bind( movieSelector ) )
 }
 
 export default { initialiseMovieSelector, onLoadPageBuffer }

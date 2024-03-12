@@ -163,7 +163,7 @@ aside.closed .bi-arrow-bar-right {
     gap: .5rem;
 }
 
-.format-toggler, .filter-btn {
+.taskbar-opt  {
     padding: 0 .7rem;
     font-size: var(--fs-140);
     border-radius: .2rem;
@@ -191,15 +191,17 @@ aside.closed .bi-arrow-bar-right {
     letter-spacing: .03rem;
 }
 
-.filter-btn:hover, .filter-btn.active {
+.filter-btn:hover, .filter-btn.active,
+.delete-list-select-btn:hover, .delete-list-select-btn.active {
     background-color: var(--clr-accent-pastel);
 }
 
-
-
-.filter-btn:active, .format-toggler:active:not( .format-toggler.active:active ) {
+.filter-btn:active,
+.delete-list-select-btn:active ,
+.format-toggler:active:not( .format-toggler.active:active ) {
     color: var(--clr-main);
 }
+
 
 /* TASKBAR ---< */
 
@@ -398,14 +400,45 @@ aside.closed .bi-arrow-bar-right {
     justify-content: space-between;
 }
 
+.list-menu-opt h4 {
+    user-select: none
+}
+
+.list-menu-opt-subcontainer {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.list-menu, .list-menu-opt-subcontainer {
+    transition: ease-in-out var(--td-btn-scale-up);
+}
+
+.list-menu .list-menu-opt-subcontainer {
+    width: 0.4875rem;
+}
+
 .list-menu-opt .quantity {
     align-self: center;
     height: min-content;
 }
 
-.list-menu-opt .quantity h4 {
+.list-menu-opt .quantity :is( h4, i ) {
     font-weight: var(--fw-bold);
     font-size: var(--fs-120);
+}
+
+.list-menu-opt-subcontainer i {
+    color: var(--clr-delete);
+    display: none;
+}
+
+.list-menu.delete-mode .list-menu-opt-subcontainer i {
+    display: revert;
+}
+
+.list-menu.delete-mode .list-menu-opt-subcontainer {
+    width: 2.279375rem;
 }
 
 .add-new-section {
@@ -439,6 +472,7 @@ aside.closed .bi-arrow-bar-right {
 .opt-add-new * {
     font-weight: var(--fw-bold);
     text-align: left;
+    user-select: none;
 }
 
 /* --------------------------------------------------------------------- MOVIE REGISTER */
@@ -490,6 +524,7 @@ aside.closed .bi-arrow-bar-right {
 
 .item-details-divider {
     transform: translateY(-.05rem);
+    user-select: none;
 }
 
 /* --------------------------------------------------------------------- MOVIE TABLE */
@@ -650,7 +685,7 @@ body:has(#confirm-del-container){
     height: fit-content;
 }
 
-#confirm-del-container .movie-title-del {
+#confirm-del-container .title-del {
     font-size: var(--fs-160)
 }
 

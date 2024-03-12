@@ -21,6 +21,7 @@
                     <button class="card-toggle format-toggler"><i class="bi bi-view-list"></i></button>
                 </div>
                 <button class="filter-btn taskbar-opt"><i class="bi bi-funnel"></i> filter</button>
+                <button class="delete-list-select-btn  taskbar-opt"><i class="bi bi-trash3"></i> delete</button>
             </div>
 
             <div class="sidebar-overflow-container flex">
@@ -47,13 +48,13 @@
                 </div>
     
                 <ul class="list-menu flex">
-                    <li id="all-movies-menu-opt" class="list-menu-opt flex tab-focus" data-list-id="0">
+                    <li id="all-movies-menu-opt" class="list-menu-opt flex tab-focus" data-list="0">
                         <h4 class="list-name">All</h4>
                         <span class="quantity"><h4></h4></span>
                     </li>
     
                     <!-- 
-                        <li class="list-menu-opt flex" data-list-id="...">
+                        <li class="list-menu-opt flex" data-list="...">
                         <h4 class="list-name">...</h4>
                         <span class="quantity"><h4>...</h4></span>
                         </li>
@@ -122,8 +123,8 @@
     </section>
 </main>
 <div id="confirm-del-container" class="flex">
-    <h2>The following movie will be deleted:</h2>
-    <span class="movie-title-del"></span>
+    <h2>The following will be deleted:</h2>
+    <span class="title-del"></span>
     <div class="confirm-del-btns flex">
         <button id="confirm-del">Confirm</button>
         <button id="cancel-del">Cancel</button>

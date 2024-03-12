@@ -27,7 +27,7 @@ export default class Sidebar{
 
     _handleUserAction( e, Register ){
         if( this.taskbarElement.contains( e.target ) ) handleUserTask( e, Register, this.filterComponent );
-        else if( this.listMenuElement.contains( e.target ) ) customListMenu.displayListMembers( e, Register );
+        else if( this.listMenuElement.contains( e.target ) && !e.target.classList.contains('del-list-btn') ) customListMenu.displayListMembers( e, Register );
         else if( e.target.classList.contains('apply-filter-btn') ) Register._populateRegister( { filterActive: true } );
     }
 
@@ -72,5 +72,14 @@ export default class Sidebar{
         if( this.domElement.classList.contains('closed') ) return;
         this.domElement.classList.remove('open')
         this.domElement.classList.add('closed')
+    }
+
+    static refreshElement( elementName ){
+        switch( elementName ){
+            case 'listMenu':
+                customListMenu.renderListMenu( undefined )
+            default:
+                customListMenu.renderListMenu( undefined )          
+        }
     }
 }

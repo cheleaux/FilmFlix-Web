@@ -1,4 +1,5 @@
 import Movie from './movie.js'
+import CustomList from './customList.js'
 import { fetchAllMovies } from './movie.js'
 import { filterRegisterByTitle } from './filter.js'
 
@@ -10,8 +11,10 @@ export default class MovieSelector {
         this.searchbar = this.domElement.querySelector('#movie-title-search')
         this.registerElement = this.domElement.querySelector('.movie-selector-register')
         this.searchErrMsg = this.domElement.querySelector('.search-err-msg')
-        this.allMovies = fetchAllMovies()
+        this.allMovies = this.fetchAllMovies()
         this.collection = []
+
+        
     }
     
     static isMovieSelected( movie ){
@@ -30,7 +33,10 @@ export default class MovieSelector {
 
     _handleMovieSelection( e ){
         const selection = e.target.closest('.movie-reg-item')
-        if( !selection ) console.error('Selection Error: not found');
+        if( !selection ){ 
+            console.error('Selection Error: not found')
+            return
+        }
         MovieSelector.isMovieSelected( selection ) ? this._deselectMovie( selection ) : this._selectMovie( selection );
         this.counter.innerHTML = this.collection.length
     }
@@ -55,14 +61,23 @@ export default class MovieSelector {
         }
     }
 
-    _searchRegister(){
+    async _searchRegister(){
         const titleQuery = this.searchbar.value
-        const queriedMovieList = filterRegisterByTitle( titleQuery )
+        const movies = await this.allMovies
+        const queriedMovieList = filterRegisterByTitle( titleQuery, movies )
         this._populateRegister( queriedMovieList )
     }
 
-    _createCollecion(){
-        console.log( this.collection )
+    _createCollection(){
+        const collectionName = document.querySelector('.collection-details #list-name').value
+        const collection = new CustomList( collectionName, this.collection.length, this.collection )
+        return collection
+    }
+
+    _submitCollection(){
+        const collection = this._createCollection()
+        CustomList.add( collection )
+        window.location.href = '/movies';
     }
 
     async fetchAllMovies(){

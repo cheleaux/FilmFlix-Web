@@ -1,5 +1,4 @@
-import Filter from './filter.js'
-
+import customListMenu from './customListMenu.js'
 
 export function getTaskbarDomElement(){
     const domElement = document.querySelector('.register-taskbar')
@@ -15,7 +14,7 @@ export function handleUserTask( e, register, FilterCompenent ){
     } else if( taskComponent.classList.contains('filter-btn') ){
         FilterCompenent._toggleFilterOptions();
         toggleFilterBtnStyle( e.target, FilterCompenent.domElement )
-    }
+    } else if( taskComponent.classList.contains('delete-list-select-btn') ) customListMenu.toggleDeleteSelection( taskComponent );
 }
 
 export function setFormatIcon( register ){

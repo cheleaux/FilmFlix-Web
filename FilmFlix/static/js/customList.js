@@ -1,18 +1,22 @@
 
 export default class CustomList {
-    constructor( id, name, quantity ){
+    constructor( name, quantity, movieIDs, id = null ){
         this.id = id
         this.name = name
         this.quantity = quantity
+        this.movieIDs = movieIDs
     }
 
-    _constructListMrnuItemHTML(){
+    _constructListMenuItemHTML(){
         const li = document.createElement('li')
         li.classList.add('list-menu-opt', 'flex');
         li.dataset.list = this.id
         li.innerHTML =`
             <h4 class="list-name">${this.name}</h4>
-            <span class="quantity"><h4>${this.quantity}</h4></span>
+            <div class="list-menu-opt-subcontainer flex">
+                <span class="quantity"><h4>${this.quantity}</h4></span>
+                <i class="bi bi-trash3-fill del-list-btn"></i>
+            </div>
         `
         return li
     }
@@ -33,6 +37,24 @@ export default class CustomList {
         } catch (err) {
             console.log(err)
         }
+    }
+
+    static async add( collectionData ){
+        try {
+            fetch('/custom-lists/add-list', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify( collectionData ), // Convert the data to JSON format
+            }).then( res => console.log( res ) )
+        } catch ( err ){
+            throw new Error(`POST request Error: ${ err }`)
+        }
+    }
+    static async delete( ID ){
+        console.log(`delete list ${ ID }`)
+        // DELETE LIST FOR DB HERE
     }
 
     static _toggleActiveStatus( element ){

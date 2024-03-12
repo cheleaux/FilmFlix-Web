@@ -175,6 +175,10 @@
     gap: .6rem;
 }
 
+.mv-reg-item-details, .mv-reg-item-title {
+    user-select: none;
+}
+
 .mv-reg-item-details * {
     text-wrap: nowrap;
 }

@@ -1,5 +1,6 @@
 
 export default function searchBM( str, pattern ){
+    console.log('in searchBM')
     const badMatchTable = buildBadMatchTable( pattern ) // Build the Bad Match Table for the pattern
     let offset = 0 // Initialize offset for string traversal
     const patternLastIndex = pattern.length - 1 // Index of the last character in the pattern

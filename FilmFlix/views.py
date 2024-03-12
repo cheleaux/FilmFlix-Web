@@ -26,9 +26,9 @@ def movieDetails( movieId ):
     if request.method == "GET":
         return render_template( "addMovie.html", details=fetchMovieDetails( movieId ) )
     elif request.method == "PUT":
-        return respondToMovieUpdate( request.json )
+        return movieUpdateResponder( request.json )
     elif request.method == "DELETE":
-        return respondToMovieDelete( movieId )
+        return movieDeletionResponder( movieId )
 
 
 @views.route("/movies/add-movie", methods=[ "GET", "POST" ])
@@ -36,7 +36,7 @@ def addMovie():
     if request.method == "GET":
         return render_template("addMovie.html")
     elif request.method == "POST":
-        return respondToMovieInsert(request.json)
+        return movieInsertResponder( request.json )
 
 
 @views.route("/api/custom-list", methods=[ "GET", "POST" ])
@@ -61,4 +61,5 @@ def addCustomList():
         return render_template('addCustomList.html')
     elif request.method == 'POST':
         newListDetails = request.json
-        return createCustomList( newListDetails )
+        print( newListDetails )
+        return customListInsertResponder( newListDetails )

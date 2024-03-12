@@ -5,6 +5,7 @@ class CustomList:
         self.name = name
         self.quantity = quantity
 
+
     def initFromObj( obj ):
         Id = obj.list_id
         quantity = obj.movie_count

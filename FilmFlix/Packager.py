@@ -8,6 +8,7 @@ def serializeObjects( Objs ):
         Objs.__dict__.pop('_sa_instance_state')
         return json.dumps( Objs.__dict__ )
     
+    
 def makeStatelessAndSerializable( objArr ):
     serializables = []
     for item in objArr:

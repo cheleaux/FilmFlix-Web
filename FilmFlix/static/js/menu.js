@@ -1,4 +1,6 @@
-
+import CustomList from './customList.js'
+import Movie from './movie.js'
+import Sidebar from './sidebar.js';
 
 export default function enableMovieActionsMenu( e, register ){
     e.stopPropagation()
@@ -50,6 +52,30 @@ function getDeleteComfirmation( Btn, register ){
     confirmDelMenu.querySelector('.confirm-del-btns').addEventListener( 'click', ( e ) => {
         ConfirmAndRemove( e, movie, movieRow, confirmDelMenu )
     }, { once: true })
+}
+
+export function confirmListDelete( list ){
+    toggleConfirmWindow( confirmDelMenu, list.name )
+    const confirmDelMenu = document.querySelector('#confirm-del-container')
+    confirmDelMenu.querySelector('.confirm-del-btns').addEventListener( 'click', () => deleteOnConfirm( list, CustomList.delete, confirmDelMenu ) )
+}
+
+function deleteOnConfirm( item, deleteInstance, confirmDelMenu, parentComponent = null ){
+    if ( e.target.closest('button').id == 'confirm-del' ){
+        toggleConfirmWindow( confirmDelMenu )
+        deleteInstance( item )
+        refreshElementContaier( item, parentComponent )
+    }
+    else if ( e.target.closest('button').id == 'cancel-del' ) toggleConfirmWindow( confirmDelMenu );
+}
+
+function refreshElementContaier( item, parentComponent ){
+    if( item instanceof Movie ){
+        const register = parentComponent
+        register.filterActive ? register._populateRegister( { filterActive: true } ) : register._populateRegister()
+    } else if( item instanceof CustomList ){
+        Sidebar.refreshElement('listMenu')
+    }
 }
 
 function toggleConfirmWindow( confirmDelMenu, title = undefined ){

@@ -28,10 +28,9 @@ def removeMovie(ID):
 
 def insertList( listDetails ):
     name = listDetails['name']
-    itemCount = len( listDetails['movieIDs'] )
+    itemCount = listDetails['quantity']
     newList = CustomList( name, itemCount )
-    print(f'Custom list { listDetails["name"] } has been added')
-    db.session.add(newList)
+    db.session.add( newList )
     db.session.commit()
 
 
@@ -66,8 +65,9 @@ def fetchMovieByID( movieID ):
 
 
 def fetchListMeta():
-    CustomLists = CustomList.query.all()
-    return CustomLists
+    customLists = CustomList.query.all()
+    print( customLists )
+    return customLists
 
 
 def instateListMembership( listID, itemIDs ):

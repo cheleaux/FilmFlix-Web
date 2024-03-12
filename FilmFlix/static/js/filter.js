@@ -1,5 +1,3 @@
-import { getTitleFromElement } from './movie.js'
-import searchBM from './search.js'
 
 export default class Filter {
     constructor( filterGroups ){
@@ -47,13 +45,18 @@ export default class Filter {
 
     static filterByTitle( searchTitle, movies ){
         if( searchTitle ){
-            // SPLIT THE SEARCH TITLE INTO INDIVIDUAL WORDS IS MORE THAT ONE AND FILTER BY EACH
-            // MAKE THE LIST OF THOSE ARRAYS AND MERGE THEM
-            // ADDITION: ORDER BY HOW MANY OF THOSE ARRAYS THE TITLE CAME UP IN
-            const filterMovieItems = movies.filter( movie => {
-                return searchBM( movie.title, searchTitle )
+            let filteredMovieItems = []
+            searchTitle.toLowerCase().split(' ').forEach( word => {
+                // MAKE CLONE OF THE MOVIES ARRAY ITERATE OVER
+                const moviesClone = JSON.parse( JSON.stringify( movies ) )
+                moviesClone.forEach( movie => {
+                    const indexOfWord = searchTitle.toLowerCase().split(' ').indexOf(word)
+                    fetchRelevantMovies( movie, word, indexOfWord, filteredMovieItems )
+                })
             })
-            return filterMovieItems
+            // SORT IN ORDER OF DESCENDING RELEVANCE
+            filteredMovieItems.sort( ( movieA, movieB ) => movieB.points - movieA.points )
+            return filteredMovieItems
         }
     }
 
@@ -82,6 +85,26 @@ export default class Filter {
             if( filterInp.id.toLowerCase().includes( key ) ) this.duration[key] = filterInp.value.trim() ? filterInp.value : undefined;
         }
     }
+}
+
+const fetchRelevantMovies = ( movie, word, indexOfWord, filteredMovieItems ) => {
+    // DETERMINE IF MOVIE WAS ALREADY PROCESSED PREVIOUSLY
+    const processedMovieInstance = filteredMovieItems.find( processedMovie => processedMovie.title === movie.title )
+    if( processedMovieInstance ) movie = processedMovieInstance
+    
+    // CALCULATE RELEVANCE TO AND PUSH ACCORDINGLY
+    allocateTitleRelevancePoints( movie, word, indexOfWord )
+    if( movie.points > 0 && !processedMovieInstance ) filteredMovieItems.push( movie )
+}
+
+const allocateTitleRelevancePoints = ( movie, word, indexOfSearchWord ) => {
+    movie.points = movie.points || 0;
+    if( movie.title.toLowerCase().includes( word ) ){
+        movie.points += 2;
+        const indexOfTitleWord = movie.title.toLowerCase().split(' ').indexOf( word )
+        if( indexOfSearchWord === indexOfTitleWord && movie.title.charAt(0).toLowerCase() !== word.charAt(0)) movie.points += 1;
+    }
+    if( movie.title.charAt(0).toLowerCase() === word.charAt(0) ) movie.points += 1;
 }
 
 export const filterRegisterByTitle = Filter.filterByTitle
