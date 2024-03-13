@@ -1,5 +1,5 @@
 import CustomList from "./customList.js"
-import Menu from "./menu.js"
+import { confirmListDelete } from "./menu.js"
 
 function getDomElement(){
     const domElement = document.querySelector('.list-menu')
@@ -45,8 +45,7 @@ function requestListDeletion( e ){
     const listID = listToDelete.dataset.list
     const listName = listToDelete.querySelector('.list-name').innerHTML
     const list = new CustomList( listName, undefined, undefined, listID )
-    // DEBUG DELETE MENU CONFIRMATION THREAD 
-    // Menu.confirmListDelete( list )
+    confirmListDelete( list )
     console.log(`requesting confirmation to delete list ${ listName }`)
 }
 
@@ -58,7 +57,7 @@ function switchActiveListStatus( listOpt ){
     CustomList._toggleActiveStatus( listOpt )
 }
 
-function renderListMenu( { length } ) {
+function renderListMenu( { length } = {} ) {
     const listData = CustomList.fetchMetaData()
     length ? setMainListQuantity( length ) : null;
     listData.then( data => {

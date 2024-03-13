@@ -55,12 +55,12 @@ function getDeleteComfirmation( Btn, register ){
 }
 
 export function confirmListDelete( list ){
-    toggleConfirmWindow( confirmDelMenu, list.name )
     const confirmDelMenu = document.querySelector('#confirm-del-container')
-    confirmDelMenu.querySelector('.confirm-del-btns').addEventListener( 'click', () => deleteOnConfirm( list, CustomList.delete, confirmDelMenu ) )
+    toggleConfirmWindow( confirmDelMenu, list.name )
+    confirmDelMenu.querySelector('.confirm-del-btns').addEventListener( 'click', ( e ) => deleteOnConfirm( e, list, CustomList.delete, confirmDelMenu ) )
 }
 
-function deleteOnConfirm( item, deleteInstance, confirmDelMenu, parentComponent = null ){
+function deleteOnConfirm( e, item, deleteInstance, confirmDelMenu, parentComponent = null ){
     if ( e.target.closest('button').id == 'confirm-del' ){
         toggleConfirmWindow( confirmDelMenu )
         deleteInstance( item )

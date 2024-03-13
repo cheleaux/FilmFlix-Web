@@ -60,7 +60,7 @@ def fetchMoviesFromSearch( query ):
 
 
 def fetchMovieByID( movieID ):
-    mvDetails = Movie.query.filter_by(filmID=movieID).first()
+    mvDetails = Movie.query.filter_by( filmID=movieID ).first()
     return mvDetails
 
 
@@ -72,27 +72,30 @@ def fetchListMeta():
 
 def instateListMembership( listID, itemIDs ):
     for movieID in itemIDs:
-        newListMember = Movie.query.filter_by(filmID=int(movieID)).first()
+        newListMember = Movie.query.filter_by( filmID=int( movieID  )).first()
         if not newListMember:
-            print(f'movie "{movieID}" not found 404')
+            print(f'movie "{ movieID }" not found 404')
             continue
         if listID not in newListMember.lists['list_ids']: 
             appendListIDToMemebershipRecord( newListMember, listID )
 
 
+def removeListMembership( listID ):
+    listMembers = getlistMembers
+
 def appendListIDToMemebershipRecord( movie, listID ):
     movie.lists['list_ids'].append( listID )
-    flag_modified(movie, 'lists')
-    db.session.add(movie)
+    flag_modified( movie, 'lists')
+    db.session.add( movie )
     db.session.commit()
 
 
 def updateListMemberCount( listID ):
     count = getListMemberCount( listID )
-    listToUpdate = CustomList.query.filter_by(list_id=listID).first()
+    listToUpdate = CustomList.query.filter_by( list_id=listID ).first()
     listToUpdate.movie_count = count
-    flag_modified(listToUpdate, 'movie_count')
-    db.session.add(listToUpdate)
+    flag_modified( listToUpdate, 'movie_count')
+    db.session.add( listToUpdate )
     db.session.commit()
 
 

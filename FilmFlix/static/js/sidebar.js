@@ -77,9 +77,9 @@ export default class Sidebar{
     static refreshElement( elementName ){
         switch( elementName ){
             case 'listMenu':
-                customListMenu.renderListMenu( undefined )
+                customListMenu.renderListMenu()
             default:
-                customListMenu.renderListMenu( undefined )          
+                customListMenu.renderListMenu()          
         }
     }
 }

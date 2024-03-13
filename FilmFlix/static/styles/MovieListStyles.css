@@ -163,17 +163,25 @@ aside.closed .bi-arrow-bar-right {
     gap: .5rem;
 }
 
-.taskbar-opt  {
+.taskbar-opt, .format-toggler  {
     padding: 0 .7rem;
-    font-size: var(--fs-140);
+    font-size: var(--fs-120);
     border-radius: .2rem;
     border: transparent;
+}
+
+.taskbar-opt {
+    flex-direction: row;
+    text-wrap: none;
+    align-items: center;
 }
 
 .format-toggler {
     flex-direction: row;
     align-items: center;
     background-color: var(--clr-main-bg);
+    height: 100%;
+    max-height: 1.399rem;
 }
 
 .format-toggler.active {

@@ -47,6 +47,10 @@ def fetchCustomList():
             return fetchMovies( { 'listID': listId } )
         else:
             return errorResponse( 'Undefined listID', 400 )
+    elif request.method == 'DELETE':
+        if request.args.get("list"):
+            listId = request.args.get('list')
+            return customListDeleteResponder( listId )
 
 
 @views.route("/api/custom-list/all", methods=[ "GET", "POST" ])
@@ -61,5 +65,4 @@ def addCustomList():
         return render_template('addCustomList.html')
     elif request.method == 'POST':
         newListDetails = request.json
-        print( newListDetails )
         return customListInsertResponder( newListDetails )

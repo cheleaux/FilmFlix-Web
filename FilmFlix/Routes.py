@@ -30,6 +30,12 @@ def customListInsertResponder( listDetails ):
     return res
 
 
+def customListDeleteResponder( listID ):
+    res = Response( f'Delete movie record { listID }', 204, mimetype='text/plain' )
+    removeCustomList( listID )
+    return res
+
+
 def fetchMovieDetails( ID ):
     movie = fetchMovieByID( ID )
     movieJson = serializeObjects( movie )

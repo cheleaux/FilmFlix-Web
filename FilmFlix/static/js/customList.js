@@ -46,15 +46,24 @@ export default class CustomList {
                 headers: {
                   'Content-Type': 'application/json'
                 },
-                body: JSON.stringify( collectionData ), // Convert the data to JSON format
+                body: JSON.stringify( collectionData ) // Convert the data to JSON format
             }).then( res => console.log( res ) )
         } catch ( err ){
-            throw new Error(`POST request Error: ${ err }`)
+            throw new Error(`POST Request Error: ${ err }`)
         }
     }
+
     static async delete( ID ){
-        console.log(`delete list ${ ID }`)
-        // DELETE LIST FOR DB HERE
+        try {
+            fetch(`/custom-list?list=${ ID }`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then( res => console.log( res ) )
+        } catch ( err ){
+            throw new Error(`DELETE Request Error: ${ err }`)
+        }
     }
 
     static _toggleActiveStatus( element ){
