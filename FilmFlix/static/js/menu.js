@@ -6,8 +6,9 @@ export default function enableMovieActionsMenu( e, register ){
     e.stopPropagation()
     if( e.target.classList.contains('bi-three-dots') ) toggleMenuVisibility( e.target, register );
     else if ( e.target.closest('.delete-btn') ){
+        const movie = Movie.fetchParentMovie( e.target, register )
         closeAllActionMenus( register )
-        getDeleteComfirmation( e.target, register )
+        confirmDelete( movie, register )
     };
 }
 
@@ -43,34 +44,37 @@ function closeAllActionMenus( register ){
     register.activeRegister().querySelectorAll('.row-opt-menu').forEach( menu => menu.style.visibility = 'none' )
 }
 
-
-function getDeleteComfirmation( Btn, register ){
-    const movieRow = Btn.closest('.mv-row') || Btn.closest('.mv-list-item')
-    const movie = register.listContent.find( (movie) => movieRow.id == movie.filmID )
+export function confirmDelete( item, parentElement = null ){
     const confirmDelMenu = document.querySelector('#confirm-del-container')
-    toggleConfirmWindow( confirmDelMenu, movie.title )
-    confirmDelMenu.querySelector('.confirm-del-btns').addEventListener( 'click', ( e ) => {
-        ConfirmAndRemove( e, movie, movieRow, confirmDelMenu )
-    }, { once: true })
+
+    // IF ITEM IS INSTANCE OF MOVIE PROCESS AS A MOVIE
+    if( item.hasOwnProperty('filmID') ){
+        var confimDisplayName = item.title
+        confirmDelMenu.querySelector('.confirm-del-btns').addEventListener( 'click', ( e ) => deleteOnConfirm( e, item, Movie.delete, confirmDelMenu, parentElement ),
+        { once: true } )
+    } 
+    // IF ITEM IS INSTANCE OF CUSTOM LIST PROCESS AS A CUSTOM LIST
+    else if( item instanceof CustomList ){
+        var confimDisplayName = item.name
+        confirmDelMenu.querySelector('.confirm-del-btns').addEventListener( 'click', ( e ) => deleteOnConfirm( e, item, CustomList.delete, confirmDelMenu ),
+        { once: true } )
+    }
+
+    // MAKE THE CONFIRM WINDOW VISIBLE
+    toggleConfirmWindow( confirmDelMenu, confimDisplayName )
 }
 
-export function confirmListDelete( list ){
-    const confirmDelMenu = document.querySelector('#confirm-del-container')
-    toggleConfirmWindow( confirmDelMenu, list.name )
-    confirmDelMenu.querySelector('.confirm-del-btns').addEventListener( 'click', ( e ) => deleteOnConfirm( e, list, CustomList.delete, confirmDelMenu ) )
-}
-
-function deleteOnConfirm( e, item, deleteInstance, confirmDelMenu, parentComponent = null ){
+function deleteOnConfirm( e, item, deleteFunction, confirmDelMenu, parentComponent = null ){
     if ( e.target.closest('button').id == 'confirm-del' ){
         toggleConfirmWindow( confirmDelMenu )
-        deleteInstance( item )
+        deleteFunction( item )
         refreshElementContaier( item, parentComponent )
     }
     else if ( e.target.closest('button').id == 'cancel-del' ) toggleConfirmWindow( confirmDelMenu );
 }
 
 function refreshElementContaier( item, parentComponent ){
-    if( item instanceof Movie ){
+    if( item.hasOwnProperty('filmID') ){
         const register = parentComponent
         register.filterActive ? register._populateRegister( { filterActive: true } ) : register._populateRegister()
     } else if( item instanceof CustomList ){
@@ -87,13 +91,4 @@ function toggleConfirmWindow( confirmDelMenu, title = undefined ){
         confirmDelMenu.style.display = 'none';
         document.querySelector('body').classList.remove('blurred')
     }
-}
-
-function ConfirmAndRemove( e, movie, HTMLRow, confirmDelMenu ){
-    if ( e.target.closest('button').id == 'confirm-del' ){
-        toggleConfirmWindow( confirmDelMenu )
-        HTMLRow.style.display = 'none'
-        movie._deleteMovie()
-    }
-    else if ( e.target.closest('button').id == 'cancel-del' ) toggleConfirmWindow( confirmDelMenu );
 }

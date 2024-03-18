@@ -5,7 +5,7 @@ import addCustomListPage from './addCustomListPage.js'
 
 
 const isOnMovieListPage = ( window.location.href.includes('movies') && !window.location.href.includes('movies/'))
-const isOnMovieDetailsPage = ( window.location.href.includes('movies/') )
+const isOnMovieDetailsPage = ( window.location.href.includes('movies/') && !window.location.href.includes('add-movie') )
 const isOnAddMoviePage = ( window.location.href.includes('add-movie') )
 const isOnAddCustomList = ( window.location.href.includes('add-list') )
 

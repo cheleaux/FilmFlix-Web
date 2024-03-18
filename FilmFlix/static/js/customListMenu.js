@@ -1,5 +1,5 @@
 import CustomList from "./customList.js"
-import { confirmListDelete } from "./menu.js"
+import { confirmDelete } from "./menu.js"
 
 function getDomElement(){
     const domElement = document.querySelector('.list-menu')
@@ -12,11 +12,11 @@ function displayListMembers( e, Register ){
     if( listOpt ){
         const listId = listOpt.dataset.list
         switchActiveListStatus( listOpt )
-        if( listId == 0 ){ Register.filterActive ? Register._populateRegister( { filterActive: true } ) : Register._populateRegister() }
+        if( listId == 0 ){ 
+            Register.filterActive ? Register._populateRegister( { filterActive: true, baseFetch: true } ) : Register._populateRegister( { baseFetch: true } ) }
         else {
             const customMovies = CustomList.fetchCustomListMovies( listId )
             customMovies.then( movies => Register.filterActive ? Register._populateRegister( movies, { filterActive: true } ) : Register._populateRegister( movies ) )
-            console.log(`filter active: ${ Register.filterActive }`)
         }
     };
 }
@@ -45,7 +45,7 @@ function requestListDeletion( e ){
     const listID = listToDelete.dataset.list
     const listName = listToDelete.querySelector('.list-name').innerHTML
     const list = new CustomList( listName, undefined, undefined, listID )
-    confirmListDelete( list )
+    confirmDelete( list )
     console.log(`requesting confirmation to delete list ${ listName }`)
 }
 

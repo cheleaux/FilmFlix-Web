@@ -19,8 +19,8 @@ export default class Register {
     }
 
     _populateRegister(){
-        const { definedMovieList, filterActive } = Register.sortArguments( arguments, '_populateRegister' )
-        const movieData = definedMovieList || ( this.listContent || JSON.parse( this.mainListMeta.movieJson ) )
+        const { definedMovieList, filterActive, baseFetch } = Register.sortArguments( arguments, '_populateRegister' )
+        const movieData = definedMovieList || ( baseFetch ? JSON.parse( this.mainListMeta.mainJson ) : this.listContent )
         Register.isEmpty( movieData ) ? this._NonFoundProtocol() : this._preInsertProtocol( movieData );
         filterActive ? this._insertMovies( this._runFilter( movieData ) ) : this._insertMovies( movieData ) ;
     }
@@ -71,14 +71,6 @@ export default class Register {
         const formatSetToCard = this.domElement.classList.contains('non-tabular-register')
         const activeRegister = formatSetToList ? this.domElement.querySelector('tbody') : formatSetToCard ? this.domElement.querySelector('.movie-register') : null;
         return activeRegister
-    }
-
-    _fetchRegisterMeta( list = undefined ){
-        const movies = list !== undefined ? list : JSON.parse( this.domElement.dataset.movies );
-        const metaData = {
-            
-        }
-        return metaData
     }
 
     _setLockedFormat( formatSetter ){
@@ -132,8 +124,9 @@ export default class Register {
             case '_populateRegister':
                 const definedMovieList = Object.values( args ).find( arg => Array.isArray( arg ) ) || null
                 const attributes = Object.values( args ).find( arg => typeof arg === 'object' && !Array.isArray( arg ) ) || null
-                const filterActive = attributes && attributes.hasOwnProperty('filterActive') ? attributes['filterActive'] : null; 
-                var sortedArgs = { definedMovieList, filterActive }
+                const filterActive = attributes && attributes.hasOwnProperty('filterActive') ? attributes['filterActive'] : null;
+                const baseFetch = attributes && attributes.hasOwnProperty('baseFetch') ? attributes['baseFetch'] : null;
+                var sortedArgs = { definedMovieList, filterActive, baseFetch }
                 break;
             default:
                 var sortedArgs = args

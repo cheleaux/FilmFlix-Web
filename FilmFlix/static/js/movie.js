@@ -27,6 +27,19 @@ export default class Movie {
         }
 
     }
+        
+    static delete( movie ){
+        console.log( movie)
+        const xhttp = new XMLHttpRequest()
+        xhttp.open( 'DELETE', `/movies/${ String( movie.filmID ) }`, true )
+        xhttp.send()
+    }
+
+    static fetchParentMovie( btn, register ){
+        const movieRow = btn.closest('.mv-row') || btn.closest('.mv-list-item')
+        const movie = register.listContent.find( (movie) => movieRow.id == movie.filmID )
+        return movie
+    }
 
     _constructListItemHTML(){
         const row = document.createElement('tr')
@@ -93,22 +106,16 @@ export default class Movie {
         return li
     }
 
-    _deleteMovie(){
-        const xhttp = new XMLHttpRequest()
-        xhttp.open( 'DELETE', `/api/movies/${ String( this.id ) }`, true )
-        xhttp.send()
-    }
-
     _addNew(){
         const xhttp = new XMLHttpRequest()
-        xhttp.open( 'POST', '/api/add-movie', true )
+        xhttp.open( 'POST', '/movies/add-movie', true )
         xhttp.setRequestHeader( 'Content-type', 'application/json; charset=UTF-8' )
         xhttp.send( JSON.stringify(this) )
     }
-
+    
     _updateMovieDetails(){
         const xhttp = new XMLHttpRequest()
-        xhttp.open( 'PUT', `/api/movies/${ String( this.id ) }`, true )
+        xhttp.open( 'PUT', `/movies/${ String( this.id ) }`, true )
         xhttp.setRequestHeader( 'Content-type', 'application/json; charset=UTF-8' )
         xhttp.send( JSON.stringify(this) )
     }

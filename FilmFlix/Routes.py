@@ -1,43 +1,48 @@
 from flask import Response
-from .TouchDB import *
+from .Movie import Movie
+from .CustomList import CustomList
 from .Packager import *
+from .Utils import getID, fetchMoviesBasedOnParams
 
 
-def movieInsertResponder( movie ):
-    insertMovie( movie )
-    movieID = getID( { 'title': movie.get('title') } )
+def movieInsertResponder( movieDetails ):
+    print( movieDetails )
+    movie = Movie( movieDetails['title'], movieDetails['yearReleased'], movieDetails['rating'], movieDetails['duration'], movieDetails['genre'] )
+    movie.insertMovie()
+    movieID = getID( { 'title': movieDetails['title'] } )
     res = Response( f'New movie record { movieID }', 201, mimetype='text/plain' )
     return res
 
 
 def movieDeletionResponder( movieID ):
     res = Response( f'Deleted movie record { movieID }', 204, mimetype='text/plain' )
-    removeMovie( movieID )
+    Movie.removeMovie( movieID )
     return res
 
 
-def movieUpdateResponder( movie ):
-    res = Response( f'Updated movie record { movie["id"] }', 201, mimetype='text/plain' )
-    updateMovieDetails( movie )
+def movieUpdateResponder( movieDetails ):
+    res = Response( f'Updated movie record { movieDetails["id"] }', 201, mimetype='text/plain' )
+    Movie.updateMovieDetails( movieDetails )
     return res
         
         
 def customListInsertResponder( listDetails ):
-    insertList( listDetails )
-    listID = getID( { 'name': listDetails.get('name') } )
-    instateListMembership( listID, listDetails.get('movieIDs') )
+    customList = CustomList( listDetails['name'], listDetails['movieIDs'] )
+    customList.insertList()
+    listID = getID( { 'name': listDetails['name'] } )
+    Movie.instateListMembership( listID, listDetails['movieIDs'] )
     res = Response( f'New custom list record { listID }', 201, mimetype='text/plain')
     return res
 
 
 def customListDeleteResponder( listID ):
     res = Response( f'Delete movie record { listID }', 204, mimetype='text/plain' )
-    removeCustomList( listID )
+    CustomList.removeList( listID )
     return res
 
 
 def fetchMovieDetails( ID ):
-    movie = fetchMovieByID( ID )
+    movie = Movie.fetchMovieByID( ID )
     movieJson = serializeObjects( movie )
     return movieJson
 
@@ -52,20 +57,10 @@ def fetchMovies( param ):
 
 
 def fetchCustomListMenuDetails():
-    allCustomLists = fetchListMeta()
+    allCustomLists = CustomList.fetchListMeta()
     listJson = serializeObjects( allCustomLists )
     res = Response( listJson, 200, mimetype='application/json' )
     return res
-
-
-def fetchMoviesBasedOnParams( param ):
-    if param[list(param)[0]] == None or param[list(param)[0]] == 'undefined':
-        movies = fetchMoviesFromList( None )
-    elif 'listID' in param.keys():
-        movies = fetchMoviesFromList( param['listID'] )
-    elif 'query' in param.keys() and param['query'] != None:
-        movies = fetchMoviesFromSearch( param['query'] )
-    return movies
 
 
 def errorResponse( errMessage, errCode ):

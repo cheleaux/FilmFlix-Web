@@ -25,7 +25,9 @@ export default class Form{
         const movie = new Movie( ID, this.titleInp.value, this.releaseInp.value, this.ratingInp.value, this.durationInp.value, this.genreInp.value )
         this.submit.innerHTML = `${ successStatement } <span><i class="bi bi-check"></i></span>`
         this.operation === 'update' ? movie._updateMovieDetails() :
-        this.operation === 'insert' ? movie._addNew() : alert( `invalid form operation '${ this.operation }'` )
+        this.operation === 'insert' ? movie._addNew() :
+        // else
+        alert( `invalid form operation '${ this.operation }'` )
     }
 
     _lockForm(){

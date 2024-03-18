@@ -20,8 +20,10 @@ def fetchAllMovies():
     movies = fetchMovies( { 'query': None } )
     return movies
 
-
-@views.route("/movies/<movieId>", methods=[ "GET", "DELETE", "PUT" ])
+# FIX DELETE OPERATION:
+# ROUTE NOT FOUND / ROUTE METHOD NOT PERMITTED
+# CHECK REQUEST URL IN 'movie.js'
+@views.route("/movies/<int:movieId>", methods=[ "GET", "PUT", "DELETE" ])
 def movieDetails( movieId ):
     if request.method == "GET":
         return render_template( "addMovie.html", details=fetchMovieDetails( movieId ) )
@@ -53,7 +55,7 @@ def fetchCustomList():
             return customListDeleteResponder( listId )
 
 
-@views.route("/api/custom-list/all", methods=[ "GET", "POST" ])
+@views.route("/api/custom-list/all", methods=["GET"])
 def fetchListData():
     customListDataRes = fetchCustomListMenuDetails()
     return customListDataRes
