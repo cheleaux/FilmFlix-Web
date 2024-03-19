@@ -25,7 +25,7 @@ function fetchFunctionalScreenBreakpointQueries(){
 function onLoadPageBuffer( register, sidebar, mediaQueries ){
     sidebar._formatAndRenderContent( register, mediaQueries )
     register._formatForScreenWidth( mediaQueries.screenQuery1090 )
-    register._populateRegister( { baseFetch: true } )
+    register._populateRegister( { rootFetch: true } )
     register.domElement.addEventListener( 'click', ( e ) => { enableMovieActionsMenu( e, register ) } )
     sidebar.domElement.addEventListener( 'click', ( e ) => { sidebar._handleUserAction( e, register ) } )
 }

@@ -19,8 +19,8 @@ export default class Register {
     }
 
     _populateRegister(){
-        const { definedMovieList, filterActive, baseFetch } = Register.sortArguments( arguments, '_populateRegister' )
-        const movieData = definedMovieList || ( baseFetch ? JSON.parse( this.mainListMeta.mainJson ) : this.listContent )
+        const { definedMovieList, filterActive, rootFetch } = Register.sortArguments( arguments, '_populateRegister' )
+        const movieData = definedMovieList || ( rootFetch ? JSON.parse( this.mainListMeta.mainJson ) : this.listContent )
         Register.isEmpty( movieData ) ? this._NonFoundProtocol() : this._preInsertProtocol( movieData );
         filterActive ? this._insertMovies( this._runFilter( movieData ) ) : this._insertMovies( movieData ) ;
     }
@@ -105,6 +105,14 @@ export default class Register {
         })
     }
     
+    refreshElement( element ){
+        switch( element ){
+            case 'rootFetch':
+                Movie.fetchAllMoviesJson()
+                .then( movies => this.domElement.dataset.movies = movies )
+        }
+    }
+
     static isEmpty( movieList ){
         return movieList.length == 0 || movieList == undefined
     }
@@ -125,8 +133,8 @@ export default class Register {
                 const definedMovieList = Object.values( args ).find( arg => Array.isArray( arg ) ) || null
                 const attributes = Object.values( args ).find( arg => typeof arg === 'object' && !Array.isArray( arg ) ) || null
                 const filterActive = attributes && attributes.hasOwnProperty('filterActive') ? attributes['filterActive'] : null;
-                const baseFetch = attributes && attributes.hasOwnProperty('baseFetch') ? attributes['baseFetch'] : null;
-                var sortedArgs = { definedMovieList, filterActive, baseFetch }
+                const rootFetch = attributes && attributes.hasOwnProperty('rootFetch') ? attributes['rootFetch'] : null;
+                var sortedArgs = { definedMovieList, filterActive, rootFetch }
                 break;
             default:
                 var sortedArgs = args

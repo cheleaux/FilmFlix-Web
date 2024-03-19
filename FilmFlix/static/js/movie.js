@@ -19,7 +19,7 @@ export default class Movie {
     static async fetchAllMoviesJson(){
         try {
             const movieData = await fetch('/api/movies')
-            if (!movieData.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            if ( !movieData.ok ) throw new Error(`HTTP error! Status: ${response.status}`);
             const movieJson = await movieData.json()
             return movieJson
         } catch ( err ){
@@ -28,11 +28,17 @@ export default class Movie {
 
     }
         
-    static delete( movie ){
-        console.log( movie)
-        const xhttp = new XMLHttpRequest()
-        xhttp.open( 'DELETE', `/movies/${ String( movie.filmID ) }`, true )
-        xhttp.send()
+    static async delete( movie ){
+        try {
+            if( movie && ( movie.filmID || movie.id ) ){
+                const res = await fetch( `/movies/${ String( movie.filmID ) }`, { method: 'DELETE' } )
+                if( !res.ok ) throw new Error(`HTTP error! Status: ${ response.status }`);
+                else return res
+            }
+        } catch( err ){
+            console.error(`Error deleteing movie ( ID-${ movie.filmID } ):`, err);
+        }
+        
     }
 
     static fetchParentMovie( btn, register ){

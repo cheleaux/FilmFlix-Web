@@ -12,13 +12,18 @@ function displayListMembers( e, Register ){
     if( listOpt ){
         const listId = listOpt.dataset.list
         switchActiveListStatus( listOpt )
-        if( listId == 0 ){ 
-            Register.filterActive ? Register._populateRegister( { filterActive: true, baseFetch: true } ) : Register._populateRegister( { baseFetch: true } ) }
-        else {
-            const customMovies = CustomList.fetchCustomListMovies( listId )
-            customMovies.then( movies => Register.filterActive ? Register._populateRegister( movies, { filterActive: true } ) : Register._populateRegister( movies ) )
-        }
+        renderListByID( listId, Register )
     };
+}
+
+function renderListByID( listId, Register ){
+    if( listId == 0 ){ 
+        console.log( listId )
+        Register.filterActive ? Register._populateRegister( { filterActive: true, rootFetch: true } ) : Register._populateRegister( { rootFetch: true } ) }
+    else {
+        const customMovies = CustomList.fetchCustomListMovies( listId )
+        customMovies.then( movies => Register.filterActive ? Register._populateRegister( movies, { filterActive: true } ) : Register._populateRegister( movies ) )
+    }
 }
 
 function toggleDeleteSelection( deleteListBtn ){
@@ -57,6 +62,12 @@ function switchActiveListStatus( listOpt ){
     CustomList._toggleActiveStatus( listOpt )
 }
 
+function fetchActiveList(){
+    const listMenu = getDomElement()
+    const activeList = listMenu.querySelector('.list-menu-opt.tab-focus')
+    return activeList
+}
+
 function renderListMenu( { length } = {} ) {
     const listData = CustomList.fetchMetaData()
     length ? setMainListQuantity( length ) : null;
@@ -73,4 +84,4 @@ function setMainListQuantity( quantity ){
     AllMoviesOption.querySelector('.quantity').innerHTML = String(quantity)
 }
 
-export default { renderListMenu, displayListMembers, getDomElement, toggleDeleteSelection };
+export default { renderListMenu, displayListMembers, getDomElement, toggleDeleteSelection, renderListByID, fetchActiveList };

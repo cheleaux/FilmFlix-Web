@@ -1,6 +1,8 @@
 import CustomList from './customList.js'
 import Movie from './movie.js'
 import Sidebar from './sidebar.js';
+import Register from './register.js'
+import customListMenu from './customListMenu.js';
 
 export default function enableMovieActionsMenu( e, register ){
     e.stopPropagation()
@@ -64,20 +66,37 @@ export function confirmDelete( item, parentElement = null ){
     toggleConfirmWindow( confirmDelMenu, confimDisplayName )
 }
 
-function deleteOnConfirm( e, item, deleteFunction, confirmDelMenu, parentComponent = null ){
+async function deleteOnConfirm( e, item, deleteFunction, confirmDelMenu, parentComponent = null ){
     if ( e.target.closest('button').id == 'confirm-del' ){
-        toggleConfirmWindow( confirmDelMenu )
-        deleteFunction( item )
-        refreshElementContaier( item, parentComponent )
+        
+        try {
+            toggleConfirmWindow( confirmDelMenu )
+            var res = await deleteFunction( item )
+            if( res.ok ) refreshElementContaier( item, parentComponent );
+
+        } catch( err ){
+            console.error(`Couldn't not delete: ${ err }`)
+        }
     }
     else if ( e.target.closest('button').id == 'cancel-del' ) toggleConfirmWindow( confirmDelMenu );
 }
 
 function refreshElementContaier( item, parentComponent ){
     if( item.hasOwnProperty('filmID') ){
-        const register = parentComponent
-        register.filterActive ? register._populateRegister( { filterActive: true } ) : register._populateRegister()
+        // IF ITEM IS A MOVIE GRAB THE MOVIE ELEMENT AND THE ACTIVE LIST IDs
+        const Register = parentComponent
+        const movieEl = Array.from( Register.activeRegister().children).find( movieRow => movieRow.id == item.filmID )
+        const activeListID = customListMenu.fetchActiveList().dataset.list
+
+        // REMOVE THE MOVIE ELEMENT FROM THE LIST
+        movieEl.remove()
+
+        // REFETCH THE ENTIRE REGISTRY MOVI JSON STORE IN MEMORY AND RERENDER THE ACTIVE LIST
+        Register.refreshElement('rootFetch')
+        customListMenu.renderListByID( activeListID, Register )
+
     } else if( item instanceof CustomList ){
+        // IF ITEM IS A COLLECTION RERENDER THE COLLECTIONS MENU
         Sidebar.refreshElement('listMenu')
     }
 }
