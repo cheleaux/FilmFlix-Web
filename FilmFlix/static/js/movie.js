@@ -32,11 +32,13 @@ export default class Movie {
         try {
             if( movie && ( movie.filmID || movie.id ) ){
                 const res = await fetch( `/movies/${ String( movie.filmID ) }`, { method: 'DELETE' } )
-                if( !res.ok ) throw new Error(`HTTP error! Status: ${ response.status }`);
-                else return res
+                if( !res.ok ){
+                    console.error(`HTTP DELETE Error! Could not delete movie ( ID-${ movie.filmID } ) \nStatus: ${ response.status }`);
+                    return res
+                } else return res
             }
         } catch( err ){
-            console.error(`Error deleteing movie ( ID-${ movie.filmID } ):`, err);
+            throw new Error(`HTTP DELETE Error! Status: ${ response.status } \n ${ err }`);
         }
         
     }

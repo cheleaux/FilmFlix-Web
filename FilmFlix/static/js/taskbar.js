@@ -5,15 +5,15 @@ export function getTaskbarDomElement(){
     return domElement
 }
 
-export function handleUserTask( e, register, FilterCompenent ){
+export function handleUserTask( e, register, Sidebar ){
     const taskComponent = e.target.closest('.taskbar-opt')
     const formatToggler = e.target.closest('.format-toggler')
     if( taskComponent.classList.contains('register-format-toggle') && !iconMatchesFormat( formatToggler, register ) ){
         register._switchFormat( formatToggler );
         register._populateRegister()
     } else if( taskComponent.classList.contains('filter-btn') ){
-        FilterCompenent._toggleFilterOptions();
-        toggleFilterBtnStyle( e.target, FilterCompenent.domElement )
+        Sidebar.filterComponent._toggleFilterOptions();
+        toggleFilterBtnStyle( e.target, Sidebar.filterComponent.domElement )
     } else if( taskComponent.classList.contains('delete-list-select-btn') ) customListMenu.toggleDeleteSelection( taskComponent );
 }
 

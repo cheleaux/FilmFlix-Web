@@ -150,6 +150,23 @@ aside.closed .bi-arrow-bar-right {
     display: none;
 }
 
+.alert-msg-box {
+    width: 100%;
+    padding: 0.25rem 0;
+    flex-direction: row;
+    justify-content: space-around;
+    color: var(--clr-main);
+    background-color: var(--clr-rule);
+    font-size: var(--fs-120);
+    margin-bottom: 0.85rem;
+    border-radius: 0.2rem;
+    display: none;
+}
+
+.alert-msg-box:hover {
+    background-color: var(--clr-rule-hover)
+}
+
 /* ----------------------- TASKBAR */
 
 .register-taskbar {
@@ -193,9 +210,10 @@ aside.closed .bi-arrow-bar-right {
     background-color: var(--clr-aside-rule)
 }
 
+.delete-list-select-btn,
 .filter-btn, .filter-btn.inactive {
     color: var(--clr-icon);
-    background-color: var(--clr-aside-rule);
+    background-color: var(--clr-taskbar-btn);
     letter-spacing: .03rem;
 }
 

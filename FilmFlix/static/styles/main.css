@@ -25,8 +25,10 @@
     --clr-table-text: #6D6D6D;
     --clr-main-bg: #f7f7fa;
     --clr-rule: #BDBDBD;
+    --clr-rule-hover: #a5a4a4;
     --clr-form-noselect: #f2fcf4;
     --clr-aside-rule: #E7E7E7;
+    --clr-taskbar-btn: #F2F3F3;
 
     /*  FONT-FAMILY  */
     --ff-main: 'Satoshi', Sans-serif;

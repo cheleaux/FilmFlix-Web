@@ -38,7 +38,7 @@ def addMovie():
     if request.method == "GET":
         return render_template("addMovie.html")
     elif request.method == "POST":
-        return movieInsertResponder( request.json )
+        return movieInsertResponder( request.json ) 
 
 
 @views.route("/api/custom-list", methods=[ "GET", "POST" ])

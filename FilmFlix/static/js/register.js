@@ -20,7 +20,9 @@ export default class Register {
 
     _populateRegister(){
         const { definedMovieList, filterActive, rootFetch } = Register.sortArguments( arguments, '_populateRegister' )
+        console.log(`root fetch status: ${ rootFetch }`)
         const movieData = definedMovieList || ( rootFetch ? JSON.parse( this.mainListMeta.mainJson ) : this.listContent )
+        console.log(`movieData:`, movieData, JSON.parse( this.mainListMeta.mainJson ) )
         Register.isEmpty( movieData ) ? this._NonFoundProtocol() : this._preInsertProtocol( movieData );
         filterActive ? this._insertMovies( this._runFilter( movieData ) ) : this._insertMovies( movieData ) ;
     }
@@ -105,11 +107,12 @@ export default class Register {
         })
     }
     
-    refreshElement( element ){
+    _refreshElement( element ){
         switch( element ){
             case 'rootFetch':
                 Movie.fetchAllMoviesJson()
-                .then( movies => this.domElement.dataset.movies = movies )
+                .then( movies => console.log( movies ) )
+                .then( movies => this.domElement.dataset.movies = JSON.stringify( movies ) )
         }
     }
 
@@ -136,7 +139,7 @@ export default class Register {
                 const rootFetch = attributes && attributes.hasOwnProperty('rootFetch') ? attributes['rootFetch'] : null;
                 var sortedArgs = { definedMovieList, filterActive, rootFetch }
                 break;
-            default:
+            default: 
                 var sortedArgs = args
         }
         return sortedArgs

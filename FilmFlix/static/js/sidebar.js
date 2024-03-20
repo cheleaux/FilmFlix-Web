@@ -10,6 +10,8 @@ export default class Sidebar{
         this.filterComponent = this._initialiseFilterComponent()
         // LIST MENU DOM ELEMENT GETTER
         this.listMenuElement = customListMenu.getDomElement()
+        // ALERT BOX
+        this.alert = domElement.querySelector('.alert-msg-box')
     }
 
     _initialiseFilterComponent(){
@@ -26,7 +28,7 @@ export default class Sidebar{
     }
 
     _handleUserAction( e, Register ){
-        if( this.taskbarElement.contains( e.target ) ) handleUserTask( e, Register, this.filterComponent );
+        if( this.taskbarElement.contains( e.target ) ) handleUserTask( e, Register, this );
         else if( this.listMenuElement.contains( e.target ) && !e.target.classList.contains('del-list-btn') ) customListMenu.displayListMembers( e, Register );
         else if( e.target.classList.contains('apply-filter-btn') ) Register._populateRegister( { filterActive: true } );
     }
@@ -74,6 +76,20 @@ export default class Sidebar{
         this.domElement.classList.add('closed')
     }
 
+    static flashAlert( msg ){
+        // DISPLAY ALERT MSG
+        const alert = document.querySelector('.alert-msg-box')
+        alert.style.display = 'flex';
+        alert.querySelector('.alert-msg').innerHTML = msg;
+
+        // VISIBILITY TOGGLE FUNCTION USED TO ADD AND REMOVE LISTENER
+        const toggleVisibilty = () => {
+            alert.style.display = 'none'
+            alert.removeEventListener( 'click', toggleVisibilty )
+        }
+        alert.addEventListener( 'click', toggleVisibilty )
+    }
+
     static refreshElement( elementName ){
         switch( elementName ){
             case 'listMenu':
@@ -83,3 +99,6 @@ export default class Sidebar{
         }
     }
 }
+
+export const flashAlert = Sidebar.flashAlert
+export const refreshElement = Sidebar.refreshElement

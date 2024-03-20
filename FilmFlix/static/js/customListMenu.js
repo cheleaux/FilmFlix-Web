@@ -26,13 +26,13 @@ function renderListByID( listId, Register ){
     }
 }
 
+// TOGGLE ON / OFF THE CUSTOM LIST MENU DELETE MODE BASE ON THE CURRENT STATE & PASS THE EVENT LISTENER REFERENCE FUNCTION
 function toggleDeleteSelection( deleteListBtn ){
-    const domElement = getDomElement() 
+    const domElement = getDomElement()
     domElement.classList.contains('delete-mode') ? deactivateListDeleteMode( domElement, deleteListBtn ) : activateListDeleteMode( domElement, deleteListBtn );
 }
 
 function deactivateListDeleteMode( domElement, deleteListBtn ){
-    console.log('in deactivate function')
     domElement.classList.remove('delete-mode')
     deleteListBtn.classList.remove('active')
     domElement.removeEventListener( 'click', requestListDeletion )
