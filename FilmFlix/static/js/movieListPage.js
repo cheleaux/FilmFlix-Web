@@ -1,36 +1,47 @@
 import MovieRegister from './register.js'
-import enableMovieActionsMenu from './menu.js'
+import MenuInterface from './menu.js'
 import Sidebar from './sidebar.js'
 
 
-function initialiseRegister(){
+
+
+// TODO: INSTANCIATE INDIVIDUAL OBSERVERS AND SUBSCRIBE THEM TO THE HUB 
+
+
+
+export function initialiseRegister( ObserverHub ){
     const registerElement = document.querySelector('.movie-register-container')
-    const register = new MovieRegister( registerElement )
+    const register = new MovieRegister( registerElement, ObserverHub )
     return register
 }
 
-function initialiseSidebar(){
+export function initialiseSidebar(){
     const sidebarElement = document.querySelector('.page-menu')
     const sidebar = new Sidebar( sidebarElement )
     return sidebar
 }
 
-function fetchFunctionalScreenBreakpointQueries(){
+export function initiateMenuInterface( ObserverHub, Register, Sidebar ){
+    const Menus = new MenuInterface( ObserverHub, Register, Sidebar )
+    return Menus
+}
+
+export function fetchFunctionalScreenBreakpointQueries(){
     const screenQuery770 = window.matchMedia('(max-width: 770px)')
     const screenQuery1090 = window.matchMedia('(max-width: 1090px)')
     const queries = { screenQuery770, screenQuery1090 }
     return queries
 }
 
-function onLoadPageBuffer( register, sidebar, mediaQueries ){
+export function onLoadPageBuffer( register, sidebar, mediaQueries, Menus ){
     sidebar._formatAndRenderContent( register, mediaQueries )
     register._formatForScreenWidth( mediaQueries.screenQuery1090 )
     register._populateRegister( { rootFetch: true } )
-    register.domElement.addEventListener( 'click', ( e ) => { enableMovieActionsMenu( e, register ) } )
+    register.domElement.addEventListener( 'click', ( e ) => { Menus._enableMovieActionsMenu( e ) } )
     sidebar.domElement.addEventListener( 'click', ( e ) => { sidebar._handleUserAction( e, register ) } )
 }
 
-function formatPageFromQueryEvent( mediaWidth, mediaQueries, register, sidebar ){
+export function formatPageFromQueryEvent( mediaWidth, mediaQueries, register, sidebar ){
     if( mediaWidth === '1090' ){
         register._formatForScreenWidth( mediaQueries.screenQuery1090 )
         sidebar._formatForScreenWidth( mediaQueries )
@@ -38,5 +49,3 @@ function formatPageFromQueryEvent( mediaWidth, mediaQueries, register, sidebar )
         sidebar._formatForScreenWidth( mediaQueries )
     }
 }
-
-export default { initialiseRegister, initialiseSidebar, fetchFunctionalScreenBreakpointQueries, onLoadPageBuffer, formatPageFromQueryEvent }

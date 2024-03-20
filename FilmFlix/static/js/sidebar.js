@@ -76,29 +76,33 @@ export default class Sidebar{
         this.domElement.classList.add('closed')
     }
 
+    
+    _refreshElement( elements ){
+        elements.forEach( ( element ) => {
+            switch( element ){
+                case 'listMenu':
+                    customListMenu.renderListMenu()
+                default:
+                    customListMenu.renderListMenu()          
+            }
+        })
+    }
+
     static flashAlert( msg ){
         // DISPLAY ALERT MSG
         const alert = document.querySelector('.alert-msg-box')
-        alert.style.display = 'flex';
-        alert.querySelector('.alert-msg').innerHTML = msg;
 
         // VISIBILITY TOGGLE FUNCTION USED TO ADD AND REMOVE LISTENER
         const toggleVisibilty = () => {
             alert.style.display = 'none'
             alert.removeEventListener( 'click', toggleVisibilty )
         }
+
+        alert.style.display = 'flex';
+        alert.querySelector('.alert-msg').innerHTML = msg;
         alert.addEventListener( 'click', toggleVisibilty )
     }
-
-    static refreshElement( elementName ){
-        switch( elementName ){
-            case 'listMenu':
-                customListMenu.renderListMenu()
-            default:
-                customListMenu.renderListMenu()          
-        }
-    }
 }
-
+        
 export const flashAlert = Sidebar.flashAlert
 export const refreshElement = Sidebar.refreshElement

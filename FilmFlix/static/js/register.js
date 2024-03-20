@@ -2,11 +2,12 @@ import Movie from './movie.js'
 import Filter from './filter.js'
 import FilterComponent from './filterComponent.js'
 import { getTaskbarDomElement, setFormatIcon } from './taskbar.js'
-import { Filterables } from './filter.js'
+import { sortArguments, extractUniqueValues } from './Utils.js'
 
 export default class Register {
-    constructor( domElement ){
+    constructor( domElement, ObserverHub ){
         this.domElement = domElement
+        this.ObserverHub = ObserverHub
         this.listContent = []
         this.errMsg = domElement.querySelector('.err-not-found') || null
         this.activeRegister = this._fetchActiveRegister
@@ -14,12 +15,12 @@ export default class Register {
         this.mainListMeta = {
             mainJson: this.domElement.dataset.movies,
             length: JSON.parse( this.domElement.dataset.movies ).length, // RETURNS AN INTEGER
-            filterables: Register.extractUniqueValues( JSON.parse( this.domElement.dataset.movies ) ), // RETURNS AN OBJECT WITH PROPS IDENTICAl TO A MOVIE INSTANCE WITHOUT 'title' OR 'filmID'
+            filterables: extractUniqueValues( JSON.parse( this.domElement.dataset.movies ) ), // RETURNS AN OBJECT WITH PROPS IDENTICAl TO A MOVIE INSTANCE WITHOUT 'title' OR 'filmID'
         }
     }
 
     _populateRegister(){
-        const { definedMovieList, filterActive, rootFetch } = Register.sortArguments( arguments, '_populateRegister' )
+        const { definedMovieList, filterActive, rootFetch } = sortArguments( arguments, '_populateRegister' )
         console.log(`root fetch status: ${ rootFetch }`)
         const movieData = definedMovieList || ( rootFetch ? JSON.parse( this.mainListMeta.mainJson ) : this.listContent )
         console.log(`movieData:`, movieData, JSON.parse( this.mainListMeta.mainJson ) )
@@ -32,6 +33,15 @@ export default class Register {
         for(const item of movieData){
             const newMovie = new Movie( item.filmID, item.title, item.yearReleased, item.rating, item.duration, item.genre )
             activeRegister.insertAdjacentElement( 'beforeend',  activeRegister.classList.contains('movie-register') ? newMovie._constructCardItemHTML() : newMovie._constructListItemHTML() );
+        }
+    }
+
+    _removeMovie( movieID ){
+        try {
+            var movieEl = Array.from( Register.activeRegister().children).find( movieRow => movieRow.id == movieID )
+            movieEl.remove()
+        } catch( err ){
+            if( !movieEl ) console.error(`Register Error: Could not find movie element of id ${ movieID }`);
         }
     }
 
@@ -107,41 +117,23 @@ export default class Register {
         })
     }
     
-    _refreshElement( element ){
-        switch( element ){
-            case 'rootFetch':
-                Movie.fetchAllMoviesJson()
-                .then( movies => console.log( movies ) )
-                .then( movies => this.domElement.dataset.movies = JSON.stringify( movies ) )
-        }
+    _refreshElement( elements ){
+        elements.forEach( ( element ) => {
+            switch( element ){
+                case 'rootFetch':
+                    Movie.fetchAllMoviesJson()
+                    .then( movies => console.log( movies ) )
+                    .then( movies => this.domElement.dataset.movies = JSON.stringify( movies ) )
+                case 'filterables':
+                    this.mainListMeta.filterables = extractUniqueValues( JSON.parse( this.domElement.dataset.movies ) )
+                    this.ObserverHub.notify( { filterables: this.mainListMeta.filterables }, 'filterablesChanged' )
+                }
+        })
     }
 
     static isEmpty( movieList ){
         return movieList.length == 0 || movieList == undefined
     }
 
-    static extractUniqueValues( movieList ){
-        const uniqueValues = new Filterables()
-        movieList.forEach( movie => {
-            for( const key of Object.keys( uniqueValues )){
-                if( !uniqueValues[key].includes( movie[key] ) ) uniqueValues[key].push( movie[key] );
-            }
-        })
-        return uniqueValues
-    }
 
-    static sortArguments( args, func ){
-        switch( func ){
-            case '_populateRegister':
-                const definedMovieList = Object.values( args ).find( arg => Array.isArray( arg ) ) || null
-                const attributes = Object.values( args ).find( arg => typeof arg === 'object' && !Array.isArray( arg ) ) || null
-                const filterActive = attributes && attributes.hasOwnProperty('filterActive') ? attributes['filterActive'] : null;
-                const rootFetch = attributes && attributes.hasOwnProperty('rootFetch') ? attributes['rootFetch'] : null;
-                var sortedArgs = { definedMovieList, filterActive, rootFetch }
-                break;
-            default: 
-                var sortedArgs = args
-        }
-        return sortedArgs
-    }
 }

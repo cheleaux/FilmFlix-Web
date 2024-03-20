@@ -1,5 +1,4 @@
-import FilterComponent from './filterComponent.js';
-import { flashAlert, refreshElement } from './sidebar.js'
+import { flashAlert } from './sidebar.js'
 
 
 class Observer {
@@ -9,6 +8,7 @@ class Observer {
     }
 }
 
+// TODO: INSTANTIATE AND INTEGRATE OBSERVERS INTO MAIN APP LOGIC 'index.js'
 export class ObserverHub {
     constructor(){
         this.observers = new Map()
@@ -26,7 +26,7 @@ export class ObserverHub {
         if( this.observers.has( event ) ) this.observers.get( event ).delete( observer );
     }
 
-    notify( event, data ){
+    notify( data, event ){
         if( this.observers.has( event ) ){
             for( const observer of this.observers.get( event ) ){
                 observer.update( event, data )
@@ -38,27 +38,10 @@ export class ObserverHub {
 
 export class AlertObserver extends Observer {
     update( event, data ){
-        if( event === 'movieDeleted' || event === 'listDeleted' ){
-            try {
-                flashAlert( data.alertMsg )
-            } catch( err ){
-                console.error(`User-Action Report Error: ${ err }`)
-            }
+        try {
+            if( event === 'movieDeleted' || event === 'listDeleted' || event === 'movieFailedToDelete' ) flashAlert( data.alertMsg );
+        } catch( err ){
+            console.error(`User-Action Report Error: ${ err }`)
         }
     }
 }
-
-export class SidebarRefreshObserver extends Observer {
-    update( event, data ){
-        if( event === 'movieDeleted' ){
-            refreshElement('listMenu')
-            FilterComponent._renderfilterFields( movieListMetaData )
-            Register._refreshElement('rootFetch')
-        }
-        if( event === 'listDeleted' ){
-            refreshElement('listMenu')
-        }
-    }
-}
-
-export class RegisterRefreshObserver extends Observer {}
