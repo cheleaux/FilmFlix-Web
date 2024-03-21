@@ -16,9 +16,9 @@ if ( isOnMovieListPage ){
     var ObserverHub = new ObserverHub()
     var Register = MovieListPage.initialiseRegister( ObserverHub )  // RETURNS INSTANTIATED REGISTER OBJECT WHERE 'domELement' IS THE MOVIE REGISTER CONTAINER
     var Sidebar = MovieListPage.initialiseSidebar()  // RETURNS INSTANTIATED SIDEBAR OBJECT WHERE 'domELement' IS THE SIDEBAR MENU CONTAINER
-    var Menus = initiateMenuInterface( ObserverHub, Register, Sidebar )
+    var Menus = MovieListPage.initialiseMenuInterface( ObserverHub, Register, Sidebar )
     var queries = MovieListPage.fetchFunctionalScreenBreakpointQueries()  // RETURNS OBJECT OF MEDIA QUERY OBJECTS KEYED BY QUERY WIDTH
-    document.addEventListener( 'DOMContentLoaded', () => { MovieListPage.onLoadPageBuffer( Register, Sidebar, queries, Menus ) })
+    document.addEventListener( 'DOMContentLoaded', () => { MovieListPage.onLoadPageBuffer( Register, Sidebar, ObserverHub, queries, Menus ) })
     queries.screenQuery1090.addEventListener( 'change', () => { MovieListPage.formatPageFromQueryEvent( '1090', queries, Register, Sidebar ) })
     queries.screenQuery770.addEventListener( 'change', () => { MovieListPage.formatPageFromQueryEvent( '770', queries, Register, Sidebar ) })
 }

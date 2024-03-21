@@ -1,8 +1,8 @@
 import MovieRegister from './register.js'
 import MenuInterface from './menu.js'
 import Sidebar from './sidebar.js'
-
-
+import { SidebarRefreshObserver, RegisterRefreshObserver } from './refreshObservers.js'
+import { AlertObserver } from './alertObserver.js'
 
 
 // TODO: INSTANCIATE INDIVIDUAL OBSERVERS AND SUBSCRIBE THEM TO THE HUB 
@@ -21,9 +21,21 @@ export function initialiseSidebar(){
     return sidebar
 }
 
-export function initiateMenuInterface( ObserverHub, Register, Sidebar ){
+function initialiseMenuInterface( ObserverHub, Register, Sidebar ){
     const Menus = new MenuInterface( ObserverHub, Register, Sidebar )
     return Menus
+}
+
+function intantiateAndSuscribePageObservers( ObserverHub ){
+    const SidebarRefreshObserver = new SidebarRefreshObserver()
+    const RegisterRefreshObserver = new RegisterRefreshObserver()
+    const AlertObserver = new AlertObserver()
+    ObserverHub.subscribe( [ SidebarRefreshObserver, RegisterRefreshObserver, AlertObserver ], 'movieDeleted' )
+    ObserverHub.subscribe( [ SidebarRefreshObserver, AlertObserver ], 'listDeleted' )
+    ObserverHub.subscribe( [ RegisterRefreshObserver ],'rootMovieFetchChanged' )
+    ObserverHub.subscribe( [ SidebarRefreshObserver ],'filterablesChanged' )    
+    ObserverHub.subscribe( [ AlertObserver ], 'movieDFailedToDelete' )
+    ObserverHub.subscribe( [ AlertObserver ], 'listDFailedToDelete' )
 }
 
 export function fetchFunctionalScreenBreakpointQueries(){
@@ -33,12 +45,13 @@ export function fetchFunctionalScreenBreakpointQueries(){
     return queries
 }
 
-export function onLoadPageBuffer( register, sidebar, mediaQueries, Menus ){
+export function onLoadPageBuffer( register, sidebar, ObserverHub, mediaQueries, Menus ){
     sidebar._formatAndRenderContent( register, mediaQueries )
     register._formatForScreenWidth( mediaQueries.screenQuery1090 )
     register._populateRegister( { rootFetch: true } )
     register.domElement.addEventListener( 'click', ( e ) => { Menus._enableMovieActionsMenu( e ) } )
     sidebar.domElement.addEventListener( 'click', ( e ) => { sidebar._handleUserAction( e, register ) } )
+    intantiateAndSuscribePageObservers( ObserverHub )
 }
 
 export function formatPageFromQueryEvent( mediaWidth, mediaQueries, register, sidebar ){
@@ -49,3 +62,4 @@ export function formatPageFromQueryEvent( mediaWidth, mediaQueries, register, si
         sidebar._formatForScreenWidth( mediaQueries )
     }
 }
+
