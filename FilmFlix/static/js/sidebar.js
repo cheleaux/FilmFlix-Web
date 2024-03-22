@@ -27,8 +27,8 @@ export default class Sidebar{
         this.filterComponent._renderfilterFields( Register.mainListMeta )
     }
 
-    _handleUserAction( e, Register ){
-        if( this.taskbarElement.contains( e.target ) ) handleUserTask( e, Register, this );
+    _handleUserAction( e, Register, Menus ){
+        if( this.taskbarElement.contains( e.target ) ) handleUserTask( e, Register, this, Menus );
         else if( this.listMenuElement.contains( e.target ) && !e.target.classList.contains('del-list-btn') ) customListMenu.displayListMembers( e, Register );
         else if( e.target.classList.contains('apply-filter-btn') ) Register._populateRegister( { filterActive: true } );
     }

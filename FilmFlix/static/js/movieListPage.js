@@ -21,7 +21,7 @@ export function initialiseSidebar(){
     return sidebar
 }
 
-function initialiseMenuInterface( ObserverHub, Register, Sidebar ){
+export function initialiseMenuInterface( ObserverHub, Register, Sidebar ){
     const Menus = new MenuInterface( ObserverHub, Register, Sidebar )
     return Menus
 }
@@ -50,7 +50,7 @@ export function onLoadPageBuffer( register, sidebar, ObserverHub, mediaQueries, 
     register._formatForScreenWidth( mediaQueries.screenQuery1090 )
     register._populateRegister( { rootFetch: true } )
     register.domElement.addEventListener( 'click', ( e ) => { Menus._enableMovieActionsMenu( e ) } )
-    sidebar.domElement.addEventListener( 'click', ( e ) => { sidebar._handleUserAction( e, register ) } )
+    sidebar.domElement.addEventListener( 'click', ( e ) => { sidebar._handleUserAction( e, register, Menus ) } )
     intantiateAndSuscribePageObservers( ObserverHub )
 }
 

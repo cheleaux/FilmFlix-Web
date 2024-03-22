@@ -27,9 +27,9 @@ function renderListByID( listId, Register ){
 }
 
 // TOGGLE ON / OFF THE CUSTOM LIST MENU DELETE MODE BASE ON THE CURRENT STATE & PASS THE EVENT LISTENER REFERENCE FUNCTION
-function toggleDeleteSelection( deleteListBtn ){
+function toggleDeleteSelection( deleteListBtn, Menus ){
     const domElement = getDomElement()
-    domElement.classList.contains('delete-mode') ? deactivateListDeleteMode( domElement, deleteListBtn ) : activateListDeleteMode( domElement, deleteListBtn );
+    domElement.classList.contains('delete-mode') ? deactivateListDeleteMode( domElement, deleteListBtn ) : activateListDeleteMode( domElement, deleteListBtn, Menus );
 }
 
 function deactivateListDeleteMode( domElement, deleteListBtn ){
@@ -38,20 +38,19 @@ function deactivateListDeleteMode( domElement, deleteListBtn ){
     domElement.removeEventListener( 'click', requestListDeletion )
 }
 
-function activateListDeleteMode( domElement, deleteListBtn ){
+function activateListDeleteMode( domElement, deleteListBtn, Menus ){
     deleteListBtn.classList.add('active')
     domElement.classList.add('delete-mode')
-    domElement.addEventListener( 'click', requestListDeletion )
+    domElement.addEventListener( 'click', ( e ) => requestListDeletion( e, Menus ) )
 }
 
-function requestListDeletion( e ){
+function requestListDeletion( e, Menus ){
     if( !e.target.classList.contains('del-list-btn') ) return;
     const listToDelete = e.target.closest('.list-menu-opt')
     const listID = listToDelete.dataset.list
     const listName = listToDelete.querySelector('.list-name').innerHTML
     const list = new CustomList( listName, undefined, undefined, listID )
-    confirmDelete( list )
-    console.log(`requesting confirmation to delete list ${ listName }`)
+    Menus._getDeleteConfirmation( list )
 }
 
 function switchActiveListStatus( listOpt ){
