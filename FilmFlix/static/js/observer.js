@@ -19,35 +19,35 @@ USE THE OBSERVERS HUB TO MANAGE ALL ACTIVE OBSERVERS. ASSIGN, REMOVE AND NOTIFY 
 OBSERVERS ARE STORED IN ARRAYS KEYED TO A SIGNLE EVENT IN A MAP. OBSERVERS CAN BE MAPPED TO MORE THAN ONE EVENT,
 AND ONLY ONCE PER EVENT 
 */
-export class ObserverHub {
+export default class ObserverHub {
     constructor(){
         this.observers = new Map()
     }
 
     // ASSIGN ONE OR MORE OBSERVERS TO A LISTEN FOR A SINGLE EVENT, 'pbservers' IS ALWAYS AN ARRAY
-    subscibe( observers, event ){
+    _subscribe( observers, event ){
         observers.forEach( observer => {
-            if( this.observers.has( event ) ){
-                this.observers.get( event ).add( observer )
-            } 
-            else if( this.observers.get( event ).has( observer ) ){
-                console.error(`Observer Hub Subcription Error: observer is alread subscribed to this event!`)
-            }
-            else this.observers.set( event, new Set( observer ) )
+            if( this.observers.has( event ) ) this._insertObserver( event, observer );
+            else this.observers.set( event, new Set().add( observer ) )
         })
     }
 
     // REMOVE AN OBSERVER FROM AN EVENTS EMIT LIST
-    removeObserver( observer, event ){
+    _removeObserver( observer, event ){
         if( this.observers.has( event ) ) this.observers.get( event ).delete( observer );
     }
 
     // BROADCAST AN EVENT TO ALL LISTENING OBSERVERS WITH A RESOURCE DATA PACKET WITH ALL OBERSERVER RECIEVE
-    notify( data, event ){
+    _notify( data, event ){
         if( this.observers.has( event ) ){
             for( const observer of this.observers.get( event ) ){
                 observer.update( event, data )
             }
         }
+    }
+    _insertObserver( event, observer ){
+        if( this.observers.get( event ).has( observer ) ){
+            console.error(`Observer Hub Subcription Error: observer is alread subscribed to this event!`)
+        } else this.observers.get( event ).add( observer )
     }
 }

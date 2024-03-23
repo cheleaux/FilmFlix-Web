@@ -3,8 +3,7 @@ import Movie from './movie.js'
 import customListMenu from './customListMenu.js';
 
 
-// TODO: REFACTOR RECURRING VARIABLES AS STATE VARIABLES
-// TODO: ENSURE ALL MENU INTERFACING IS UPDATE TO INTERFACE USING THE NEW CLASS
+// TODO: ENSURE ALL MENU INTERFACING IS UPDATED TO INTERFACE USING THE NEW CLASS
 export default class MenuInterface {
     constructor( ObserverHub, Register, Sidebar ){
         this.ObserverHub = ObserverHub
@@ -15,13 +14,13 @@ export default class MenuInterface {
     _enableMovieActionsMenu( e ){
         e.stopPropagation()
         if( e.target.classList.contains('bi-three-dots') ){
-            this._initialiseActionMenuWindow( e.target )
-            this._toggleMenuVisibility();
+            const actionMenu = this._initialiseActionMenuWindow( e.target )
+            actionMenu._toggleMenuVisibility();
         }
         else if ( e.target.closest('.delete-btn') ){
-            const movie = Movie.fetchParentMovie( e.target )
-            this._closeAllActionMenus()
-            this._getDeleteConfirmation( new movie( movie.filmID, movie.title, movie.yearReleased, movie.rating, movie.duration, movie.genre ) )
+            const movie = Movie.fetchParentMovie( e.target, this.Register )
+            RegisterActionMenu.closeAllActionMenus( this.Register )
+            this._getDeleteConfirmation( new Movie( movie.filmID, movie.title, movie.yearReleased, movie.rating, movie.duration, movie.genre ) )
         };
     }
 
@@ -47,12 +46,12 @@ export default class MenuInterface {
 
     _initialiseDeleteWindow(){
         const confirmDelMenu = document.querySelector('#confirm-del-container')
-        const deleteWindow = new ConfirmDeleteWindow( confirmDelMenu, ObserverHub, this.Register, this.Sidebar )
+        const deleteWindow = new ConfirmDeleteWindow( confirmDelMenu, this.ObserverHub, this.Register, this.Sidebar )
         return deleteWindow
     }
 
     _initialiseActionMenuWindow( pointer ){
-        const actionMenu = new RegisterActionMenu( pointer )
+        const actionMenu = new RegisterActionMenu( pointer, this.Register, this.Sidebar )
         return actionMenu
     }
 }
@@ -75,7 +74,7 @@ export class ConfirmDeleteWindow {
             try {
                 var res = await deleteFunction( item )
                 if( await res.ok ){
-                    this.ObserverHub.notify( {
+                    this.ObserverHub._notify( {
                         alertMsg: item instanceof CustomList ? 'Collection deleted successfully' : 'Movie deleted successfully',
                         deletedItemID: item.id,
                         domComponents: {
@@ -86,7 +85,7 @@ export class ConfirmDeleteWindow {
                 }
             } catch( err ){
                 if( !res || !res.ok ){
-                    this.ObserverHub.notify( { alertMsg: `Problem! Could not delete!`, res }, 'movieFailedToDelete' )
+                    this.ObserverHub._notify( { alertMsg: `Problem! Could not delete!`, res }, 'movieFailedToDelete' )
                 }
                 throw new Error(`Could not delete: ${ err }`)
             }
@@ -107,32 +106,23 @@ export class ConfirmDeleteWindow {
 }
 
 export class RegisterActionMenu {
-    constructor( pointer ){
-        this.windowElement = ( pointer.closest('.tbl-row-opt') || pointer.closest('.mv-item-opt') ).querySelector('.row-opt-menu') 
+    constructor( pointer, Register, Sidebar ){
+        this.windowElement = ( pointer.closest('.tbl-row-opt') || pointer.closest('.mv-item-opt') ).querySelector('.row-opt-menu')
+        this.Register = Register
+        this.Sidebar = Sidebar
     }
     
     _toggleMenuVisibility(){
         if ( this.windowElement.style.display != 'revert' ) this._openMenuAndManualFocus( );
         else this.windowElement.style.display = 'none'
     }
-    
-    _disableMovieActionsMenu( e ){
-        if( !( e.target in this.windowElement.children ) ){
-            this._toggleMenuVisibility()
-            this._disableMenuManualFocus()
-        }
-    }
-    
+      
     _openMenuAndManualFocus(){
-        this._closeAllActionMenus()
+        RegisterActionMenu.closeAllActionMenus( this.Register )
         this.windowElement.style.display = 'revert';
         this._enableMenuManualFocus()
     }
     
-    _closeAllActionMenus(){
-        this.Register.activeRegister().querySelectorAll('.row-opt-menu').forEach( menu => menu.style.visibility = 'none' )
-    }
-
     _enableMenuManualFocus(){
         document.querySelector('body').addEventListener( 'click', this._disableMovieActionsMenu )
         this.Register.domElement.addEventListener( 'click', this._disableMovieActionsMenu )
@@ -141,5 +131,17 @@ export class RegisterActionMenu {
     _disableMenuManualFocus(){
         document.querySelector('body').removeEventListener( 'click', this._disableMovieActionsMenu )
         this.Register.domElement.removeEventListener( 'click', this._disableMovieActionsMenu )
+    }
+    
+    _disableMovieActionsMenu( e ){
+        console.log( this.windowElement )
+        if( !( e.target in this.windowElement.children ) ){
+            this._toggleMenuVisibility()
+            this._disableMenuManualFocus()
+        }
+    }
+
+    static closeAllActionMenus( Register ){
+        Register.activeRegister().querySelectorAll('.row-opt-menu').forEach( menu => menu.style.visibility = 'none' )
     }
 }

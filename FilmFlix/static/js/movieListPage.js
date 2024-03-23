@@ -27,15 +27,15 @@ export function initialiseMenuInterface( ObserverHub, Register, Sidebar ){
 }
 
 function intantiateAndSuscribePageObservers( ObserverHub ){
-    const SidebarRefreshObserver = new SidebarRefreshObserver()
-    const RegisterRefreshObserver = new RegisterRefreshObserver()
-    const AlertObserver = new AlertObserver()
-    ObserverHub.subscribe( [ SidebarRefreshObserver, RegisterRefreshObserver, AlertObserver ], 'movieDeleted' )
-    ObserverHub.subscribe( [ SidebarRefreshObserver, AlertObserver ], 'listDeleted' )
-    ObserverHub.subscribe( [ RegisterRefreshObserver ],'rootMovieFetchChanged' )
-    ObserverHub.subscribe( [ SidebarRefreshObserver ],'filterablesChanged' )    
-    ObserverHub.subscribe( [ AlertObserver ], 'movieDFailedToDelete' )
-    ObserverHub.subscribe( [ AlertObserver ], 'listDFailedToDelete' )
+    const sidebarRefreshObserver = new SidebarRefreshObserver()
+    const registerRefreshObserver = new RegisterRefreshObserver()
+    const alertObserver = new AlertObserver()
+    ObserverHub._subscribe( [ sidebarRefreshObserver, registerRefreshObserver, alertObserver ], 'movieDeleted' )
+    ObserverHub._subscribe( [ sidebarRefreshObserver, alertObserver ], 'listDeleted' )
+    ObserverHub._subscribe( [ registerRefreshObserver ],'rootMovieFetchChanged' )
+    ObserverHub._subscribe( [ sidebarRefreshObserver ],'filterablesChanged' )    
+    ObserverHub._subscribe( [ alertObserver ], 'movieDFailedToDelete' )
+    ObserverHub._subscribe( [ alertObserver ], 'listDFailedToDelete' )
 }
 
 export function fetchFunctionalScreenBreakpointQueries(){

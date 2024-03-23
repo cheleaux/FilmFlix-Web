@@ -1,5 +1,4 @@
 import CustomList from "./customList.js"
-import { confirmDelete } from "./menu.js"
 
 function getDomElement(){
     const domElement = document.querySelector('.list-menu')
