@@ -34,7 +34,7 @@ function intantiateAndSuscribePageObservers( ObserverHub ){
     ObserverHub._subscribe( [ sidebarRefreshObserver, alertObserver ], 'listDeleted' )
     ObserverHub._subscribe( [ registerRefreshObserver ],'rootMovieFetchChanged' )
     ObserverHub._subscribe( [ sidebarRefreshObserver ],'filterablesChanged' )    
-    ObserverHub._subscribe( [ alertObserver ], 'movieDFailedToDelete' )
+    ObserverHub._subscribe( [ alertObserver ], 'movieFailedToDelete' )
     ObserverHub._subscribe( [ alertObserver ], 'listDFailedToDelete' )
 }
 

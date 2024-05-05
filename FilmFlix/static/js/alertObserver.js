@@ -5,9 +5,8 @@ import { flashAlert } from './sidebar.js'
 export class AlertObserver extends Observer {
     update( event, data ){
         try {
-            switch( event ){
-                case 'movieDeleted' || 'listDeleted' || 'movieFailedToDelete' || 'listFailedToDelete':
-                    flashAlert( data.alertMsg )
+            if( event === 'movieDeleted' || event === 'listDeleted' || event === 'movieFailedToDelete' || event === 'listFailedToDelete' ){
+                flashAlert( data.alertMsg )
             }
         } catch( err ){
             console.error(`User-Action Report Error: ${ err }`)

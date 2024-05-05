@@ -85,9 +85,10 @@ export class ConfirmDeleteWindow {
                 }
             } catch( err ){
                 if( !res || !res.ok ){
-                    this.ObserverHub._notify( { alertMsg: `Problem! Could not delete!`, res }, 'movieFailedToDelete' )
+                    const event = item instanceof CustomList ? 'movieFailedToDelete' : 'listDFailedToDelete';
+                    this.ObserverHub._notify( { alertMsg: `Sorry! Failed to delete!`, res }, event )
                 }
-                throw new Error(`Could not delete: ${ err }`)
+                throw new Error(`Could not delete! ${ err }`)
             }
         }
         else if( e.target.closest('button').id == 'cancel-del' ) this._toggleConfirmWindow();
