@@ -87,7 +87,7 @@ export default class Register {
 
     _setLockedFormat( formatSetter ){
         const formatToggler = getTaskbarDomElement().querySelector('.register-format-toggle')
-        if( !formatToggler ) return;
+        if( !formatToggler ) r
         formatToggler.style.display = 'none'
         formatSetter()
     }
