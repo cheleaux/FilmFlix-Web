@@ -78,7 +78,7 @@ export class ConfirmDeleteWindow {
                         alertMsg: item instanceof CustomList ? 'Collection deleted successfully' : 'Movie deleted successfully',
                         deletedItemID: item.id,
                         domComponents: {
-                            register: this.Register,
+                            Register: this.Register,
                             Sidebar: this.Sidebar,
                         },
                     }, 'movieDeleted' )
@@ -116,7 +116,7 @@ export class RegisterActionMenu {
         if ( this.windowElement.style.display != 'revert' ) this._openMenuAndManualFocus( );
         else this.windowElement.style.display = 'none'
     }
-      
+
     _openMenuAndManualFocus(){
         RegisterActionMenu.closeAllActionMenus( this.Register )
         this.windowElement.style.display = 'revert';
@@ -124,17 +124,18 @@ export class RegisterActionMenu {
     }
     
     _enableMenuManualFocus(){
-        document.querySelector('body').addEventListener( 'click', this._disableMovieActionsMenu )
-        this.Register.domElement.addEventListener( 'click', this._disableMovieActionsMenu )
+        const self = this
+        document.querySelector('body').addEventListener( 'click', this._disableMovieActionsMenu.bind( this ) )
+        this.Register.domElement.addEventListener( 'click', this._disableMovieActionsMenu.bind( this ) )
     }
     
     _disableMenuManualFocus(){
+        const self = this
         document.querySelector('body').removeEventListener( 'click', this._disableMovieActionsMenu )
         this.Register.domElement.removeEventListener( 'click', this._disableMovieActionsMenu )
     }
     
     _disableMovieActionsMenu( e ){
-        console.log( this.windowElement )
         if( !( e.target in this.windowElement.children ) ){
             this._toggleMenuVisibility()
             this._disableMenuManualFocus()

@@ -47,7 +47,7 @@ export default class ObserverHub {
     }
     _insertObserver( event, observer ){
         if( this.observers.get( event ).has( observer ) ){
-            console.error(`Observer Hub Subcription Error: observer is alread subscribed to this event!`)
+            console.error(`Observer Subcription Error: observer is alread subscribed to this event!`)
         } else this.observers.get( event ).add( observer )
     }
 }

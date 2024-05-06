@@ -21,9 +21,9 @@ export default class Register {
 
     _populateRegister(){
         const { definedMovieList, filterActive, rootFetch } = sortArguments( arguments, '_populateRegister' )
-        console.log(`root fetch status: ${ rootFetch }`)
+        // console.log(`root fetch status: ${ rootFetch }`)
         const movieData = definedMovieList || ( rootFetch ? JSON.parse( this.mainListMeta.mainJson ) : this.listContent )
-        console.log(`movieData:`, movieData, JSON.parse( this.mainListMeta.mainJson ) )
+        // console.log(`movieData:`, movieData, JSON.parse( this.mainListMeta.mainJson ) )
         Register.isEmpty( movieData ) ? this._NonFoundProtocol() : this._preInsertProtocol( movieData );
         filterActive ? this._insertMovies( this._runFilter( movieData ) ) : this._insertMovies( movieData ) ;
     }
@@ -38,10 +38,10 @@ export default class Register {
 
     _removeMovie( movieID ){
         try {
-            var movieEl = Array.from( Register.activeRegister().children).find( movieRow => movieRow.id == movieID )
+            var movieEl = Array.from( this.activeRegister().children).find( movieRow => movieRow.id == movieID )
             movieEl.remove()
         } catch( err ){
-            if( !movieEl ) console.error(`Register Error: Could not find movie element of id ${ movieID }`);
+            if( !movieEl ) console.error(`Register Error: Could not find movie element of id ${ movieID }:\n${ err }`);
         }
     }
 
@@ -117,16 +117,22 @@ export default class Register {
         })
     }
     
-    _refreshElement( elements ){
+    _refreshElement( elements, component = undefined ){
         elements.forEach( ( element ) => {
             switch( element ){
                 case 'rootFetch':
                     Movie.fetchAllMoviesJson()
-                    .then( movies => console.log( movies ) )
                     .then( movies => this.domElement.dataset.movies = JSON.stringify( movies ) )
                 case 'filterables':
+                    const data = { 
+                        filterables: this.mainListMeta.filterables,
+                        domComponents: { 
+                            Register: this,
+                            Sidebar: component
+                        }
+                    }
                     this.mainListMeta.filterables = extractUniqueValues( JSON.parse( this.domElement.dataset.movies ) )
-                    this.ObserverHub.notify( { filterables: this.mainListMeta.filterables }, 'filterablesChanged' )
+                    this.ObserverHub._notify( data, 'filterablesChanged' )
                 }
         })
     }

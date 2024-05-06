@@ -17,7 +17,6 @@ function displayListMembers( e, Register ){
 
 function renderListByID( listId, Register ){
     if( listId == 0 ){ 
-        console.log( listId )
         Register.filterActive ? Register._populateRegister( { filterActive: true, rootFetch: true } ) : Register._populateRegister( { rootFetch: true } ) }
     else {
         const customMovies = CustomList.fetchCustomListMovies( listId )
