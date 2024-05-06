@@ -85,7 +85,8 @@ export class ConfirmDeleteWindow {
                 }
             } catch( err ){
                 if( !res || !res.ok ){
-                    const event = item instanceof CustomList ? 'movieFailedToDelete' : 'listDFailedToDelete';
+                    const event = item instanceof CustomList ? 'listFailedToDelete' : 'movieFailedToDelete';
+                    console.log(event)
                     this.ObserverHub._notify( { alertMsg: `Sorry! Failed to delete!`, res }, event )
                 }
                 throw new Error(`Could not delete! ${ err }`)
@@ -99,8 +100,9 @@ export class ConfirmDeleteWindow {
             this.domElement.style.display = 'flex'
             document.querySelector('body').classList.add('blurred')
             this.domElement.querySelector('span').innerHTML = title
-        } else {
-            this.domElement.style.display = 'none';
+        }
+        else {
+            this.domElement.style.display = 'none'
             document.querySelector('body').classList.remove('blurred')
         }
     }
@@ -125,13 +127,11 @@ export class RegisterActionMenu {
     }
     
     _enableMenuManualFocus(){
-        const self = this
         document.querySelector('body').addEventListener( 'click', this._disableMovieActionsMenu.bind( this ) )
         this.Register.domElement.addEventListener( 'click', this._disableMovieActionsMenu.bind( this ) )
     }
     
     _disableMenuManualFocus(){
-        const self = this
         document.querySelector('body').removeEventListener( 'click', this._disableMovieActionsMenu )
         this.Register.domElement.removeEventListener( 'click', this._disableMovieActionsMenu )
     }

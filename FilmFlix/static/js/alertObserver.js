@@ -6,6 +6,7 @@ export class AlertObserver extends Observer {
     update( event, data ){
         try {
             if( event === 'movieDeleted' || event === 'listDeleted' || event === 'movieFailedToDelete' || event === 'listFailedToDelete' ){
+                console.log('alert')
                 flashAlert( data.alertMsg )
             }
         } catch( err ){

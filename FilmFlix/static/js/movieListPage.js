@@ -35,7 +35,7 @@ function intantiateAndSuscribePageObservers( ObserverHub ){
     ObserverHub._subscribe( [ registerRefreshObserver ],'rootMovieFetchChanged' )
     ObserverHub._subscribe( [ sidebarRefreshObserver ],'filterablesChanged' )    
     ObserverHub._subscribe( [ alertObserver ], 'movieFailedToDelete' )
-    ObserverHub._subscribe( [ alertObserver ], 'listDFailedToDelete' )
+    ObserverHub._subscribe( [ alertObserver ], 'listFailedToDelete' )
 }
 
 export function fetchFunctionalScreenBreakpointQueries(){
