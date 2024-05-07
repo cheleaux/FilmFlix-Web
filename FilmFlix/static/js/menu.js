@@ -13,15 +13,18 @@ export default class MenuInterface {
 
     _enableMovieActionsMenu( e ){
         e.stopPropagation()
+        console.log(e.target, e.target.tagName)
         if( e.target.classList.contains('bi-three-dots') ){
+            console.log(`Opened With: ${e.target, e.target.classList}`)
             const actionMenu = this._initialiseActionMenuWindow( e.target )
             actionMenu._toggleMenuVisibility();
         }
-        else if ( e.target.closest('.delete-btn') ){
+        else if ( e.target.closest('.delete-btn') && e.target.tagName !== 'TD' ){
             const movie = Movie.fetchParentMovie( e.target, this.Register )
             RegisterActionMenu.closeAllActionMenus( this.Register )
             this._getDeleteConfirmation( new Movie( movie.filmID, movie.title, movie.yearReleased, movie.rating, movie.duration, movie.genre ) )
-        };
+        }
+        else RegisterActionMenu.closeAllActionMenus( this.Register )
     }
 
     _getDeleteConfirmation( item ){
