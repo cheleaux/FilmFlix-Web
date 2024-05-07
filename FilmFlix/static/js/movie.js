@@ -31,7 +31,8 @@ export default class Movie {
     static async delete( movie ){
         try {
             if( movie && ( movie.filmID || movie.id ) ){
-                const res = await fetch( `/movies/${ String( movie.filmID ) }`, { method: 'DELETE' } )
+                const movieId = movie.id || movie.filmID
+                const res = await fetch( `/movies/${ String( movieId ) }`, { method: 'DELETE' } )
                 if( !res.ok ){
                     console.error(`HTTP DELETE Error! Could not delete movie ( ID-${ movie.filmID } ) \nStatus: ${ response.status }`);
                     return res
@@ -40,7 +41,6 @@ export default class Movie {
         } catch( err ){
             throw new Error(`HTTP DELETE Error! Status: ${ response.status } \n ${ err }`);
         }
-        
     }
 
     static fetchParentMovie( btn, register ){
