@@ -1,4 +1,5 @@
 import json
+from .CustomList import CustomList
 
 def serializeObjects( Objs ):
     if isinstance( Objs, list ):
@@ -14,5 +15,7 @@ def makeStatelessAndSerializable( objArr ):
     for item in objArr:
         item.__dict__.pop('_sa_instance_state')
         statelessDict = item.__dict__
+        # CustomList.addCountListCount( statelessDict ) if addCount else None
         serializables.append( statelessDict )
+    print(objArr)
     return serializables
