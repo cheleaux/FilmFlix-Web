@@ -6,7 +6,6 @@ from .Utils import getID, fetchMoviesBasedOnParams
 
 
 def movieInsertResponder( movieDetails ):
-    print( movieDetails )
     movie = Movie( movieDetails['title'], movieDetails['yearReleased'], movieDetails['rating'], movieDetails['duration'], movieDetails['genre'] )
     movie.insertMovie()
     movieID = getID( { 'title': movieDetails['title'] } )
@@ -51,7 +50,7 @@ def fetchMovies( param ):
     movies = fetchMoviesBasedOnParams( param )
     if movies != []:
         movieJson = serializeObjects( movies )
-        return movieJson
+        return movies
     else:
         return errorResponse( 'invalid listID', 404 )
 

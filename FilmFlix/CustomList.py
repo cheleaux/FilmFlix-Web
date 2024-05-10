@@ -39,7 +39,7 @@ class CustomList( db.Model ):
                 FROM movies m
                 JOIN jsonb_array_elements(lists->'list_ids') x ON x ->> 0 = '{str(listID)}'
         '''
-        movies = db.session.execute(text(query)).fetchall()
+        movies = db.session.execute( text( query ) ).fetchall()
         return movies
 
 

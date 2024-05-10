@@ -39,6 +39,9 @@ def downgrade():
                existing_server_default=sa.text('\'{"list_ids": []}\'::jsonb'))
 
     with op.batch_alter_table('lists', schema=None) as batch_op:
-        batch_op.add_column(sa.Column('movie_count', sa.INTEGER(), autoincrement=False, nullable=False))
+        batch_op.add_column(sa.Column('movie_count', sa.INTEGER(),
+                                    autoincrement=False,
+                                    nullable=False,
+                                    server_default='0'))
 
     # ### end Alembic commands ###
