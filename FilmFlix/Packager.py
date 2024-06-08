@@ -23,6 +23,7 @@ def stateSerialisationPrep( objArr ):
             serialisables.append( statelessDict )
         return serialisables
 
+
 def is_json( item ):
     try:
         json.loads( item )
