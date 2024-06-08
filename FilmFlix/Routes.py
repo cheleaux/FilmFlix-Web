@@ -3,6 +3,7 @@ from .Movie import Movie
 from .CustomList import CustomList
 from .Packager import *
 from .Utils import getID, fetchMoviesBasedOnParams
+from sqlalchemy import inspect
 
 
 def movieInsertResponder( movieDetails ):
@@ -42,24 +43,24 @@ def customListDeleteResponder( listID ):
 
 def fetchMovieDetails( ID ):
     movie = Movie.fetchMovieByID( ID )
-    movieJson = serializeObjects( movie )
+    movieJson = serialiseObjects( movie )
     return movieJson
 
 
 def fetchMovies( param ):
     movies = fetchMoviesBasedOnParams( param )
+    devFunc()
     if movies != []:
-        movieJson = serializeObjects( movies )
-        return movies
+        movieJson = serialiseObjects( movies )
+        return movieJson
     else:
         return errorResponse( 'invalid listID', 404 )
 
 
 def fetchCustomListMenuDetails():
     customListMetaData = CustomList.fetchListMeta()
+    listJson = serialiseObjects( customListMetaData )
     CustomList.setMovieCount( customListMetaData )
-    print( customListMetaData )
-    listJson = serializeObjects( customListMetaData )
     res = Response( listJson, 200, mimetype='application/json' )
     return res
 
@@ -67,3 +68,7 @@ def fetchCustomListMenuDetails():
 def errorResponse( errMessage, errCode ):
     res = Response( errMessage, errCode, mimetype='text/plain' )
     return res
+
+def devFunc():
+    inspectedClass = inspect(Movie)
+    print(inspectedClass)

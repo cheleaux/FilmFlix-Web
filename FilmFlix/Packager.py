@@ -1,21 +1,33 @@
 import json
 from .CustomList import CustomList
 
-def serializeObjects( Objs ):
+def serialiseObjects( Objs ):
+    if is_json( Objs ):
+        return
+    
     if isinstance( Objs, list ):
-        statelessMoviesList = makeStatelessAndSerializable( Objs )
+        statelessMoviesList = stateSerialisationPrep( Objs )
         return json.dumps( statelessMoviesList )
     elif isinstance( Objs, object ):
-        Objs.__dict__.pop('_sa_instance_state')
+        Obj = Objs
+        Obj.__dict__.pop('_sa_instance_state')
         return json.dumps( Objs.__dict__ )
     
     
-def makeStatelessAndSerializable( objArr ):
-    serializables = []
-    for item in objArr:
-        item.__dict__.pop('_sa_instance_state')
-        statelessDict = item.__dict__
-        # CustomList.addCountListCount( statelessDict ) if addCount else None
-        serializables.append( statelessDict )
-    print(objArr)
-    return serializables
+def stateSerialisationPrep( objArr ):
+    if not isinstance( objArr[1], dict ):
+        serialisables = []
+        for item in objArr:
+            item.__dict__.pop('_sa_instance_state')
+            statelessDict = item.__dict__
+            serialisables.append( statelessDict )
+        return serialisables
+
+def is_json( item ):
+    try:
+        json.loads( item )
+    except ValueError:
+        return False
+    except TypeError:
+        return False
+    return True
