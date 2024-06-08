@@ -56,8 +56,10 @@ def fetchMovies( param ):
 
 
 def fetchCustomListMenuDetails():
-    allCustomLists = CustomList.fetchListMeta()
-    listJson = serializeObjects( allCustomLists )
+    customListMetaData = CustomList.fetchListMeta()
+    CustomList.setMovieCount( customListMetaData )
+    print( customListMetaData )
+    listJson = serializeObjects( customListMetaData )
     res = Response( listJson, 200, mimetype='application/json' )
     return res
 

@@ -41,12 +41,13 @@ class CustomList( db.Model ):
         '''
         movies = db.session.execute( text( query ) ).fetchall()
         return movies
-
+    
 
     @staticmethod
-    def addCountListCount( list ):
-        listCount = CustomList.getListMemberCount( list.list_id )
-        list['count'] = listCount
+    def setMovieCount( listArr ):
+        for list in listArr:
+            list["count"] = CustomList.getListMemberCount( list.list_id )
+            print( list, "list list")
 
 
     @staticmethod
