@@ -12,7 +12,7 @@ class CustomList( db.Model ):
     def __init__( self, name, movieIDs = [] ):
         self.name = name
         self.movieIDs = movieIDs
-        self.movie_count = len( movieIDs )
+        self.movie_count = None
 
 
     def insertList( self ):
@@ -46,8 +46,7 @@ class CustomList( db.Model ):
     @staticmethod
     def setMovieCount( listArr ):
         for list in listArr:
-            list["count"] = CustomList.getListMemberCount( list.list_id )
-            print( list, "list list")
+            list.movie_count = CustomList.getListMemberCount( list.list_id )
 
 
     @staticmethod

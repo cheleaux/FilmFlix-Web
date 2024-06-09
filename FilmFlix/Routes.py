@@ -24,8 +24,8 @@ def movieUpdateResponder( movieDetails ):
     res = Response( f'Updated movie record { movieDetails["id"] }', 201, mimetype='text/plain' )
     Movie.updateMovieDetails( movieDetails )
     return res
-        
-        
+
+
 def customListInsertResponder( listDetails ):
     customList = CustomList( listDetails['name'], listDetails['movieIDs'] )
     customList.insertList()
@@ -59,8 +59,8 @@ def fetchMovies( param ):
 
 def fetchCustomListMenuDetails():
     customListMetaData = CustomList.fetchListMeta()
-    listJson = serialiseObjects( customListMetaData )
     CustomList.setMovieCount( customListMetaData )
+    listJson = serialiseObjects( customListMetaData )
     res = Response( listJson, 200, mimetype='application/json' )
     return res
 
@@ -68,6 +68,7 @@ def fetchCustomListMenuDetails():
 def errorResponse( errMessage, errCode ):
     res = Response( errMessage, errCode, mimetype='text/plain' )
     return res
+
 
 def devFunc():
     inspectedClass = inspect(Movie)
