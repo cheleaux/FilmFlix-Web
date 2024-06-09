@@ -41,7 +41,7 @@ def addMovie():
         return movieInsertResponder( request.json ) 
 
 
-@views.route("/api/custom-list", methods=[ "GET", "POST" ])
+@views.route("/api/custom-list", methods=[ "GET", "DELETE" ])
 def fetchCustomList():
     if request.method == "GET":
         if request.args.get("list"):
@@ -53,6 +53,8 @@ def fetchCustomList():
         if request.args.get("list"):
             listId = request.args.get('list')
             return customListDeleteResponder( listId )
+        else:
+            return errorResponse( 'Undefined listID', 400 )
 
 
 @views.route("/api/custom-list/all", methods=["GET"])

@@ -14,7 +14,6 @@ export default class MenuInterface {
     _enableMovieActionsMenu( e ){
         e.stopPropagation()
         if( e.target.classList.contains('bi-three-dots') ){
-            console.log(`Opened With: ${e.target, e.target.classList}`)
             const actionMenu = this._initialiseActionMenuWindow( e.target )
             actionMenu._toggleMenuVisibility();
         }
@@ -88,7 +87,6 @@ export class ConfirmDeleteWindow {
             } catch( err ){
                 if( !res || !res.ok ){
                     const event = item instanceof CustomList ? 'listFailedToDelete' : 'movieFailedToDelete';
-                    console.log(event)
                     this.ObserverHub._notify( { alertMsg: `Sorry! Failed to delete!`, res }, event )
                 }
                 throw new Error(`Could not delete! ${ err }`)

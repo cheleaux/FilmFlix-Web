@@ -81,8 +81,7 @@ export default class Sidebar{
         elements.forEach( ( element ) => {
             switch( element ){
                 case 'listMenu':
-                    customListMenu.renderListMenu()
-                default:
+                    customListMenu.clear()
                     customListMenu.renderListMenu()          
             }
         })

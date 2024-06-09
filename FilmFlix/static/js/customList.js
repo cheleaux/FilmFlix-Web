@@ -53,21 +53,23 @@ export default class CustomList {
         }
     }
 
-    static async delete( ID ){
+    static async delete( list ){
         try {
-            fetch(`/custom-list?list=${ ID }`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then( res => console.log( res ) )
+            const ID = list.id
+            const res = fetch(`/api/custom-list?list=${ ID }`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+            })
+            return res
         } catch ( err ){
             throw new Error(`DELETE Request Error: ${ err }`)
         }
     }
 
     static _toggleActiveStatus( element ){
-        if (element.classList.contains('list-menu-opt')){
+        if ( element.classList.contains('list-menu-opt') ){
             element.classList.toggle('tab-focus')
         }
     }

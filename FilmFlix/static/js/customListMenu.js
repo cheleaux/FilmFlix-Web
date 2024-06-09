@@ -53,8 +53,8 @@ function requestListDeletion( e, Menus ){
 
 function switchActiveListStatus( listOpt ){
     const menuOptions = Array.from( getDomElement().children )
-    menuOptions.forEach( ( element ) => {
-        if( element.classList.contains('tab-focus') ) CustomList._toggleActiveStatus( element );
+    menuOptions.forEach( ( list ) => {
+        if( list.classList.contains('tab-focus') ) CustomList._toggleActiveStatus( list );
     })
     CustomList._toggleActiveStatus( listOpt )
 }
@@ -81,4 +81,9 @@ function setMainListQuantity( quantity ){
     AllMoviesOption.querySelector('.quantity').innerHTML = String(quantity)
 }
 
-export default { renderListMenu, displayListMembers, getDomElement, toggleDeleteSelection, renderListByID, fetchActiveList };
+function clear(){
+    const menuOptions = Array.from( getDomElement().children )
+    menuOptions.forEach( list => list.remove() )
+}
+
+export default { clear, renderListMenu, displayListMembers, getDomElement, toggleDeleteSelection, renderListByID, fetchActiveList };

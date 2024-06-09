@@ -22,6 +22,7 @@ class CustomList( db.Model ):
 
     @staticmethod
     def removeList( listID ):
+        print(CustomList.query.filter_by(list_id= int(listID)).first())
         CustomList.query.filter_by(list_id= int(listID)).delete()
         db.session.commit()
 
