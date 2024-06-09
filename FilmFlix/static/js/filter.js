@@ -5,10 +5,10 @@ export default class Filter {
         this.genre = []
         this.yearReleased = []
         this.duration = {
-            min: undefined,
+            min: 0,
             max: undefined,
             isWithinRange: ( movie ) => {
-                const durationFilterRange = Array.from( { length: Number( this.duration.max || '5100' ) - ( Number( this.duration.min || '0' ) )}, ( _, i) => i + Number( this.duration.min ) + 1 )
+                const durationFilterRange = Array.from( { length: Number( this.duration.max || '5100' ) - ( Number( this.duration.min || 0 ) )}, ( _, i) => i + Number( this.duration.min ) + 1 )
                 return durationFilterRange.includes( Number( movie.duration ) ) ? true : false;
             }
         }    

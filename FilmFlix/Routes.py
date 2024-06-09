@@ -49,7 +49,6 @@ def fetchMovieDetails( ID ):
 
 def fetchMovies( param ):
     movies = fetchMoviesBasedOnParams( param )
-    devFunc()
     if movies != []:
         movieJson = serialiseObjects( movies )
         return movieJson

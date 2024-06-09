@@ -13,7 +13,6 @@ export default class MenuInterface {
 
     _enableMovieActionsMenu( e ){
         e.stopPropagation()
-        console.log(e.target, e.target.tagName)
         if( e.target.classList.contains('bi-three-dots') ){
             console.log(`Opened With: ${e.target, e.target.classList}`)
             const actionMenu = this._initialiseActionMenuWindow( e.target )
